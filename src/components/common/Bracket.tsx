@@ -38,8 +38,8 @@ const LeftBracket = () => {
       />
       <RightBracketImg
         ref={rBracket}
-        src={process.env.PUBLIC_URL + '/images/Rightbracket.png'}
-        alt="Rightbracket"
+        src={process.env.PUBLIC_URL + '/images/rightbracket.png'}
+        alt="rightbracket"
       />
     </LeftBracketBlock>
   );
