@@ -340,7 +340,7 @@ const BoardTableContent = ({
     }
 
     const convertDateForm = (boards: any[]) => {
-      const year: Array<number> = boards[0];
+      const year = boards[0]!;
       const month =
         boards[1] < 10 ? boards[1].toString().padStart(2, '0') : boards[1];
       const date =
