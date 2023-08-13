@@ -293,20 +293,19 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
       setUserName(myInfo.userName);
     }
     setTimeout(() => {
-      let now = countInfos.map((countInfos) => countInfos.todayVar) as any;
-      let now2 = countInfos.map((countInfos) => countInfos.totalVar) as any;
-
+      let now = countInfos.map((countInfos) => countInfos.todayVar);
+      let now2 = countInfos.map((countInfos) => countInfos.totalVar);
       const handle = setInterval(() => {
         setCounter(
           (counterRef.innerHTML = Math.ceil(
-            (countInfos.map((countInfos) => countInfos.todayVar) as any) - now,
+            countInfos.map((countInfos) => countInfos.todayVar) - now,
           )
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
         );
         setTcounter(
           (tcounterRef.innerHTML = Math.ceil(
-            (countInfos.map((countInfos) => countInfos.totalVar) as any) - now2,
+            countInfos.map((countInfos) => countInfos.totalVar) - now2,
           )
             .toString()
             .replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
