@@ -174,7 +174,7 @@ const Search = () => {
           onFocus={() => setLine()}
           onBlur={() => setLine()}
           ref={inputRef}
-          placeholder="111검색어를 입력하세요. (CTRL + /)"
+          placeholder="검색어를 입력하세요. (CTRL + /)"
         />
       </form>
     </>
