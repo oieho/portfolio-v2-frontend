@@ -340,7 +340,7 @@ const BoardTableContent = ({
       setSharpAndComma(', #');
     }
 
-    const convertDateForm = (boards: any[]) => {
+    const convertDateForm = (boards: Board[] | any[]) => {
       const year = boards[0];
       const month =
         boards[1] < 10 ? boards[1].toString().padStart(2, '0') : boards[1];
