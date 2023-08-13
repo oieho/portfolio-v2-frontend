@@ -428,7 +428,6 @@ const BoardTableContent = ({
     state.boardModifiable,
     actions,
     board,
-    boards,
     state.hashSelected,
     state.selectedListOthers,
     selectedIndex,
