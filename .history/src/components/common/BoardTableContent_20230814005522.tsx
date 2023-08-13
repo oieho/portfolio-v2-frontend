@@ -387,35 +387,34 @@ const BoardTableContent = ({
       };
       if (boards) {
         const regDate = [...boards.workBoard?.regDate];
-        // Create a copy of the regDate array
-        if (typeof regDate[5] === 'undefined') {
-          regDate[5] = 0;
-        }
-        if (typeof regDate[4] === 'undefined') {
-          regDate[4] = 0;
-        }
+      } // Create a copy of the regDate array
+      if (typeof regDate[5] === 'undefined') {
+        regDate[5] = 0;
+      }
+      if (typeof regDate[4] === 'undefined') {
+        regDate[4] = 0;
+      }
 
-        const before = toDateObject(regDate) as any;
-        const now = new Date() as any;
-        const difference = now - before;
-        const twoDays = 2 * 24 * 60 * 60 * 1000;
-        const oneDay = 24 * 60 * 60 * 1000;
-        const twoHours = 2 * 60 * 60 * 1000;
-        const oneHour = 60 * 60 * 1000;
+      const before = toDateObject(regDate) as any;
+      const now = new Date() as any;
+      const difference = now - before;
+      const twoDays = 2 * 24 * 60 * 60 * 1000;
+      const oneDay = 24 * 60 * 60 * 1000;
+      const twoHours = 2 * 60 * 60 * 1000;
+      const oneHour = 60 * 60 * 1000;
 
-        if (difference > twoDays) {
-          const days = Math.floor(difference / (24 * 60 * 60 * 1000));
-          return `${days} days ago`;
-        } else if (difference > oneDay) {
-          const oneDay = Math.floor(difference / (24 * 60 * 60 * 1000));
-          return `${oneDay} day ago`;
-        } else if (difference > twoHours) {
-          const hours = Math.floor(difference / (60 * 60 * 1000));
-          return `${hours} hours ago`;
-        } else if (difference > oneHour) {
-          const hour = Math.floor(difference / (60 * 60 * 1000));
-          return `${hour} hour ago`;
-        }
+      if (difference > twoDays) {
+        const days = Math.floor(difference / (24 * 60 * 60 * 1000));
+        return `${days} days ago`;
+      } else if (difference > oneDay) {
+        const oneDay = Math.floor(difference / (24 * 60 * 60 * 1000));
+        return `${oneDay} day ago`;
+      } else if (difference > twoHours) {
+        const hours = Math.floor(difference / (60 * 60 * 1000));
+        return `${hours} hours ago`;
+      } else if (difference > oneHour) {
+        const hour = Math.floor(difference / (60 * 60 * 1000));
+        return `${hour} hour ago`;
       }
     };
     setBoardRegDateDaysAgo(newBoardRegDateDaysAgo());
