@@ -386,7 +386,7 @@ const BoardTableContent = ({
         return new Date(year, month, date, hours, minutes, seconds);
       };
 
-      const regDate = [...boards?.workBoard?.regDate]; // Create a copy of the regDate array
+      const regDate = [...boards.workBoard?.regDate]; // Create a copy of the regDate array
       if (typeof regDate[5] === 'undefined') {
         regDate[5] = 0;
       }
