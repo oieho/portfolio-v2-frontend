@@ -340,37 +340,35 @@ const BoardTableContent = ({
     }
 
     const convertDateForm = (boards: any[]) => {
-      if (boards) {
-        const year = boards[0];
-        const month =
-          boards[1] < 10 ? boards[1].toString().padStart(2, '0') : boards[1];
-        const date =
-          boards[2] < 10 ? boards[2].toString().padStart(2, '0') : boards[2];
-        const hours =
-          boards[3] < 10 ? boards[3].toString().padStart(2, '0') : boards[3];
-        var minutes =
-          boards[4] < 10 ? boards[4].toString().padStart(2, '0') : boards[4];
-        var seconds =
-          boards[5] < 10 ? boards[5].toString().padStart(2, '0') : boards[5];
-        if (typeof boards[5] === 'undefined') {
-          seconds = '00';
-        } else if (typeof boards[4] === 'undefined') {
-          minutes = '00';
-        }
-        return (
-          year +
-          '-' +
-          month +
-          '-' +
-          date +
-          ' ' +
-          hours +
-          ':' +
-          minutes +
-          ':' +
-          seconds
-        );
+      const year = boards[0];
+      const month =
+        boards[1] < 10 ? boards[1].toString().padStart(2, '0') : boards[1];
+      const date =
+        boards[2] < 10 ? boards[2].toString().padStart(2, '0') : boards[2];
+      const hours =
+        boards[3] < 10 ? boards[3].toString().padStart(2, '0') : boards[3];
+      var minutes =
+        boards[4] < 10 ? boards[4].toString().padStart(2, '0') : boards[4];
+      var seconds =
+        boards[5] < 10 ? boards[5].toString().padStart(2, '0') : boards[5];
+      if (typeof boards[5] === 'undefined') {
+        seconds = '00';
+      } else if (typeof boards[4] === 'undefined') {
+        minutes = '00';
       }
+      return (
+        year +
+        '-' +
+        month +
+        '-' +
+        date +
+        ' ' +
+        hours +
+        ':' +
+        minutes +
+        ':' +
+        seconds
+      );
     };
     setBoardRegDateDays(convertDateForm(boards.workBoard?.regDate));
 
