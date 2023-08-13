@@ -860,6 +860,7 @@ const BoardTableContent = ({
       className="BoardTableContent-virtualized table-class"
       style={style}
     >
+      test
       <tbody>
         <TableTr
           onClick={() => {
@@ -888,13 +889,13 @@ const BoardTableContent = ({
           }
         >
           <TableTd className="td1">
-            {/* <BoardBodyThumbnailImg
+            <BoardBodyThumbnailImg
               src={
                 thumbnail !== 'notUploaded'
                   ? process.env.PUBLIC_URL + thumbnail
                   : '/images/board/notuploadedImg.png'
               }
-            /> */}
+            />
             <BoardHeadUL>
               <li>
                 <BoardTitle>
