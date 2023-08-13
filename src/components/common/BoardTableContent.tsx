@@ -420,11 +420,11 @@ const BoardTableContent = ({
       setSelectedIndex(-1);
     }
   }, [
-    boards.workBoard?.wno,
-    boards.workBoard?.regDate,
+    boards.workBoard.wno,
+    boards.workBoard.regDate,
     index,
     state.selectedList,
-    boards.workBoard?.hashTag,
+    boards.workBoard.hashTag,
     state.boardModifiable,
     actions,
     board,
@@ -434,7 +434,7 @@ const BoardTableContent = ({
     state.hideEditorGear,
     state.boardRemovable,
     state.viewSelectedIndexGear,
-    boards.workBoard?.title,
+    boards.workBoard.title,
   ]);
   useLayoutEffect(() => {
     const displayThumbnail = async (wno: string) => {
@@ -453,7 +453,7 @@ const BoardTableContent = ({
     };
 
     displayThumbnail(boards.workBoard.wno);
-  }, [boards.workBoard?.wno, state.boardThumbnail]);
+  }, [boards.workBoard.wno, state.boardThumbnail]);
   const showArticle = useCallback(
     (index: number) => {
       actions.setViewSelectedIndexGear(false);
@@ -560,7 +560,7 @@ const BoardTableContent = ({
     [
       actions,
       alreadyCounted,
-      boards.workBoard?.wno,
+      boards.workBoard.wno,
       countQParam,
       keywordQParam,
       navigate,
@@ -872,7 +872,7 @@ const BoardTableContent = ({
             }
             showArticle(index);
           }}
-          id={`board-${boards.workBoard?.wno}`}
+          id={`board-${boards.workBoard.wno}`}
           className={
             state.removeSelectedIndex === boards.workBoard.wno
               ? 'blackOnRemove'
