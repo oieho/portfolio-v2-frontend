@@ -439,7 +439,6 @@ const BoardTableContent = ({
     state.boardRemovable,
     state.viewSelectedIndexGear,
     boards.workBoard?.title,
-    boards,
   ]);
   useLayoutEffect(() => {
     const displayThumbnail = async (wno: string) => {
