@@ -1,5 +1,4 @@
 import client from './client';
-import axios from 'axios';
 
 export const getSearchResult = (searchType: string, keyword: string) =>
   client.get('/boards', {

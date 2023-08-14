@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import ContentBody from '../components/common/ContentBody';
 import { RootState } from '../modules';
-import axios from 'axios';
 
 const ContentBodyContainer = () => {
   const { board } = useSelector(({ auth, board, loading }: RootState) => ({
