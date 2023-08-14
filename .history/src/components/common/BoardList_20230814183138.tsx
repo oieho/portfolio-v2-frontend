@@ -372,7 +372,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       } else if (state.toolsSelected === true) {
         dispatch(fetchTools(selected) as any);
       } else if (state.selectedView === false) {
-        dispatch(fetchList(selected as any));
+        dispatch(fetchList(selected as BoardListPayload));
       } else if (state.selectedView === true) {
         dispatch(fetchSelectedList(selected) as any);
       }

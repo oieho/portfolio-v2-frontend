@@ -12,7 +12,6 @@ import { MyInfo } from '../../App';
 import BoardTableContent from './BoardTableContent';
 import { List, ListRowRenderer } from 'react-virtualized';
 import {
-  BoardListPayload,
   fetchList,
   fetchSelectedList,
   fetchHashTags,
