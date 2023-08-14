@@ -1,0 +1,4 @@
+[[redirects]]
+    from = "/boards/*"
+    to = "src/index.html"
+    status = 200
