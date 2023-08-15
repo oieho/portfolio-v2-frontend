@@ -2350,30 +2350,37 @@ const ContentDesc = ({
                                               >
                                                 <hr />
                                               </span>
-                                              <span
-                                                onClick={() => {
-                                                  setModifyCommentVal('');
-                                                  setSelectedCommentUid(index);
-                                                  setModify(true);
-                                                  setReply(false);
-                                                  setStarOnModify(-3);
-                                                }}
-                                                title="수정"
-                                              >
-                                                <hr />
-                                              </span>
-                                              <span
-                                                title="삭제"
-                                                onClick={deleteComment(
-                                                  commentItem.cno,
-                                                  commentItem.wno,
-                                                  commentItem.uid,
-                                                  commentItem.rnum,
-                                                  commentItem.rdepth,
-                                                )}
-                                              >
-                                                <hr />
-                                              </span>
+                                              {commentItem.userNo ===
+                                                myInfo?.userNo && (
+                                                <>
+                                                  <span
+                                                    onClick={() => {
+                                                      setModifyCommentVal('');
+                                                      setSelectedCommentUid(
+                                                        index,
+                                                      );
+                                                      setModify(true);
+                                                      setReply(false);
+                                                      setStarOnModify(-3);
+                                                    }}
+                                                    title="수정"
+                                                  >
+                                                    <hr />
+                                                  </span>
+                                                  <span
+                                                    title="삭제"
+                                                    onClick={deleteComment(
+                                                      commentItem.cno,
+                                                      commentItem.wno,
+                                                      commentItem.uid,
+                                                      commentItem.rnum,
+                                                      commentItem.rdepth,
+                                                    )}
+                                                  >
+                                                    <hr />
+                                                  </span>
+                                                </>
+                                              )}
                                             </>
                                           ) : (
                                             myInfo?.roleType === 'USER' && (
