@@ -544,7 +544,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  '/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://localhost:8088/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
@@ -559,7 +559,7 @@ const MemberLogin = ({
             <NaverBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/naver?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://localhost:8088/oauth2/authorization/naver?redirect_uri=http://localhost:3000/socialLogin')
               }
               onMouseOver={() => setNaverBtnHover(true)}
               onMouseOut={() => setNaverBtnHover(naverBtnHover)}
@@ -574,7 +574,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/google?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://localhost:8088/oauth2/authorization/google?redirect_uri=http://localhost:3000/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
