@@ -67,7 +67,7 @@ function* loginSaga(action: ReturnType<typeof login>) {
 
     if (autoLogin === true) {
       yield put(setAccessToken(accessToken));
-      Cookies.set('accessToken', accessToken, { expires: 2222222 }); // 1시간
+      Cookies.set('accessToken', accessToken); // 1시간
       Cookies.set('refreshToken', refreshToken); // 2주
     }
     if (response && response.status === 200) {
