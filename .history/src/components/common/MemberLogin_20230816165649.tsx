@@ -6,7 +6,6 @@ import React, {
   useRef,
   LegacyRef,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from './button/Button';
 import { TryLoginAuth, ToggleLogin } from '../../App';
 import MemberFindId from '../../containers/MemberFindIdContainer';
@@ -358,7 +357,6 @@ const MemberLogin = ({
   tryLoginAuth,
   toggleLogin,
 }: Props) => {
-  const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [idIconHover, setIdIconHover] = useState<boolean>();
