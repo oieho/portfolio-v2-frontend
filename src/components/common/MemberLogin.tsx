@@ -6,7 +6,6 @@ import React, {
   useRef,
   LegacyRef,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Button from './button/Button';
 import { TryLoginAuth, ToggleLogin } from '../../App';
 import MemberFindId from '../../containers/MemberFindIdContainer';
@@ -358,8 +357,6 @@ const MemberLogin = ({
   tryLoginAuth,
   toggleLogin,
 }: Props) => {
-  const navigate = useNavigate();
-
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
   const [idIconHover, setIdIconHover] = useState<boolean>();
@@ -546,15 +543,8 @@ const MemberLogin = ({
           <AlignBtn>
             <KakaoBtnWrap
               onClick={() =>
-                fetch(
-                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=https://oieho.netlify.app/socialLogin',
-                  {
-                    method: 'GET',
-                    credentials: 'include', // This includes cookies and HTTP authentication
-                  },
-                ).then((response) => {
-                  navigate('https://oieho.netlify.app/socialLogin');
-                })
+                (window.location.href =
+                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=https://oieho.netlify.app/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
