@@ -1,6 +1,10 @@
 import client from './client';
 import Cookies from 'js-cookie';
-import { setAccessToken, setMyInfo, setLoginInfo } from '../../modules/auth';
+import {
+  setAccessToken,
+  setMyInfo,
+  setLoginInfo,
+} from '../../modules/auth';
 
 import { MyInfo } from '../../App';
 export const signIn = (userId: string, password: string) =>
@@ -14,16 +18,12 @@ export const signIn = (userId: string, password: string) =>
     });
 
 export const signInChk = () =>
-  client
-    .post('/members/myinfo', null, {
-      withCredentials: true, // Adding the withCredentials option
-    })
-    .catch(function (error) {
-      if (error.response.status === 401) {
-        alert('인증 토큰이 만료되었습니다. 재로그인이 필요합니다.');
-        setLoginInfo(error.response.data);
-      }
-    });
+  client.post('/members/myinfo').catch(function (error) {
+    if (error.response.status === 401) {
+      alert('인증 토큰이 만료되었습니다. 재로그인이 필요합니다.');
+      setLoginInfo(error.response.data);
+    }
+  });
 
 export const setCountList = () => client.post('/setCounts');
 
