@@ -6,7 +6,7 @@ import React, {
   useRef,
   LegacyRef,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import Button from './button/Button';
 import { TryLoginAuth, ToggleLogin } from '../../App';
 import MemberFindId from '../../containers/MemberFindIdContainer';
