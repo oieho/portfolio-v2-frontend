@@ -436,7 +436,14 @@ const MemberLogin = ({
     } else {
       BackBtnRef.current.style.display = 'none';
     }
-
+    window.onpopstate = () => {
+      for (const ref of MemberModuleArray) {
+        ref.current.style.display = 'none';
+      }
+    };
+    return () => {
+      window.onpopstate = null;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blockBool]);
   return (
