@@ -6,6 +6,7 @@ import client from '../../lib/api/client';
 import Cookies from 'js-cookie';
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const accessToken = searchParams.get('accessToken');
