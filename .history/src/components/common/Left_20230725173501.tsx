@@ -272,8 +272,8 @@ const Left = (props: leftProps) => {
             <NavHomeBtn
               src={
                 homeHover || isFirstLoadHome
-                  ? process.env.PUBLIC_URL + '/static/images/navhomeOv.png'
-                  : process.env.PUBLIC_URL + '/static/images/navhome.png'
+                  ? process.env.PUBLIC_URL + '/images/navhomeOv.png'
+                  : process.env.PUBLIC_URL + '/images/navhome.png'
               }
               onMouseOver={() => setHomeHover(true)}
               onMouseOut={homeout}
