@@ -542,13 +542,10 @@ const MemberLogin = ({
           </form>
           <AlignBtn>
             <KakaoBtnWrap
-              onClick={() => {
-                // 소셜 로그인 처리를 위한 URL 설정
-                const socialLoginURL = `http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=http://oieho.netlify.app/socialLogin`;
-
-                // 위 URL로 리다이렉트
-                window.location.href = socialLoginURL;
-              }}
+              onClick={() =>
+                (window.location.href =
+                  'http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=http://oieho.netlify.app/#/socialLogin')
+              }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
               title="Login Kakao"
