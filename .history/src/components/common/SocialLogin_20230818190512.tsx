@@ -14,7 +14,6 @@ const SocialLogin = () => {
     const params = new URLSearchParams(location.search);
     const accessToken = params.get('accessToken');
     const socialRefreshToken = params.get('refreshToken');
-    console.log(accessToken, params);
 
     // 이 부분은 accessToken이 실제로 값이 있는 경우에만 실행되도록 추가합니다.
     if (accessToken) {
