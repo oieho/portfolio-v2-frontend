@@ -16,7 +16,7 @@ const SocialLogin = () => {
     console.log('accessToken::' + accessToken);
     client.defaults.headers.common.authorization = `Bearer ${accessToken}`;
     console.log('진입');
-    dispatch(checkMyInfo(true));
+    dispatch2(checkMyInfo(true));
     Cookies.set('accessToken', accessToken as string);
     Cookies.set('refreshToken', socialRefreshToken as string);
     setSearchParams(undefined);
