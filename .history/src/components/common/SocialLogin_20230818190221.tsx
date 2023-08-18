@@ -24,7 +24,7 @@ const SocialLogin = () => {
       // 파라미터 처리가 끝난 후 콜백 함수 실행
       navigateCallback();
     }
-  }, [location, dispatch, navigateCallback]);
+  }, [location, dispatch]);
 
   const navigateCallback = () => {
     // 이동하고자 하는 경로로 이동
