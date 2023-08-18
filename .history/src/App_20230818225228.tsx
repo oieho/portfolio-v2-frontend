@@ -52,7 +52,6 @@ const App = () => {
             }
           />
 
-          <Route path="socialLogin" element={<SocialLogin />} />
           <Route path="join" element={<MemberJoin />} />
           <Route path="memberInfo" element={<MemberInfo />} />
           <Route path="modifyPassword" element={<MemberModifyPassword />} />
@@ -63,6 +62,9 @@ const App = () => {
         </Route>
         <Route path="/blog" element={<Blog />}></Route>
       </Routes>
+      <Route path="/#/" element={<Main />}>
+        <Route path="/socialLogin" element={<SocialLogin />} />
+      </Route>
     </>
   );
 };

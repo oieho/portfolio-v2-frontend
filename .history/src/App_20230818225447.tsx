@@ -23,9 +23,9 @@ const App = () => {
         <title>OIEHO - [메인 페이지]</title>
       </Helmet>
       <Routes>
-        <Route path="/*" element={<Main />}>
+        <Route path="/#" element={<Main />}>
           <Route
-            path="boards/view/:wno"
+            path="/boards/view/:wno"
             element={
               <>
                 <ContentBody />
@@ -34,7 +34,7 @@ const App = () => {
             }
           />
           <Route
-            path="boards/write"
+            path="/boards/write"
             element={
               <>
                 <ContentBodyOnWriting />
@@ -43,7 +43,7 @@ const App = () => {
             }
           />
           <Route
-            path="boards/modify/:wno"
+            path="/boards/modify/:wno"
             element={
               <>
                 <ContentBodyOnModifing />
@@ -52,14 +52,14 @@ const App = () => {
             }
           />
 
-          <Route path="socialLogin" element={<SocialLogin />} />
-          <Route path="join" element={<MemberJoin />} />
-          <Route path="memberInfo" element={<MemberInfo />} />
-          <Route path="modifyPassword" element={<MemberModifyPassword />} />
-          <Route path="modify" element={<MemberModify />} />
-          <Route path="findId" element={<MemberFindId />} />
-          <Route path="findPassword" element={<MemberFindPassword />} />
-          <Route path="mailSender" element={<MailSender />} />
+          <Route path="/socialLogin" element={<SocialLogin />} />
+          <Route path="/join" element={<MemberJoin />} />
+          <Route path="/memberInfo" element={<MemberInfo />} />
+          <Route path="/modifyPassword" element={<MemberModifyPassword />} />
+          <Route path="/modify" element={<MemberModify />} />
+          <Route path="/findId" element={<MemberFindId />} />
+          <Route path="/findPassword" element={<MemberFindPassword />} />
+          <Route path="/mailSender" element={<MailSender />} />
         </Route>
         <Route path="/blog" element={<Blog />}></Route>
       </Routes>

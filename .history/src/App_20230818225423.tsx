@@ -23,7 +23,7 @@ const App = () => {
         <title>OIEHO - [메인 페이지]</title>
       </Helmet>
       <Routes>
-        <Route path="/*" element={<Main />}>
+        <Route path="/#" element={<Main />}>
           <Route
             path="boards/view/:wno"
             element={
