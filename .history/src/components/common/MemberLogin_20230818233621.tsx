@@ -544,7 +544,7 @@ const MemberLogin = ({
           <AlignBtn>
             <KakaoBtnWrap
               as={Link}
-              to="https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=http://oieho.netlify.app/#/socialLogin"
+              to="https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=http://oieho.netlify.app/socialLogin"
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
               title="Login Kakao"
