@@ -47,11 +47,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <HashRouter>
+    <Router>
       <HelmetProvider>
         <App />
       </HelmetProvider>
-    </HashRouter>
+    </Router>
   </Provider>,
 );
 
