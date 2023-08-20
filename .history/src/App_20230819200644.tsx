@@ -1,4 +1,5 @@
-import { Route, Routes } from 'react-router-dom';
+import { Fragment } from 'react';
+import { HashRouter as Route, Routes } from 'react-router-dom';
 import Main from './pages/Main';
 import SocialLogin from './components/common/SocialLogin';
 import MailSender from './containers/MailSenderContainer';
@@ -51,8 +52,9 @@ const App = () => {
               </>
             }
           />
-
-          <Route path="socialLogin" element={<SocialLogin />} />
+          <Fragment>
+            <Route path="socialLogin" element={<SocialLogin />} />
+          </Fragment>
           <Route path="join" element={<MemberJoin />} />
           <Route path="memberInfo" element={<MemberInfo />} />
           <Route path="modifyPassword" element={<MemberModifyPassword />} />
