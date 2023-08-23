@@ -545,7 +545,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://portfolio-v2-backend:8080/oauth2/authorization/kakao?redirect_uri=https://nginx-nginx-3prof2lll3bfr1i.sel3.cloudtype.app/#/socialLogin')
+                  'http://portfolio-v2-backend:8080/oauth2/authorization/kakao?redirect_uri=https://nginx-nginx-3prof2lll3bfr1i.sel3.cloudtype.app/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
