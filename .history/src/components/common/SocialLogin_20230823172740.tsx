@@ -12,12 +12,12 @@ const SocialLogin = () => {
   const accessToken = searchParams.get('accessToken');
   const socialRefreshToken = searchParams.get('refreshToken');
   client.defaults.headers.common.authorization = `Bearer ${accessToken}`;
+  navigate('/socialLogin');
   useEffect(() => {
     dispatch(checkMyInfo(true));
     Cookies.set('accessToken', accessToken as string);
     Cookies.set('refreshToken', socialRefreshToken as string);
     setSearchParams(undefined);
-    navigate('/socialLogin');
   }, [navigate, setSearchParams, accessToken, socialRefreshToken, dispatch]);
   return <></>;
 };
