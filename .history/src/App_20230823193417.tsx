@@ -52,7 +52,7 @@ const App = () => {
             }
           />
 
-          <Route path="*/#/socialLogin" element={<SocialLogin />} />
+          <Route path="*/socialLogin" element={<SocialLogin />} />
           <Route path="join" element={<MemberJoin />} />
           <Route path="memberInfo" element={<MemberInfo />} />
           <Route path="modifyPassword" element={<MemberModifyPassword />} />
