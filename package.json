@@ -31,7 +31,6 @@
     "antd": "^5.2.1",
     "axios": "^1.1.2",
     "hotkeys-js": "^3.10.2",
-    "http-proxy-middleware": "^2.0.6",
     "js-cookie": "^3.0.1",
     "katex": "^0.16.7",
     "mobx": "^6.9.0",
@@ -59,7 +58,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false && GENERATE_SOURCEMAP=false && react-scripts --max_old_space_size=4096 build",
+    "build": "CI=false && GENERATE_SOURCEMAP=false && react-scripts --max_old_space_size=7096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
