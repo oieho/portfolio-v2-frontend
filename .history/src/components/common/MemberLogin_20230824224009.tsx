@@ -545,7 +545,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://portfolio-v2-backend.railway.internal/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
+                  'portfolio-v2-backend.railway.internal/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
@@ -560,7 +560,7 @@ const MemberLogin = ({
             <NaverBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://portfolio-v2-backend.railway.internal/oauth2/authorization/naver?redirect_uri=https://oieho.xyz/socialLogin')
+                  'portfolio-v2-backend.railway.internal/oauth2/authorization/naver?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setNaverBtnHover(true)}
               onMouseOut={() => setNaverBtnHover(naverBtnHover)}
@@ -575,7 +575,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://portfolio-v2-backend.railway.internal/oauth2/authorization/google?redirect_uri=https://oieho.xyz/socialLogin')
+                  'portfolio-v2-backend.railway.internal/oauth2/authorization/google?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
