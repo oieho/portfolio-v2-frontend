@@ -545,7 +545,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/#/socialLogin')
+                  'http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
@@ -575,7 +575,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/google?redirect_uri=https://oieho.xyz/#/socialLogin')
+                  'https://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/google?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
