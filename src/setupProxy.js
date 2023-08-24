@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     '/*',
     createProxyMiddleware({
-      target: 'portfolio-v2-frontend-production.up.railway.app',
+      target: 'https://portfolio-v2-backend.railway.internal',
       changeOrigin: true,
     }),
   );
