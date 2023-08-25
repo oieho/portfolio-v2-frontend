@@ -11,7 +11,7 @@
 }
 oieho.xyz {
     handle {
-        root * https://portfolio-v2-backend-production.up.railway.app{uri}
+        reverse_proxy /* https://portfolio-v2-backend-production.up.railway.app
     }
 }
 
