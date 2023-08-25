@@ -14,7 +14,9 @@
     log { # access logs
         format console # set access log format to console mode
     }
-    reverse_proxy * https://portfolio-v2-backend-production.up.railway.app
+    https://oieho.xyz {
+	    reverse_proxy https://portfolio-v2-backend-production.up.railway.app
+    }
     # health check for railway
     respond /health 200
 
