@@ -59,7 +59,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false && nixpacks build ./src --name my-app",
+    "build": "CI=false && nixpacks build ./ --name my-app",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
