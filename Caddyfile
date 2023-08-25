@@ -15,8 +15,10 @@
         format console # set access log format to console mode
     }
     # Another common task is to set up a reverse proxy:
-	reverse_proxy portfolio-v2-backend-production.up.railway.app
-
+    reverse-proxy \
+	--from oieho.xyz \
+	--to https://portfolio-v2-backend-production.up.railway.app \
+	--change-host-header
     # health check for railway
     respond /health 200
 
