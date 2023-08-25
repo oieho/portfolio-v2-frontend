@@ -15,18 +15,19 @@
         format console # set access log format to console mode
     }
 
-    # health check for railway
-    respond /health 200
+    reverse_proxy portfolio-v2-frontend.railway.internal:3000 # proxy all requests for /* to the frontend, change domain and port as needed
 
-    # serve from the 'build' folder (react-scripts builds into the 'build' folder)
-    root * build
+    # the handle_path directive will strip /api/ from the path before proxying
+    # this is needed if your backend's api routes don't start with /api/
+    # change paths as needed
+    handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
+        reverse_proxy portfolio-v2-backend.railway.internal:8088 # proxy all requests for /api/* to the backend, change domain and port as needed
+    }
 
-    # enable gzipping responses
-    encode gzip
-
-    # serve files from 'build'
-    file_server
-
-    # if path doesn't exist, redirect it to 'index.html' for client side routing
-    try_files {path} /index.html
+    
+    # if your backend's api routes do start with /api/ then you wouldn't want to strip the path prefix
+    # if so, comment out the above handle_path block, and uncomment this reverse_proxy directive
+    # change paths as needed
+    #reverse_proxy backend.railway.internal:3000, change domain and port as needed
 }
+
