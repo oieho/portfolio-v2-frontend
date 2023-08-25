@@ -20,7 +20,7 @@ const App = () => {
   return (
     <>
       <Helmet>
-        <title>OIEHO - [메인 페이지 ]</title>
+        <title>OIEHO - [메인 페이지]</title>
       </Helmet>
       <Routes>
         <Route path="/*" element={<Main />}>

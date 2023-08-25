@@ -17,7 +17,6 @@ const SocialLogin = () => {
     Cookies.set('accessToken', accessToken as string);
     Cookies.set('refreshToken', socialRefreshToken as string);
     setSearchParams(undefined);
-    navigate('/');
   }, [navigate, setSearchParams, accessToken, socialRefreshToken, dispatch]);
   return <></>;
 };
