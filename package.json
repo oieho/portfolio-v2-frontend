@@ -58,7 +58,7 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node --no-deprecation [entrypoint e.g. index.js]",
     "build": "CI=false && GENERATE_SOURCEMAP=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

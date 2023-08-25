@@ -1,7 +1,5 @@
-# Stage 1: Compile and build the app
-
-# Set the build stage image to Node 16
-FROM node:16-alpine as build
+# Set the base image to Node 16
+FROM node:16-alpine
 
 # Set the working directory in the container to /app
 WORKDIR /app
@@ -18,14 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
+# Expose port 3000
+EXPOSE 3000
 
-# Stage 2: Serve app with nginx
-
-# Set the base running image to nginx Alpine
-FROM nginx:alpine-perl
-
-# Copy the output from the build stage
-COPY --from=build /app/dist/oieho /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
+# Run the command to start the server
+CMD ["npm", "start"]
