@@ -15,12 +15,12 @@
         format console # set access log format to console mode
     }
 
-    reverse_proxy portfolio-v2-frontend.railway.internal:3000 # proxy all requests for /* to the frontend, change domain and port as needed
+
 
     # the handle_path directive will strip /api/ from the path before proxying
     # this is needed if your backend's api routes don't start with /api/
     # change paths as needed
-    handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
+    handle_path /* { # this strips the /api/ prefix from the uri sent to the proxy address
         reverse_proxy portfolio-v2-backend.railway.internal:8088 # proxy all requests for /api/* to the backend, change domain and port as needed
     }
 
