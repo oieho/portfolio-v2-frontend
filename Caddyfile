@@ -17,7 +17,7 @@ oieho.xyz {
 
         Referrer-Policy no-referrer-when-downgrade
     }
-    reverse_proxy portfolio-v2-backend-production.up.railway.app
+    reverse_proxy https://portfolio-v2-backend-production.up.railway.app
 }
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
