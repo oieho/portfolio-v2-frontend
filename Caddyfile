@@ -9,12 +9,10 @@
         trusted_proxies static private_ranges # trust railway's proxy
     }
 }
+
 oieho.xyz {
-    route {
-        reverse_proxy /api/* https://portfolio-v2-backend-production.up.railway.app
-        try_files {path} /index.html
-        file_server
-    }
+    tls oiehomail@gmail.com
+    proxy / https://portfolio-v2-backend-production.up.railway.app
 }
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
