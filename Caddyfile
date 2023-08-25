@@ -1,5 +1,3 @@
-oieho.xyz
-reverse_proxy :https://portfolio-v2-backend.railway.internal
 { # global options
     admin off # theres no need for the admin api in railway's environment
     persist_config off # storage isn't persistent anyway
@@ -16,7 +14,8 @@ reverse_proxy :https://portfolio-v2-backend.railway.internal
     log { # access logs
         format console # set access log format to console mode
     }
-
+    # Another common task is to set up a reverse proxy:
+	reverse_proxy https://portfolio-v2-backend.railway.internal
     # health check for railway
     respond /health 200
 
