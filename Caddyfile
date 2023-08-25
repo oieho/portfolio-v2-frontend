@@ -10,11 +10,12 @@
     }
 }
 oieho.xyz {
-    handle {
-        reverse_proxy /* https://portfolio-v2-backend-production.up.railway.app
+    route {
+        reverse_proxy /api/* https://portfolio-v2-backend-production.up.railway.app
+        try_files {path} /index.html
+        file_server
     }
 }
-
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
         format console # set access log format to console mode
