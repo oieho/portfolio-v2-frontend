@@ -10,7 +10,6 @@
     }
 }
 oieho.xyz {
-    transparent
     redir /* https://portfolio-v2-backend-production.up.railway.app
     route {
         reverse_proxy /* https://portfolio-v2-backend-production.up.railway.app
