@@ -1,7 +1,7 @@
 { # global options
     admin off # theres no need for the admin api in railway's environment
     persist_config off # storage isn't persistent anyway
-    auto_https enable # railway handles https for us, this would cause issues if left enabled
+    auto_https off # railway handles https for us, this would cause issues if left enabled
     log { # runtime logs
         format console # set runtime log format to console mode 
     }
@@ -9,14 +9,21 @@
         trusted_proxies static private_ranges # trust railway's proxy
     }
 }
+oieho.xyz {
+    header {
+        X-Content-Type-Options nosniff
 
+        X-Frame-Options DENY
+
+        Referrer-Policy no-referrer-when-downgrade
+    }
+    reverse_proxy portfolio-v2-backend-production.up.railway.app
+}
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
         format console # set access log format to console mode
     }
-    oieho.xyz {
-	    reverse_proxy https://portfolio-v2-backend-production.up.railway.app
-    }
+
     # health check for railway
     respond /health 200
 
