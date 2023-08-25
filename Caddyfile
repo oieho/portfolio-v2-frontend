@@ -10,7 +10,9 @@
     }
 }
 oieho.xyz {
-	redir https://portfolio-v2-backend-production.up.railway.app{uri}
+    handle {
+        root * https://portfolio-v2-backend-production.up.railway.app{uri}
+    }
 }
 
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
