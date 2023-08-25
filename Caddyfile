@@ -1,3 +1,5 @@
+oieho.xyz
+reverse_proxy :https://portfolio-v2-backend.railway.internal
 { # global options
     admin off # theres no need for the admin api in railway's environment
     persist_config off # storage isn't persistent anyway
@@ -9,7 +11,7 @@
         trusted_proxies static private_ranges # trust railway's proxy
     }
 }
-caddy reverse-proxy --from oieho.xyz --to https://portfolio-v2-backend.railway.internal
+
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
         format console # set access log format to console mode
