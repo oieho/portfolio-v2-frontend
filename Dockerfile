@@ -17,7 +17,7 @@ RUN npm install --quiet
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN nixpacks build ./src --name my-app
 
 # Expose port 3000
 EXPOSE 3000
