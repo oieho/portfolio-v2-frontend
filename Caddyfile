@@ -15,7 +15,7 @@
         format console # set access log format to console mode
     }
     # Another common task is to set up a reverse proxy:
-	reverse_proxy https://portfolio-v2-backend.railway.internal
+	reverse_proxy portfolio-v2-frontend-production.up.railway.app
     # health check for railway
     respond /health 200
 
