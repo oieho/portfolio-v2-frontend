@@ -1,8 +1,11 @@
 # Set the base image to Node 16
 FROM node:16-alpine
 
-# Set the working directory in the container to /app
-WORKDIR /src
+# root 에 app 폴더를 생성
+RUN mkdir /app
+
+# work dir 고정
+WORKDIR /app
 
 # Copy the package.json and package-lock.json files to the container
 COPY package*.json ./
