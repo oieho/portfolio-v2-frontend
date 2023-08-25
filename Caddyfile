@@ -9,31 +9,15 @@
         trusted_proxies static private_ranges # trust railway's proxy
     }
 }
-https://oieho.xyz {
-    redir /* https://portfolio-v2-backend-production.up.railway.app
-    route {
-        reverse_proxy /* https://portfolio-v2-backend-production.up.railway.app
-        try_files {path} /index.html
-        file_server
-    }
-}
+
 :{$PORT} { # site block, listens on the $PORT environment variable, automatically assigned by railway
     log { # access logs
         format console # set access log format to console mode
     }
 
+    # send a 301 redirect to the client with the host from the set variable
+    redir https://{$REDIRECT_TO}{uri} permanent # by using {uri} the redirect will preserve the incoming uri
+
     # health check for railway
     respond /health 200
-
-    # serve from the 'build' folder (react-scripts builds into the 'build' folder)
-    root * build
-
-    # enable gzipping responses
-    encode gzip
-
-    # serve files from 'build'
-    file_server
-
-    # if path doesn't exist, redirect it to 'index.html' for client side routing
-    try_files {path} /index.html
 }
