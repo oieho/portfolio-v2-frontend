@@ -3567,11 +3567,6 @@ bytes@3.1.2:
   resolved "https://registry.npmjs.org/bytes/-/bytes-3.1.2.tgz"
   integrity sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==
 
-caddy@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/caddy/-/caddy-0.0.13.tgz#d5bcf91ef4c11440842ef5253d901c704f0548c7"
-  integrity sha512-rc9RPEM0O32dzL52y9Udm+Y/2ll8cbaIVx0x4Q6yBrUtPvSyaDj46XPzhexLhfD0nh63+PsPVW1uMSsrTVZgag==
-
 call-bind@^1.0.0, call-bind@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/call-bind/-/call-bind-1.0.2.tgz"
