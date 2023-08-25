@@ -32,12 +32,12 @@
     }
     # Another common task is to set up a reverse proxy:
     reverse_proxy /* {
-    to https://portfolio-v2-backend-production.up.railway.app
-    header_up Host {http.reverse_proxy.upstream.host}
-    transport http {
-        tls
+        to https://portfolio-v2-backend-production.up.railway.app
+        header_up Host {http.reverse_proxy.upstream.host}
+        transport http {
+            tls
+        }
     }
-}
 
     # health check for railway  
     respond /health 200
