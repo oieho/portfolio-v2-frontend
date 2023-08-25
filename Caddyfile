@@ -9,7 +9,7 @@
         trusted_proxies static private_ranges # trust railway's proxy
     }
 }
-oieho.xyz {
+https://oieho.xyz {
     redir /* https://portfolio-v2-backend-production.up.railway.app
     route {
         reverse_proxy /* https://portfolio-v2-backend-production.up.railway.app
