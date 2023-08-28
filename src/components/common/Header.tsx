@@ -241,17 +241,6 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
   const [mailToHover, setMailToHover] = useState(false);
   const [backBtnHover, setBackBtnHover] = useState<boolean>();
 
-  const [counter, setCounter] = useState(
-    Math.ceil(0 / 1.3)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-  );
-  const [tcounter, setTcounter] = useState(
-    Math.ceil(0 / 1.3)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-  );
-
   const counterRef = useRef(null) as unknown as HTMLLIElement &
     (LegacyRef<HTMLLIElement> | undefined);
   const tcounterRef = useRef(null) as unknown as HTMLLIElement &
@@ -292,45 +281,7 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     if (myInfo) {
       setUserName(myInfo.userName);
     }
-    setTimeout(() => {
-      if (Array.isArray(countInfos)) {
-        let now = countInfos.map((countInfos) => countInfos.todayVar) as any;
-        let now2 = countInfos.map((countInfos) => countInfos.totalVar) as any;
-
-        const handle = setInterval(() => {
-          setCounter(
-            (counterRef.innerHTML = Math.ceil(
-              (countInfos.map((countInfos) => countInfos.todayVar) as any) -
-                now,
-            )
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
-          );
-          setTcounter(
-            (tcounterRef.innerHTML = Math.ceil(
-              (countInfos.map((countInfos) => countInfos.totalVar) as any) -
-                now2,
-            )
-              .toString()
-              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
-          );
-
-          // 목표수치에 도달하면 정지
-          if (now < 1 && now2 < 1) {
-            clearInterval(handle);
-          }
-
-          // 증가되는 값이 계속하여 작아짐
-          const step = now / 3;
-          const step2 = now2 / 3;
-
-          // 값을 적용시키면서 다음 차례에 영향을 끼침
-          now -= step;
-          now2 -= step2;
-        }, 40);
-      }
-    }, 1500);
-  }, [countInfos, counterRef, myInfo, state.toggleBackBtn, tcounterRef]);
+  }, [myInfo, state.toggleBackBtn]);
 
   const onAlertAdmin = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     alert('관리자만 접근이 가능합니다.');
@@ -385,20 +336,6 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
       <HeaderBlock ref={headerBlockRef}>
         <Search />
         <div className="innerright">
-          <div className="right1">
-            <ul>
-              <li>TODAY</li>
-              <li className="count" ref={counterRef}>
-                {counter}
-              </li>
-            </ul>
-            <ul>
-              <li>TOTAL</li>
-              <li className="count" ref={tcounterRef}>
-                {tcounter}
-              </li>
-            </ul>
-          </div>
           {isAuthorized && myInfo ? (
             <div className="right2">
               <LogAreaBtn
