@@ -1,4 +1,4 @@
 [[redirects]]
     from = "/*"
-    to = "https://portfolio-v2-backend.railway.internal/:splat"
+    to = "portfolio-v2-backend-production.up.railway.app/:splat"
     status = 200
