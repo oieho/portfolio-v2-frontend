@@ -90,6 +90,7 @@
     "prettier": "^2.7.1"
   },
   "homepage": "https://oieho.xyz",
+  "proxy": "https://portfolio-v2-backend-production.up.railway.app",
   "resolutions": {
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0"
