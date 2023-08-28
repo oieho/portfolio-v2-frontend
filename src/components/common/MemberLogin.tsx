@@ -545,7 +545,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://portfolio-v2-backend-production.up.railway.app/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
+                  'https://portfolio-v2-backend-production.up.railway.app/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
