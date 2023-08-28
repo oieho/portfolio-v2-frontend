@@ -16,13 +16,6 @@ interface Props {
 const HeaderContainer = ({ isAuthorized, myInfo }: Props) => {
   const dispatch = useDispatch();
 
-  const { countInfos } = useSelector((state: RootState) => ({
-    countInfos: state.count.countInfos,
-  }));
-  useEffect(() => {
-    dispatch(fetchCount());
-  }, [dispatch]);
-
   const onLogout = () => {
     delete client.defaults.headers.common.Authorization;
     Cookies.remove('accessToken');
@@ -31,12 +24,7 @@ const HeaderContainer = ({ isAuthorized, myInfo }: Props) => {
     dispatch(setMyInfo(null as unknown as MyInfo));
   };
   return (
-    <Header
-      myInfo={myInfo}
-      isAuthorized={isAuthorized}
-      countInfos={countInfos}
-      onLogout={onLogout}
-    />
+    <Header myInfo={myInfo} isAuthorized={isAuthorized} onLogout={onLogout} />
   );
 };
 

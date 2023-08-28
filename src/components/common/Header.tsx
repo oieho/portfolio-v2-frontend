@@ -230,9 +230,8 @@ type Props = {
   readonly myInfo: MyInfo | null;
   readonly isAuthorized: boolean;
   readonly onLogout: () => void;
-  readonly countInfos: CountInfo[];
 };
-const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
+const Header = ({ myInfo, isAuthorized, onLogout }: Props) => {
   const { state, actions } = useContext(MainContext);
 
   const [userName, setUserName] = useState('');
