@@ -541,12 +541,11 @@ const MemberLogin = ({
               로그인
             </Button>
           </form>
-          https://oieho.netlify.app/
           <AlignBtn>
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'https://portfolio-v2-backend-production.up.railway.app/oauth2/authorization/kakao?redirect_uri=https://oieho.netlify.app/socialLogin')
+                  'https://portfolio-v2-backend-production.up.railway.app/oauth2/authorization/kakao?redirect_uri=https://oieho.xyz/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
