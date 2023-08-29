@@ -16,18 +16,10 @@
     }
     reverse_proxy : portfolio-v2-frontend.railway.internal:3000
 
-<<<<<<< HEAD
     handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
             reverse_proxy : portfolio-v2-backend.railway.internal:8088
     }
 
-=======
-
-    handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
-            reverse_proxy : portfolio-v2-backend.railway.internal:8088
-    }
-
->>>>>>> 5bc509c3447418211ec0d76a1508ae603259e171
     # health check for railway
     respond /health 200
 
