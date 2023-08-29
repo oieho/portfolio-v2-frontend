@@ -23,9 +23,9 @@ const App = () => {
         <title>OIEHO - [메인 페이지]</title>
       </Helmet>
       <Routes>
-        <Route path="/api/*" element={<Main />}>
+        <Route path="/*" element={<Main />}>
           <Route
-            path="boards/view/:wno"
+            path="/api/boards/view/:wno"
             element={
               <>
                 <ContentBody />
@@ -34,7 +34,7 @@ const App = () => {
             }
           />
           <Route
-            path="boards/write"
+            path="/api/boards/write"
             element={
               <>
                 <ContentBodyOnWriting />
@@ -43,7 +43,7 @@ const App = () => {
             }
           />
           <Route
-            path="boards/modify/:wno"
+            path="/api/boards/modify/:wno"
             element={
               <>
                 <ContentBodyOnModifing />
