@@ -15,6 +15,11 @@
         format console # set access log format to console mode
     }
 
+    portfolio-v2-frontend.railway.internal:3000 {
+        reverse_proxy portfolio-v2-backend.railway.internal:7830
+    }
+
+
     # health check for railway
     respond /health 200
 
