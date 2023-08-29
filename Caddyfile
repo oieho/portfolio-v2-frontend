@@ -15,9 +15,9 @@
         format console # set access log format to console mode
     }
 
-    reverse_proxy 127.0.0.1:8088
-
-
+    handle_path /* { # this strips the /api/ prefix from the uri sent to the proxy address
+            reverse_proxy :8088
+    }
     # health check for railway
     respond /health 200
 
