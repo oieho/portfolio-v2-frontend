@@ -15,7 +15,7 @@
         format console # set access log format to console mode
     }
 
-    portfolio-v2-frontend.railway.internal:3000 { # this strips the /api/ prefix from the uri sent to the proxy address
+    oieho.xyz { # this strips the /api/ prefix from the uri sent to the proxy address
         reverse_proxy /api/* portfolio-v2-backend.railway.internal:8088
     }
 
