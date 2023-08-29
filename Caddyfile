@@ -16,7 +16,7 @@
     }
 
 
-    handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
+    handle_path api/* { # this strips the /api/ prefix from the uri sent to the proxy address
             reverse_proxy : portfolio-v2-backend.railway.internal:8088
     }
 
