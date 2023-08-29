@@ -25,7 +25,7 @@ const App = () => {
       <Routes>
         <Route path="/*" element={<Main />}>
           <Route
-            path="/api/boards/view/:wno"
+            path="boards/view/:wno"
             element={
               <>
                 <ContentBody />
@@ -34,7 +34,7 @@ const App = () => {
             }
           />
           <Route
-            path="/api/boards/write"
+            path="boards/write"
             element={
               <>
                 <ContentBodyOnWriting />
@@ -43,7 +43,7 @@ const App = () => {
             }
           />
           <Route
-            path="/api/boards/modify/:wno"
+            path="boards/modify/:wno"
             element={
               <>
                 <ContentBodyOnModifing />
