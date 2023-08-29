@@ -1,7 +1,7 @@
 { # global options
     admin off # theres no need for the admin api in railway's environment
     persist_config off # storage isn't persistent anyway
-    auto_https off # railway handles https for us, this would cause issues if left enabled
+    auto_https enable # railway handles https for us, this would cause issues if left enabled
     log { # runtime logs
         format console # set runtime log format to console mode 
     }
@@ -16,7 +16,7 @@
     }
 
     handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
-        reverse_proxy --from portfolio-v2-frontend.railway.internal --to portfolio-v2-backend.railway.internal:8088        
+        reverse_proxy --from portfolio-v2-frontend.railway.internal:3000 --to portfolio-v2-backend.railway.internal:8088        
     }
 
     # health check for railway
