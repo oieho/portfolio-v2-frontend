@@ -5,7 +5,7 @@ import { setAccessToken, setMyInfo, setLoginInfo } from '../../modules/auth';
 import { MyInfo } from '../../App';
 export const signIn = (userId: string, password: string) =>
   client
-    .post(`/api/auth/authenticate?username=${userId}&password=${password}`)
+    .post(`/auth/authenticate?username=${userId}&password=${password}`)
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
         throw new Error('인증 실패');
@@ -14,16 +14,16 @@ export const signIn = (userId: string, password: string) =>
     });
 
 export const signInChk = () =>
-  client.post('/api/members/myinfo').catch(function (error) {
+  client.post('/members/myinfo').catch(function (error) {
     if (error.response.status === 401) {
       alert('인증 토큰이 만료되었습니다. 재로그인이 필요합니다.');
       setLoginInfo(error.response.data);
     }
   });
 
-export const setCountList = () => client.post('/api/setCounts');
+export const setCountList = () => client.post('/setCounts');
 
-export const fetchCountList = () => client.get('/api/counts');
+export const fetchCountList = () => client.get('/counts');
 
 export const signUp = (
   userId: string,
@@ -33,7 +33,7 @@ export const signUp = (
   providerType: string,
   roleType: string,
 ) =>
-  client.post('/api/members/joinUs', {
+  client.post('/members/joinUs', {
     userId,
     userPw,
     userEmail,
@@ -43,30 +43,30 @@ export const signUp = (
   });
 
 export const fetchMemberModify = (userNo: number) =>
-  client.get(`/api/members/fetchModify/${userNo}`);
+  client.get(`/members/fetchModify/${userNo}`);
 
 export const removeMember = (userNo: number) =>
-  client.delete(`/api/members/${userNo}`);
+  client.delete(`/members/${userNo}`);
 
 export const modify = (
   userId: string,
   userPw: string,
   userEmail: string,
   userName: string,
-) => client.put('/api/members/modify', { userId, userPw, userEmail, userName });
+) => client.put('/members/modify', { userId, userPw, userEmail, userName });
 
 export const confirm = (userId: string, userPw: string) =>
-  client.post('/api/members/withdrawalconfirm', { userId, userPw });
+  client.post('/members/withdrawalconfirm', { userId, userPw });
 
 export const sendingEmail = (formData: FormData) =>
-  client.post('/api/members/mail', formData, {
+  client.post('/members/mail', formData, {
     headers: {
       'Content-Type': 'multipart/form-data;',
     },
   });
 
 export const refresh = () =>
-  client.get('/api/auth/refresh').then(function (response) {
+  client.get('/auth/refresh').then(function (response) {
     const { authorization } = response.headers;
     const accessToken = authorization?.substring(7) as string;
     const { refreshauthorization } = response.headers;
