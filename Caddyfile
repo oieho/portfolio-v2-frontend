@@ -15,12 +15,14 @@
         format console # set access log format to console mode
     }
 
-    portfolio-v2-frontend.railway.internal:3000 {
-            reverse_proxy portfolio-v2-backend.railway.internal:8088 {
-                    transport http {
-                            tls_insecure_skip_verify
-                    }
-            }
+    handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
+        reverse_proxy --from portfolio-v2-frontend.railway.internal:3000 --to portfolio-v2-backend.railway.internal:8088        
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-Proto {scheme}
+        transport http {
+                tls_insecure_skip_verify
+        }
     }
 
     # health check for railway
