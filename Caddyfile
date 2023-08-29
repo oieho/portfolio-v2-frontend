@@ -14,7 +14,7 @@
     log { # access logs
         format console # set access log format to console mode
     }
-    reverse_proxy : portfolio-v2-frontend.railway.internal:3000
+    reverse_proxy : portfolio-v2-frontend-production.up.railway.app:3000
 
     handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
             reverse_proxy : portfolio-v2-backend.railway.internal:8088
