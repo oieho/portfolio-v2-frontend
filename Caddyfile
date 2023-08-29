@@ -16,9 +16,12 @@
     }
 
     handle_path /api/* { # this strips the /api/ prefix from the uri sent to the proxy address
-        handler tls
-        proxy_protocol v1
-        reverse_proxy --from portfolio-v2-frontend.railway.internal:3000 --to portfolio-v2-backend.railway.internal:8088
+        reverse_proxy --from portfolio-v2-frontend.railway.internal:3000 --to portfolio-v2-backend.railway.internal:8088 {
+            transport http {
+                tls_insecure_skip_verify
+                }
+            } 
+        }
     }
 
     # health check for railway
