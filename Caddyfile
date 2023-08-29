@@ -17,6 +17,9 @@
 
     portfolio-v2-frontend.railway.internal /* {
             reverse_proxy portfolio-v2-backend.railway.internal {
+                    header_up Host {host}
+                    header_up X-Real-IP {remote}
+                    header_up X-Forwarded-Proto {scheme}
                     transport http {
                             tls_insecure_skip_verify
                     }
