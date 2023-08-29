@@ -15,8 +15,12 @@
         format console # set access log format to console mode
     }
 
-    handle_path /* { # this strips the /api/ prefix from the uri sent to the proxy address
-            reverse_proxy :portfolio-v2-backend.railway.internal
+    portfolio-v2-frontend.railway.internal /* {
+            reverse_proxy portfolio-v2-backend.railway.internal {
+                    transport http {
+                            tls_insecure_skip_verify
+                    }
+            }
     }
     # health check for railway
     respond /health 200
