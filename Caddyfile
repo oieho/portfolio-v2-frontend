@@ -16,7 +16,11 @@
     }
 
     portfolio-v2-frontend.railway.internal:3000 {
-        /* reverse_proxy portfolio-v2-backend.railway.internal:8088
+            reverse_proxy portfolio-v2-backend.railway.internal:8088 {
+                    transport http {
+                            tls_insecure_skip_verify
+                    }
+            }
     }
 
 
