@@ -15,13 +15,7 @@
         format console # set access log format to console mode
     }
 
-    portfolio-v2-frontend.railway.internal:3000 {
-            reverse_proxy portfolio-v2-backend.railway.internal:8088 {
-                    transport http {
-                            tls_insecure_skip_verify
-                    }
-            }
-    }
+    reverse_proxy 127.0.0.1:8088
 
 
     # health check for railway
