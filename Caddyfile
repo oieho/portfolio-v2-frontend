@@ -15,8 +15,8 @@
         format console # set access log format to console mode
     }
 
-    portfolio-v2-frontend.railway.internal {
-        reverse_proxy portfolio-v2-backend.railway.internal
+    portfolio-v2-frontend.railway.internal:3000 {
+        /* reverse_proxy portfolio-v2-backend.railway.internal:8088
     }
 
 
