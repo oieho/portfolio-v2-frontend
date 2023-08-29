@@ -16,7 +16,7 @@
     }
 
     handle_path /* { # this strips the /api/ prefix from the uri sent to the proxy address
-            reverse_proxy : portfolio-v2-backend
+            reverse_proxy :portfolio-v2-backend.railway.internal
     }
     # health check for railway
     respond /health 200
