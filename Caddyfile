@@ -17,9 +17,6 @@
 
     handle_path /* { # this strips the /api/ prefix from the uri sent to the proxy address
         reverse_proxy --from portfolio-v2-frontend.railway.internal:3000 --to portfolio-v2-backend.railway.internal:80
-        redir {
-            /* https://portfolio-v2-backend.railway.internal:80
-        }
     }
 
     # health check for railway
