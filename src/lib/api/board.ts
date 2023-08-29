@@ -14,7 +14,7 @@ export const modifyBoard = (
   title: string,
   content: string,
   writer: string,
-) => client.put(`/boards/${boardNo}`, { title, content, writer });
+) => client.put(`/api/boards/${boardNo}`, { title, content, writer });
 
 export const removeBoard = (wno: number) =>
   client.delete('/api/boards/remove', {
