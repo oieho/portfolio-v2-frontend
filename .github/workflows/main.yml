@@ -17,6 +17,8 @@ jobs:
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
         with:
+          run: sleep 200s
+          shell: bash
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           project: oiehomail/backend
           stage: frontend
@@ -40,8 +42,7 @@ jobs:
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
         with:
-          run: sleep 200s
-          shell: bash
+
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           project: oiehomail/backend
           stage: frontend
