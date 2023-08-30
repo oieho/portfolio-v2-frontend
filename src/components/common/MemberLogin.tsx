@@ -542,7 +542,6 @@ const MemberLogin = ({
             </Button>
           </form>
           <AlignBtn>
-            test
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
