@@ -1,0 +1,38 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: oiehomail/backend
+          stage: frontend
+          yaml: |
+            name: portfolio-v2-frontend
+            app: web
+            options:
+              nodeversion: "18"
+              docbase: /build
+              spa: true
+              build: npm run build
+              buildenv:
+                - name: REACT_APP_WAITLIST_API_URL
+                  value: portfolio-v2-frontend:80/api/guests
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: react
