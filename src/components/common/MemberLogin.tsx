@@ -561,7 +561,7 @@ const MemberLogin = ({
             <NaverBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/naver?redirect_uri=http://web-portfolio-v2-frontend-3prof2lll3bfr1i.sel3.cloudtype.app/socialLogin')
+                  'http://port-0-portfolio-v2-backend-3prof2lll3bfr1i.sel3.cloudtype.app/oauth2/authorization/naver?redirect_uri=https://nginx-nginx-3prof2lll3bfr1i.sel3.cloudtype.app/socialLogin')
               }
               onMouseOver={() => setNaverBtnHover(true)}
               onMouseOut={() => setNaverBtnHover(naverBtnHover)}
