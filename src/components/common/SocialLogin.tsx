@@ -15,7 +15,6 @@ const SocialLogin = () => {
   Cookies.set('accessToken', accessToken as string);
   Cookies.set('refreshToken', socialRefreshToken as string);
   setSearchParams(undefined);
-
   return <></>;
 };
 export default SocialLogin;
