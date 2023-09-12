@@ -473,7 +473,7 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
                 onMouseOut={() => setLoginHover(false)}
                 alt="to Login"
               />
-
+              test
               <LogAreaBtn
                 onClick={(e: any) => {
                   onDisplayMember(e, 1);
@@ -487,7 +487,6 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
                 onMouseOut={() => setJoinHover(false)}
                 alt="to Join"
               />
-
               <User>
                 <Logged2>
                   &nbsp;&nbsp;&nbsp;&nbsp;NOT LOGGED&nbsp;&nbsp;&nbsp;
