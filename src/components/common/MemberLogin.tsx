@@ -545,7 +545,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://localhost:8088/oauth2/authorization/kakao?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://127.0.0.1:8088/oauth2/authorization/kakao?redirect_uri=http://127.0.0.1:3000/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
@@ -560,7 +560,7 @@ const MemberLogin = ({
             <NaverBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://localhost:8088/oauth2/authorization/naver?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://127.0.0.1:8088/oauth2/authorization/naver?redirect_uri=http://127.0.0.1:3000/socialLogin')
               }
               onMouseOver={() => setNaverBtnHover(true)}
               onMouseOut={() => setNaverBtnHover(naverBtnHover)}
@@ -575,7 +575,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://localhost:8088/oauth2/authorization/google?redirect_uri=http://localhost:3000/socialLogin')
+                  'http://127.0.0.1:8088/oauth2/authorization/google?redirect_uri=http://127.0.0.1:3000/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
