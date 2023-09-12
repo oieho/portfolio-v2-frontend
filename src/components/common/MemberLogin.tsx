@@ -555,7 +555,7 @@ const MemberLogin = ({
                 src={process.env.PUBLIC_URL + '/images/kakaoicon.png'}
                 alt="Login Kakao"
               />
-              카카오 로그인test
+              카카오 로그인
             </KakaoBtnWrap>
             <NaverBtnWrap
               onClick={() =>
