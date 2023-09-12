@@ -1,4 +1,3 @@
-// Dockerfile
 # 1. node 이미지 사용
 FROM    node:16-alpine
 
