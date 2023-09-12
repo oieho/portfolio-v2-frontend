@@ -89,7 +89,7 @@
     "codemirror": "^5.65.13",
     "prettier": "^2.7.1"
   },
-  "proxy": "http://localhost:8088",
+  "proxy": "http://3.38.232.173:8088",
   "resolutions": {
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0"
