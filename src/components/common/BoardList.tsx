@@ -575,7 +575,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     // rmTrBlack();
     // rmTrBlackOnModify();
     window.location.href =
-      'http://oieho.netlify.com//boards?searchType=All&keyword=';
+      'http://54.180.58.152/boards?searchType=All&keyword=';
   };
   const showWriteForm = () => {
     const titleQParam = searchParams.get('title');

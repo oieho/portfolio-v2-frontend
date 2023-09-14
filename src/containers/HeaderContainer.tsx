@@ -21,7 +21,7 @@ const HeaderContainer = ({ isAuthorized, myInfo }: Props) => {
   }));
   useEffect(() => {
     dispatch(fetchCount());
-  }, [dispatch]);
+  }, [dispatch, countInfos]);
 
   const onLogout = () => {
     delete client.defaults.headers.common.Authorization;
