@@ -575,7 +575,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://54.180.58.152:8088/oauth2/authorization/google?redirect_uri=http://54.180.58.152:3000/socialLogin')
+                  'http://ec2-54-180-58-152.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://54.180.58.152:3000/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
