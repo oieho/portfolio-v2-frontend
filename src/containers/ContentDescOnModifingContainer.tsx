@@ -96,11 +96,11 @@ const ContentDescOnModifingContainer: React.FC<Props> = observer(
                   thumbnailInfo.lastIndexOf('_') + 1,
                 ),
                 uuid: thumbnailInfo.substring(
-                  thumbnailInfo.lastIndexOf('\\') + 3,
+                  thumbnailInfo.lastIndexOf('/') + 3,
                   thumbnailInfo.lastIndexOf('_'),
                 ),
                 path: thumbnailInfo.substring(
-                  thumbnailInfo.lastIndexOf('\\'),
+                  thumbnailInfo.lastIndexOf('/'),
                   0,
                 ),
               }),
