@@ -186,6 +186,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
                 },
               ],
             };
+            console.log(response.result);
             uploadHandler(response);
             response.result = null as any;
             return undefined;
