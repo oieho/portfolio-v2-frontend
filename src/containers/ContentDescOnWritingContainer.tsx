@@ -84,10 +84,10 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
                 thumbnailInfo.lastIndexOf('_') + 1,
               ),
               uuid: thumbnailInfo.substring(
-                thumbnailInfo.lastIndexOf('\\') + 3,
+                thumbnailInfo.lastIndexOf('/') + 3,
                 thumbnailInfo.lastIndexOf('_'),
               ),
-              path: thumbnailInfo.substring(thumbnailInfo.lastIndexOf('\\'), 0),
+              path: thumbnailInfo.substring(thumbnailInfo.lastIndexOf('/'), 0),
             }),
           ],
           { type: 'application/json' },
