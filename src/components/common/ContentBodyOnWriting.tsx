@@ -128,7 +128,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
     files: any[],
     info: object,
     core: any,
-    uploadHandler: UploadBeforeHandler,
+    uploadHandler: any,
   ) => {
     try {
       for (const file of files) {
