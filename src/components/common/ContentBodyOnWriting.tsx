@@ -153,7 +153,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
               },
             ],
           };
-          uploadHandler(response);
+          uploadHandler(response as any) as any;
           response.result = null as any;
           return undefined;
         });
