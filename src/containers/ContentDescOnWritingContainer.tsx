@@ -64,7 +64,7 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
               imgInfoOnWriting.map((file) => ({
                 imgName: file.imgName,
                 uuid: file.uuid,
-                path: 'static' + file.path,
+                path: file.path,
               })),
             ),
           ],

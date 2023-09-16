@@ -160,6 +160,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
     const handleImageUploadBefore: UploadBeforeHandler = (
       files: any[],
       info: object,
+      core: any,
       uploadHandler: UploadBeforeHandler,
     ) => {
       try {
