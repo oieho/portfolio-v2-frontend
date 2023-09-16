@@ -127,7 +127,6 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
   const handleImageUploadBefore: UploadBeforeHandler = (
     files: any[],
     info: object,
-    core: any,
     uploadHandler: UploadBeforeHandler,
   ) => {
     try {
