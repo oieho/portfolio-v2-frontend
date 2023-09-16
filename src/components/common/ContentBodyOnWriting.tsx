@@ -147,7 +147,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
           const response = {
             result: [
               {
-                url: resData.url,
+                url: 'static' + resData.url,
                 name: resData.name,
                 size: file.size,
               },
