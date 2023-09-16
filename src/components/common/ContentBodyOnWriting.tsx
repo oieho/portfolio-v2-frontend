@@ -147,7 +147,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
           const response = {
             result: [
               {
-                url: resData.url.replace.replace(/\//g, '\\'),
+                url: 'static/' + resData.url.replace.replace(/\//g, '\\'),
                 name: resData.name,
                 size: file.size,
               },
