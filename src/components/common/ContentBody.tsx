@@ -138,7 +138,7 @@ const ContentBody = ({ board }: Props) => {
           title: sortParams.titleQParam,
           count: sortParams.countQParam,
           regDate: sortParams.regDateQParam,
-          selected: sortParams.selectedQParam,
+          selected: null ? state.maxWno : sortParams.selectedQParam,
           toolOrHashTag: sortParams.toolOrHashTagQParam,
           isModified: sortParams.isModifiedQParam,
         },

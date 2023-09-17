@@ -26,8 +26,6 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
 
     const generateThumbnailDir = async (file: File) => {
       try {
-        const result = await extractsMaxWno();
-        actions.setMaxWno(result! as number);
         const formData = new FormData();
         formData.append('thumbnailFile', file);
         const response = await axios.post('/generateThumbnailDir', formData);
@@ -121,6 +119,7 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
         registerArticle={registerArticle}
         myInfo={myInfo}
         generateThumbnailDir={generateThumbnailDir}
+        extractsMaxWno={extractsMaxWno}
         isLoading={isLoading}
         isAuthorized={isAuthorized}
       />
