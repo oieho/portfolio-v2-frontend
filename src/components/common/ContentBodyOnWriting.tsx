@@ -128,7 +128,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
     files: any[],
     info: object,
     core: any,
-    uploadHandler: any,
+    uploadHandler: UploadBeforeHandler,
   ) => {
     try {
       for (const file of files) {
@@ -147,13 +147,13 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
           const response = {
             result: [
               {
-                url: 'static' + resData.url,
+                url: resData.url,
                 name: resData.name,
                 size: file.size,
               },
             ],
           };
-          uploadHandler(response as any) as any[];
+          uploadHandler(response);
           response.result = null as any;
           return undefined;
         });
