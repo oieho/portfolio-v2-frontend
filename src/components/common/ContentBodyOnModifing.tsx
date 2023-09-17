@@ -180,7 +180,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
             const response = {
               result: [
                 {
-                  url: 'static' + resData.url,
+                  url: resData.url,
                   name: resData.name,
                   size: file.size,
                 },
