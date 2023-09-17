@@ -911,11 +911,11 @@ const BoardTableContent = ({
                   <Tools>
                     {boards.workBoard?.tools?.map(
                       (icon: string, index: number) => {
-                        if (icon === 'afterEffect') {
+                        if (icon === 'docker') {
                           return (
                             <span
                               key={icon}
-                              onClick={(e: any) => callTool(e, 'afterEffect')}
+                              onClick={(e: any) => callTool(e, 'docker')}
                             >
                               <img
                                 src="/images/board/toolThumbnails/docker.png"
