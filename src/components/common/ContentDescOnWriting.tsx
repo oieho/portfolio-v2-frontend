@@ -619,7 +619,7 @@ const ContentDescOnWriting = ({
               state: { searchType: null, keyword: null },
             },
           );
-        }, 160);
+        }, 1160);
 
         const tableRows = document.querySelectorAll('.black');
         tableRows.forEach((row) => {
