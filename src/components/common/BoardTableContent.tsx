@@ -70,6 +70,7 @@ const TableTd = styled.td`
     width: 28.586rem;
   }
   &.td2 {
+    z-index: -1;
     position: relative;
     left: 0.5rem;
     font-size: 1.1rem;
