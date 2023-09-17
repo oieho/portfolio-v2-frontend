@@ -586,7 +586,7 @@ const ContentDescOnWriting = ({
         return;
       }
       try {
-        async function yourAsyncFunction() {
+        async function asyncFunction() {
           const combinedHashTag: string[] = [];
           combinedHashTag[0] = hashTag1;
           combinedHashTag[1] = hashTag2;
@@ -606,7 +606,7 @@ const ContentDescOnWriting = ({
         }
 
         // 위에서 정의한 함수를 호출하여 Promise를 얻을 수 있습니다.
-        yourAsyncFunction()
+        asyncFunction()
           .then(async () => {
             const result = await extractsMaxWno(); // extractsMaxWno 함수를 await로 호출
             actions.setMaxWno(result! as number);
