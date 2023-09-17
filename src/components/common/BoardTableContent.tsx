@@ -918,9 +918,9 @@ const BoardTableContent = ({
                               onClick={(e: any) => callTool(e, 'afterEffect')}
                             >
                               <img
-                                src="/images/board/toolThumbnails/aftereffect.png"
-                                alt="AfterEffect"
-                                title="AfterEffect"
+                                src="/images/board/toolThumbnails/docker.png"
+                                alt="Docker"
+                                title="Docker"
                               />
                             </span>
                           );
@@ -1207,6 +1207,19 @@ const BoardTableContent = ({
                                 src="/images/board/toolThumbnails/oracle.png"
                                 alt="Oracle"
                                 title="Oracle"
+                              />
+                            </span>
+                          );
+                        } else if (icon === 'jenkins') {
+                          return (
+                            <span
+                              key={icon}
+                              onClick={(e: any) => callTool(e, 'jenkins')}
+                            >
+                              <img
+                                src="/images/board/toolThumbnails/jenkins.png"
+                                alt="Jenkins"
+                                title="Jenkins"
                               />
                             </span>
                           );
