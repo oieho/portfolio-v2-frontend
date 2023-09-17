@@ -586,81 +586,68 @@ const ContentDescOnWriting = ({
         return;
       }
       try {
-        async function asyncFunction() {
-          const combinedHashTag: string[] = [];
-          combinedHashTag[0] = hashTag1;
-          combinedHashTag[1] = hashTag2;
-          if (hashTag3.length > 0) {
-            combinedHashTag.push(hashTag3);
-          }
-          await registerArticle(
-            state.portfolioContent,
-            title,
-            thumbnailInfo,
-            thumbnailFile,
-            tools,
-            description,
-            category,
-            combinedHashTag,
-          );
+        const combinedHashTag: string[] = [];
+        combinedHashTag[0] = hashTag1;
+        combinedHashTag[1] = hashTag2;
+        if (hashTag3.length > 0) {
+          combinedHashTag.push(hashTag3);
         }
+        await registerArticle(
+          state.portfolioContent,
+          title,
+          thumbnailInfo,
+          thumbnailFile,
+          tools,
+          description,
+          category,
+          combinedHashTag,
+        );
+        const result = await extractsMaxWno();
+        actions.setMaxWno(result! as number);
+        setTitle('');
+        setDescription('');
+        actions.setHideEditorGear(true);
 
-        // 위에서 정의한 함수를 호출하여 Promise를 얻을 수 있습니다.
-        asyncFunction()
-          .then(async () => {
-            const result = await extractsMaxWno(); // extractsMaxWno 함수를 await로 호출
-            actions.setMaxWno(result! as number);
-            setTitle('');
-            setDescription('');
-            actions.setHideEditorGear(true);
+        const newSelectedList = [...state.selectedList];
+        const isAlreadySelected = newSelectedList.includes(state.maxWno);
+        if (isAlreadySelected) {
+          actions.setSelectedList(newSelectedList);
+        } else {
+          const newSelectedList = [...state.selectedList, state.maxWno];
+          actions.setSelectedList(newSelectedList);
+        }
+        setTimeout(() => {
+          navigate(
+            `/boards/view/${result}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
+        }, 1160);
 
-            const newSelectedList = [...state.selectedList];
-            const isAlreadySelected = newSelectedList.includes(state.maxWno);
-            if (isAlreadySelected) {
-              actions.setSelectedList(newSelectedList);
-            } else {
-              const newSelectedList = [...state.selectedList, state.maxWno];
-              actions.setSelectedList(newSelectedList);
-            }
-            setTimeout(() => {
-              navigate(
-                `/boards/view/${state.maxWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 1160);
+        const tableRows = document.querySelectorAll('.black');
+        tableRows.forEach((row) => {
+          row.classList.remove('black');
+        });
+        const tableRows2 = document.querySelectorAll('.blackOnModify');
+        tableRows2.forEach((row) => {
+          row.classList.remove('blackOnModify');
+        });
+        const tableRows3 = document.querySelectorAll('.blackOnWrite');
+        tableRows3.forEach((row) => {
+          row.classList.remove('blackOnWrite');
+        });
+        actions.setWriteSelectedIndex(state.maxWno);
+        actions.setViewSelectedIndex(-1);
+        actions.setModifySelectedIndex(-1);
+        actions.setRemoveSelectedIndex(-1);
 
-            const tableRows = document.querySelectorAll('.black');
-            tableRows.forEach((row) => {
-              row.classList.remove('black');
-            });
-            const tableRows2 = document.querySelectorAll('.blackOnModify');
-            tableRows2.forEach((row) => {
-              row.classList.remove('blackOnModify');
-            });
-            const tableRows3 = document.querySelectorAll('.blackOnWrite');
-            tableRows3.forEach((row) => {
-              row.classList.remove('blackOnWrite');
-            });
-            actions.setWriteSelectedIndex(state.maxWno);
-            actions.setViewSelectedIndex(-1);
-            actions.setModifySelectedIndex(-1);
-            actions.setRemoveSelectedIndex(-1);
-
-            const element = document.getElementById(
-              `boardMore-${state.maxWno}`,
-            );
-            if (element) {
-              element.style.backgroundImage =
-                "url('/images/board/moreChecked.png')";
-            }
-            navigate('/'); // ThumbnailImg 재갱신
-          })
-          .catch((error) => {
-            // 오류 처리를 수행할 수 있습니다.
-            console.error(error);
-          });
+        const element = document.getElementById(`boardMore-${state.maxWno}`);
+        if (element) {
+          element.style.backgroundImage =
+            "url('/images/board/moreChecked.png')";
+        }
+        navigate('/'); // ThumbnailImg 재갱신
       } catch (error) {
         console.error(error);
         alert('글 등록에 실패하였습니다.');
@@ -671,7 +658,6 @@ const ContentDescOnWriting = ({
       category,
       countQParam,
       description,
-      extractsMaxWno,
       hashTag1,
       hashTag2,
       hashTag3,
