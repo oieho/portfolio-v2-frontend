@@ -618,9 +618,7 @@ const ContentDescOnWriting = ({
         }
         setTimeout(() => {
           navigate(
-            `/boards/view/${result - 1}?selected=${
-              state.selectedList
-            }&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+            `/boards/view/${result}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
             {
               state: { searchType: null, keyword: null },
             },
@@ -660,6 +658,7 @@ const ContentDescOnWriting = ({
       category,
       countQParam,
       description,
+      extractsMaxWno,
       hashTag1,
       hashTag2,
       hashTag3,
