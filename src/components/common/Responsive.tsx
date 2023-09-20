@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
   position: relative;
-  background-color: #f5f5f5;
+  background-color: #f5f5f6;
   top: 1.95rem;
   right: 4.85rem;
   width: 52.688rem;
@@ -18,10 +18,10 @@ const ResponsiveBlock = styled.div`
     width: 100%;
   }
 `;
-interface childrenProps{
-  children:ReactNode;
+interface childrenProps {
+  children: ReactNode;
 }
-const Responsive = ({ children, ...rest }:childrenProps) => {
+const Responsive = ({ children, ...rest }: childrenProps) => {
   return <ResponsiveBlock {...rest}>{children}</ResponsiveBlock>;
 };
 
