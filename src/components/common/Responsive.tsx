@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const ResponsiveBlock = styled.div`
   position: relative;
-  background-color: #f5f5f6;
+  background-color: #f5f5f5;
   top: 1.95rem;
   right: 4.85rem;
   width: 52.688rem;
