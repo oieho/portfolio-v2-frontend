@@ -99,7 +99,6 @@ const Search = () => {
         ? keywordQParam
         : state.prevtDupFromKeywordOnGlobal,
     };
-
     inputRef.current.focus();
   }, [
     countQParam,
