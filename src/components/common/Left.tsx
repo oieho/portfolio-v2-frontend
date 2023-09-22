@@ -82,8 +82,8 @@ const LogoEye = styled.hr`
 
 const NailImg = styled.img`
   position: absolute;
-  top: -1.25rem;
-  left: 3.27rem;
+  top: -1.24rem;
+  left: 3.15rem;
   transform: rotate(45deg);
   z-index: 4;
 `;
