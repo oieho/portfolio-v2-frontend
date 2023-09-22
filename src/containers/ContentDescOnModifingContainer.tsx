@@ -34,7 +34,10 @@ const ContentDescOnModifingContainer: React.FC<Props> = observer(
       try {
         const formData = new FormData();
         formData.append('thumbnailFile', file);
-        const response = await axios.post('/generateThumbnailDir', formData);
+        const response = await axios.post(
+          '/api/generateThumbnailDir',
+          formData,
+        );
         console.log('response:::', response);
         return response.data;
       } catch (error) {
@@ -44,7 +47,7 @@ const ContentDescOnModifingContainer: React.FC<Props> = observer(
 
     const displayThumbnail = async () => {
       try {
-        const response = await axios.get(`/display/${wno}`, {
+        const response = await axios.get(`/api/display/${wno}`, {
           responseType: 'arraybuffer', // byte[] 형식으로 응답 받기
         });
         return response;
@@ -122,7 +125,7 @@ const ContentDescOnModifingContainer: React.FC<Props> = observer(
       deliveryImgInfoOnWriting.setImgInfoOnWriting([]);
 
       await axios
-        .put('/boards/modify', formData, {
+        .put('/api/boards/modify', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

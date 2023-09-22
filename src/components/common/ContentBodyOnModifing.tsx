@@ -104,7 +104,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
       deliveryImgInfoOnWriting.setImgInfoOnWriting([]); // 배열 초기화 안하면 이전 저장 내역이 존재
 
       navigate(
-        `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+        `/api/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
       );
     }, [actions, deliveryImgInfoOnWriting, navigate, searchParams]);
 

@@ -242,7 +242,7 @@ const Left = (props: leftProps) => {
     });
 
     navigate(
-      `/boards?searchType=${searchType}&keyword='${state.prevtDupFromKeyword}'`,
+      `/api/boards?searchType=${searchType}&keyword='${state.prevtDupFromKeyword}'`,
     );
   };
 

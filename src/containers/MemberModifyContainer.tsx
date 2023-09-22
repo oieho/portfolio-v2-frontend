@@ -26,7 +26,7 @@ const MemberModifyContainer = () => {
   const validatePwChk = async (userId: string, userPw: string) => {
     let chkResult;
     await axios
-      .post('/members/pwChk', { userId, userPw })
+      .post('/api/members/pwChk', { userId, userPw })
       .then((response) => {
         chkResult = response.data;
       })
@@ -38,7 +38,7 @@ const MemberModifyContainer = () => {
   const duplicatedNameChk = async (userName: string) => {
     let chkResult;
     await axios
-      .post('/members/nameChk', userName)
+      .post('/api/members/nameChk', userName)
       .then((response) => {
         chkResult = response.data;
       })
@@ -50,7 +50,7 @@ const MemberModifyContainer = () => {
   const duplicatedEmailChk = async (userEmail: string) => {
     let chkResult;
     await axios
-      .post('/members/emailChk', userEmail)
+      .post('/api/members/emailChk', userEmail)
       .then((response) => {
         chkResult = response.data;
       })
@@ -68,7 +68,7 @@ const MemberModifyContainer = () => {
   ) => {
     let chkResult;
     await axios
-      .put('/members/modify', { userId, userPw, userEmail, userName })
+      .put('/api/members/modify', { userId, userPw, userEmail, userName })
       .then((response) => {
         chkResult = response.data;
         dispatch(checkMyInfo(true));
@@ -88,13 +88,13 @@ const MemberModifyContainer = () => {
       Cookies.remove('refreshToken');
       dispatch(setAccessToken(''));
       dispatch(setMyInfo(null as unknown as MyInfo));
-      navigate('/login');
+      navigate('/api/login');
     } catch (e: any) {
       if (e.response.status === 400) {
         alert('잘못된 요청입니다.');
       } else if (e.response.status === 401) {
         alert('로그인이 필요합니다.');
-        navigate('/login');
+        navigate('/api/login');
       } else if (e.response.status === 403) {
         alert('접근 권한이 없습니다.');
         navigate(-1);

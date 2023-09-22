@@ -366,7 +366,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     } else if (state.onGlobalSearch === false) {
       if (searchTypeQParam === null && state.toggleSelected === false) {
         navigate(
-          `/boards?searchType=${searchType}&keyword=${state.prevtDupFromKeyword}`,
+          `/api/boards?searchType=${searchType}&keyword=${state.prevtDupFromKeyword}`,
         );
       } else if (state.hashSelected === true) {
         dispatch(fetchHashTags(selected) as any);
@@ -540,7 +540,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       actions.setToggleSelected(true);
       onSelectedList(state.selectedList);
       navigate(
-        `/boards?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${state.prevtDupFromKeyword}`,
+        `/api/boards?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${state.prevtDupFromKeyword}`,
       );
     }
   }, [
@@ -577,7 +577,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     // rmTrBlack();
     // rmTrBlackOnModify();
     window.location.href =
-      'http://54.180.58.152:3000/boards?searchType=All&keyword=';
+      'http://54.180.58.152:3000/api/boards?searchType=All&keyword=';
   };
   const showWriteForm = () => {
     const titleQParam = searchParams.get('title');
@@ -587,7 +587,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     const keywordQParam = searchParams.get('keyword');
     setTimeout(() => {
       navigate(
-        `boards/write?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+        `/api/boards/write?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
         {
           state: { searchType: null, keyword: null },
         },
@@ -608,7 +608,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
         applyMore();
 
         navigate(
-          `/boards?selected=${selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${
+          `/api/boards?selected=${selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${
             typeRef.current.value
           }&keyword=${encodedKeyword.toString()}`,
         );

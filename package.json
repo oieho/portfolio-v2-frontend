@@ -29,6 +29,7 @@
     "@types/styled-components": "^5.1.27",
     "antd": "^5.2.1",
     "axios": "^1.1.2",
+    "env-cmd": "^10.1.0",
     "hotkeys-js": "^3.10.2",
     "http-proxy-middleware": "^2.0.6",
     "js-cookie": "^3.0.1",
@@ -57,8 +58,8 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f .env.development react-scripts start",
+    "build": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -89,7 +90,6 @@
     "codemirror": "^5.65.13",
     "prettier": "^2.7.1"
   },
-  "proxy": "http://54.180.58.152:8088",
   "resolutions": {
     "@types/react": "18.2.0",
     "@types/react-dom": "18.2.0"

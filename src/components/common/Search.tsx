@@ -151,7 +151,7 @@ const Search = () => {
         );
 
         navigate(
-          `/boards?searchType=${searchTypeQParam}&keyword=${encodedKeyword}`,
+          `/api/boards?searchType=${searchTypeQParam}&keyword=${encodedKeyword}`,
         );
       } catch (e) {}
     },
