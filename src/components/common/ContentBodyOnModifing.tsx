@@ -127,7 +127,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
 
     const getSunEditorInstance = (sunEditor: SunEditorCore) => {
       editor.current = sunEditor;
-
+      actions.setAllImgsAreLoaded(true);
       editor.current.onImageUpload = function (
         targetElement: HTMLElement,
         index: number,
