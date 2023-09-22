@@ -14,7 +14,7 @@ const MemberJoinContainer = () => {
   const duplicatedIdChk = async (userId: string) => {
     let chkResult;
     await axios
-      .post('/members/idChk', userId)
+      .post('/api/members/idChk', userId)
       .then((response) => {
         chkResult = response.data;
       })
@@ -26,7 +26,7 @@ const MemberJoinContainer = () => {
   const duplicatedNameChk = async (userName: string) => {
     let chkResult;
     await axios
-      .post('/members/nameChk', userName)
+      .post('/api/members/nameChk', userName)
       .then((response) => {
         chkResult = response.data;
       })
@@ -39,7 +39,7 @@ const MemberJoinContainer = () => {
   const duplicatedEmailChk = async (userEmail: string) => {
     let chkResult;
     await axios
-      .post('/members/emailChk', userEmail)
+      .post('/api/members/emailChk', userEmail)
       .then((response) => {
         chkResult = response.data;
       })

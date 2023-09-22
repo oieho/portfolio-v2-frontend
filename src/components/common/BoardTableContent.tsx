@@ -445,7 +445,7 @@ const BoardTableContent = ({
   useLayoutEffect(() => {
     const displayThumbnail = async (wno: string) => {
       try {
-        const response = await fetch(`/display/${wno}`);
+        const response = await fetch(`/api/display/${wno}`);
         if (response.status === 404) {
           setThumbnail('notUploaded');
           return;
@@ -520,7 +520,7 @@ const BoardTableContent = ({
           return;
         }
         if (alreadyCounted === false && state.selectedView === false) {
-          fetch(`/boards/increase/${boards.workBoard?.wno}`, {
+          fetch(`/api/boards/increase/${boards.workBoard?.wno}`, {
             method: 'POST',
           });
           setAlreadyCounted(true);
@@ -829,7 +829,7 @@ const BoardTableContent = ({
       });
 
       navigate(
-        `/boards/fetchHashTag?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=hashTag`,
+        `/api/boards/fetchHashTag?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=hashTag`,
       );
     },
     [actions, navigate, searchTypeQParam, state.selectedList],
@@ -857,7 +857,7 @@ const BoardTableContent = ({
       });
 
       navigate(
-        `/boards/fetchTool?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=tool`,
+        `/api/boards/fetchTool?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=tool`,
       );
     },
     [actions, navigate, searchTypeQParam, state.selectedList],

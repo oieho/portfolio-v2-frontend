@@ -62,7 +62,7 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
     };
     const wnoParam = wno;
     await axios
-      .get('/boards/comment/register', config)
+      .get('/api/boards/comment/register', config)
       .then((response) => {
         dispatch(fetchComment(wnoParam as any));
       })
@@ -82,7 +82,7 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
     roleType: string,
   ) => {
     await axios
-      .put('/boards/comment/modify', {
+      .put('/api/boards/comment/modify', {
         face,
         text,
         workBoard: { wno: wno },
@@ -121,7 +121,7 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
       },
     };
     await axios
-      .get('/boards/comment/reply', config)
+      .get('/api/boards/comment/reply', config)
       .then((response) => {
         const scrollTop = scrollArea!.scrollTop;
         console.log(scrollTop);
@@ -165,7 +165,7 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
   const extractsMaxUid = async (wno: number, rdepth: number) => {
     let result;
     await axios
-      .post('/boards/comment/getMaxUidPerOneRdepth', {
+      .post('/api/boards/comment/getMaxUidPerOneRdepth', {
         workBoard: { wno: wno },
         rdepth,
       })
