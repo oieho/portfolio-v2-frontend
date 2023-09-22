@@ -14,7 +14,7 @@ const MemberJoinContainer = () => {
   const duplicatedIdChk = async (userId: string) => {
     let chkResult;
     await axios
-      .post('/api/members/idChk', userId)
+      .post('/members/idChk', userId)
       .then((response) => {
         chkResult = response.data;
       })
@@ -26,7 +26,7 @@ const MemberJoinContainer = () => {
   const duplicatedNameChk = async (userName: string) => {
     let chkResult;
     await axios
-      .post('/api/members/nameChk', userName)
+      .post('/members/nameChk', userName)
       .then((response) => {
         chkResult = response.data;
       })
@@ -39,7 +39,7 @@ const MemberJoinContainer = () => {
   const duplicatedEmailChk = async (userEmail: string) => {
     let chkResult;
     await axios
-      .post('/api/members/emailChk', userEmail)
+      .post('/members/emailChk', userEmail)
       .then((response) => {
         chkResult = response.data;
       })
@@ -73,7 +73,7 @@ const MemberJoinContainer = () => {
         alert('잘못된 요청입니다.');
       } else if (e.response.status === 401) {
         alert('로그인이 필요합니다.');
-        navigate('/api/login');
+        navigate('/login');
       } else if (e.reponse.status === 403) {
         alert('접근 권한이 없습니다.');
         navigate(-1);

@@ -89,7 +89,7 @@ function* checkMyInfoSaga() {
     yield put(setLoginInfo(response.data));
     const contentDesc = document.getElementById('addComment');
     const url = window.location.href;
-    const regex = /api\/boards\/view\//;
+    const regex = /boards\/view\//;
     const match = url.match(regex);
     if (match) {
       contentDesc!.style.display = 'block' as any;

@@ -7,10 +7,7 @@ const ContentBodyOnWritingContainer = () => {
     const formData = new FormData();
     formData.append('uploadFile', files);
     try {
-      const response = await axios.post(
-        '/api/gettingUrlOnPortfolioImg',
-        formData,
-      );
+      const response = await axios.post('/gettingUrlOnPortfolioImg', formData);
       return response.data;
     } catch (error) {
       // Handle error

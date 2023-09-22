@@ -131,7 +131,7 @@ const ContentBody = ({ board }: Props) => {
   }, [board.title]);
   const fetchBoardsBySorting = async (sortParams: any) => {
     try {
-      const response = await axios.get('/api/boards/prevnextImgs', {
+      const response = await axios.get('/boards/prevnextImgs', {
         params: {
           searchType: sortParams.searchTypeQParam,
           keyword: sortParams.keywordQParam,
@@ -178,11 +178,11 @@ const ContentBody = ({ board }: Props) => {
           actions.setViewSelectedIndex(prevWno);
           if (state.selectedView === true) {
             navigate(
-              `/api/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           } else {
             navigate(
-              `/api/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           }
           return;
@@ -202,11 +202,11 @@ const ContentBody = ({ board }: Props) => {
           actions.setViewSelectedIndex(prevWno);
           if (state.selectedView === true) {
             navigate(
-              `/api/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           } else {
             navigate(
-              `/api/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           }
           return;
@@ -246,14 +246,14 @@ const ContentBody = ({ board }: Props) => {
           actions.setViewSelectedIndex(nextWno);
           if (state.selectedView === true) {
             navigate(
-              `/api/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
               {
                 state: { searchType: null, keyword: null },
               },
             );
           } else {
             navigate(
-              `/api/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
               {
                 state: { searchType: null, keyword: null },
               },
@@ -276,14 +276,14 @@ const ContentBody = ({ board }: Props) => {
           actions.setViewSelectedIndex(nextWno);
           if (state.selectedView === true) {
             navigate(
-              `/api/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
               {
                 state: { searchType: null, keyword: null },
               },
             );
           } else {
             navigate(
-              `/api/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+              `/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
               {
                 state: { searchType: null, keyword: null },
               },
@@ -319,7 +319,7 @@ const ContentBody = ({ board }: Props) => {
     saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
 
     navigate(
-      `/api/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+      `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
     );
   };
 

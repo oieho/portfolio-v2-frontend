@@ -628,7 +628,7 @@ const ContentDescOnModifing: React.FC<Props> = observer(
           );
 
           try {
-            const response = await fetch(`/api/display/${wno}`);
+            const response = await fetch(`/display/${wno}`);
 
             const arrayBuffer = await response.arrayBuffer();
             const imageURL = URL.createObjectURL(new Blob([arrayBuffer]));
@@ -643,7 +643,7 @@ const ContentDescOnModifing: React.FC<Props> = observer(
           if (state.selectedView === true) {
             setTimeout(() => {
               navigate(
-                `/api/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=false`,
+                `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=false`,
                 {
                   state: { searchType: null, keyword: null },
                 },
@@ -652,7 +652,7 @@ const ContentDescOnModifing: React.FC<Props> = observer(
           } else {
             setTimeout(() => {
               navigate(
-                `/api/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=true`,
+                `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=true`,
                 {
                   state: { searchType: null, keyword: null },
                 },

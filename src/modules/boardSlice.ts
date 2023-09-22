@@ -25,7 +25,7 @@ export const fetchList = createAsyncThunk(
     try {
       const { title, count, regDate, searchType, keyword } = selected;
       const response = await axios.get(
-        `/api/boards?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
+        `/boards?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
       );
       return response.data;
     } catch (error: any) {
@@ -41,7 +41,7 @@ export const fetchSelectedList = createAsyncThunk<any[], any>(
       const { title, count, regDate, searchType, keyword, selectedList } =
         selected;
       const response = await axios.get(
-        `/api/boards/selected?selectedList=${selectedList.join(
+        `/boards/selected?selectedList=${selectedList.join(
           ',',
         )}&title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
       );
@@ -57,7 +57,7 @@ export const fetchHashTags = createAsyncThunk(
     try {
       const { title, count, regDate, searchType, keyword } = selected;
       const response = await axios.get(
-        `/api/boards/fetchHashTag?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
+        `/boards/fetchHashTag?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
       );
       return response.data;
     } catch (error: any) {
@@ -71,7 +71,7 @@ export const fetchTools = createAsyncThunk(
     try {
       const { title, count, regDate, searchType, keyword } = selected;
       const response = await axios.get(
-        `/api/boards/fetchTool?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
+        `/boards/fetchTool?title=${title}&count=${count}&regDate=${regDate}&searchType=${searchType}&keyword=${keyword}`,
       );
       return response.data;
     } catch (error: any) {

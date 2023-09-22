@@ -618,7 +618,7 @@ const ContentDescOnWriting = ({
         }
         setTimeout(() => {
           navigate(
-            `/api/boards/view/${result}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+            `/boards/view/${result}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
             {
               state: { searchType: null, keyword: null },
             },

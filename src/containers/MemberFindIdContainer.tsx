@@ -6,7 +6,7 @@ const MemberFindIdContainer = () => {
   const validateNameChk = async (userName: string) => {
     let chkResult;
     await axios
-      .post('/api/members/nameChkOnFindId', { userName }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
+      .post('/members/nameChkOnFindId', { userName }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
       .then((response) => {
         chkResult = response.data;
       })
@@ -19,7 +19,7 @@ const MemberFindIdContainer = () => {
   const validateEmailChk = async (userEmail: string) => {
     let chkResult;
     await axios
-      .post('/api/members/emailChkOnFindId', { userEmail }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
+      .post('/members/emailChkOnFindId', { userEmail }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
       .then((response) => {
         chkResult = response.data;
       })
@@ -32,7 +32,7 @@ const MemberFindIdContainer = () => {
   const ifIdMatchesEmail = async (userName: string, userEmail: String) => {
     let chkResult;
     await axios
-      .post('/api/members/ifIdMatchesEmail', { userName, userEmail }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
+      .post('/members/ifIdMatchesEmail', { userName, userEmail }) // userName에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
       .then((response) => {
         chkResult = response.data;
       })
@@ -45,7 +45,7 @@ const MemberFindIdContainer = () => {
   const onSubmit = async (userName: string, userEmail: string) => {
     let chkResult;
     await axios
-      .post('/api/members/sendEmailOnFindId', { userEmail, userName })
+      .post('/members/sendEmailOnFindId', { userEmail, userName })
       .then((response) => {
         chkResult = response.data;
       })

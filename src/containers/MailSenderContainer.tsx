@@ -19,7 +19,7 @@ const MailSenderContainer = () => {
         alert('잘못된 요청입니다.');
       } else if (e.response.status === 401) {
         alert('로그인이 필요합니다.');
-        navigate('/api/login');
+        navigate('/login');
       } else if (e.response.status === 403) {
         alert('접근 권한이 없습니다.');
       } else {

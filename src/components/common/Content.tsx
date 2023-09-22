@@ -820,7 +820,7 @@ const ContentBody = ({
     saying!.style.opacity = '1';
     saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
     navigate(
-      `/api/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+      `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
     );
   };
 

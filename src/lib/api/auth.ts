@@ -5,7 +5,7 @@ import { setAccessToken, setMyInfo, setLoginInfo } from '../../modules/auth';
 import { MyInfo } from '../../App';
 export const signIn = (userId: string, password: string) =>
   client
-    .post(`/api/auth/authenticate?username=${userId}&password=${password}`)
+    .post(`/auth/authenticate?username=${userId}&password=${password}`)
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
         throw new Error('인증 실패');
@@ -14,14 +14,16 @@ export const signIn = (userId: string, password: string) =>
     });
 
 export const signInChk = () =>
-  client.post('/api/members/myinfo').catch(function (error) {
+  client.post('/members/myinfo').catch(function (error) {
     if (error.response.status === 401) {
       alert('인증 토큰이 만료되었습니다. 재로그인이 필요합니다.');
       setLoginInfo(error.response.data);
     }
   });
 
-export const fetchCountList = () => client.get('/api/counts');
+export const setCountList = () => client.post('/setCounts');
+
+export const fetchCountList = () => client.get('/counts');
 
 export const signUp = (
   userId: string,
@@ -64,7 +66,7 @@ export const sendingEmail = (formData: FormData) =>
   });
 
 export const refresh = () =>
-  client.get('/api/auth/refresh').then(function (response) {
+  client.get('/auth/refresh').then(function (response) {
     const { authorization } = response.headers;
     const accessToken = authorization?.substring(7) as string;
     const { refreshauthorization } = response.headers;

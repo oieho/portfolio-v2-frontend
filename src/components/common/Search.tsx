@@ -99,9 +99,7 @@ const Search = () => {
         ? keywordQParam
         : state.prevtDupFromKeywordOnGlobal,
     };
-    if (state.onGlobalSearch === true) {
-      dispatch(fetchList(selected as any));
-    }
+
     inputRef.current.focus();
   }, [
     countQParam,
@@ -153,7 +151,7 @@ const Search = () => {
         );
 
         navigate(
-          `/api/boards?searchType=${searchTypeQParam}&keyword=${encodedKeyword}`,
+          `/boards?searchType=${searchTypeQParam}&keyword=${encodedKeyword}`,
         );
       } catch (e) {}
     },

@@ -28,10 +28,7 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
       try {
         const formData = new FormData();
         formData.append('thumbnailFile', file);
-        const response = await axios.post(
-          '/api/generateThumbnailDir',
-          formData,
-        );
+        const response = await axios.post('/generateThumbnailDir', formData);
         return response.data;
       } catch (error) {
         console.log(error);
@@ -40,7 +37,7 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
 
     const extractsMaxWno = async () => {
       let result;
-      await axios.post('/api/boards/getMaxWno').then((response) => {
+      await axios.post('/boards/getMaxWno').then((response) => {
         result = response.data;
       });
       return result;
@@ -107,7 +104,7 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
       deliveryImgInfoOnWriting.setImgInfoOnWriting([]);
 
       await axios
-        .post('/api/boards/register', formData, {
+        .post('/boards/register', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

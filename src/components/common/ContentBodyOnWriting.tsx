@@ -99,7 +99,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
     deliveryImgInfoOnWriting.setImgInfoOnWriting([]);
 
     navigate(
-      `/api/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+      `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
     );
   }, [actions, deliveryImgInfoOnWriting, navigate, searchParams]);
   useEffect(() => {

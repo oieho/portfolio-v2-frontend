@@ -529,7 +529,7 @@ const MemberJoin = ({
         const contentDesc = document.getElementById('addComment');
         const saying = document.getElementById('saying');
         const url = window.location.href;
-        const regex = /api\/boards\/view\//;
+        const regex = /boards\/view\//;
         const match = url.match(regex);
         if (match) {
           contentDesc!.style.display = 'block' as any;

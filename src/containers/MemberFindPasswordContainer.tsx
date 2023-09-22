@@ -6,7 +6,7 @@ const MemberFindPasswordContainer = () => {
   const validateIdChk = async (userId: string) => {
     let chkResult;
     await axios
-      .post('/api/members/idChkOnFindPassword', { userId }) // userId에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
+      .post('/members/idChkOnFindPassword', { userId }) // userId에 만약 {} 가 없으면 application/x-www-form-urlencoded;charset=UTF-8'로 간주
       .then((response) => {
         chkResult = response;
       })
@@ -19,7 +19,7 @@ const MemberFindPasswordContainer = () => {
   const validateEmailChk = async (userId: string, userEmail: string) => {
     let chkResult;
     await axios
-      .post('/api/members/emailchkOnFindPassword', { userId, userEmail })
+      .post('/members/emailchkOnFindPassword', { userId, userEmail })
       .then((response) => {
         chkResult = response;
       })
@@ -32,7 +32,7 @@ const MemberFindPasswordContainer = () => {
   const verifyFindPasswordToken = async (token: string) => {
     let chkResult;
     await axios
-      .get(`/api/members/password/authorization/${token}`)
+      .get(`/members/password/authorization/${token}`)
       .then((response) => {
         chkResult = true;
       })
@@ -43,13 +43,13 @@ const MemberFindPasswordContainer = () => {
   };
 
   const deleteFindPasswordToken = async (token: string) => {
-    await axios.delete(`/api/members/password/authorization/delete/${token}`);
+    await axios.delete(`/members/password/authorization/delete/${token}`);
   };
 
   const onChangePW = async (userId: string, userPw: string) => {
     let chkResult;
     await axios
-      .put(`/api/members/changePw/`, { userId, userPw })
+      .put(`/members/changePw/`, { userId, userPw })
       .then((response) => {
         chkResult = response.data;
       })

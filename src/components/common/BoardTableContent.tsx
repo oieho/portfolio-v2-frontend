@@ -445,7 +445,7 @@ const BoardTableContent = ({
   useLayoutEffect(() => {
     const displayThumbnail = async (wno: string) => {
       try {
-        const response = await fetch(`/api/display/${wno}`);
+        const response = await fetch(`/display/${wno}`);
         if (response.status === 404) {
           setThumbnail('notUploaded');
           return;
@@ -520,7 +520,7 @@ const BoardTableContent = ({
           return;
         }
         if (alreadyCounted === false && state.selectedView === false) {
-          fetch(`/api/boards/increase/${boards.workBoard?.wno}`, {
+          fetch(`/boards/increase/${boards.workBoard?.wno}`, {
             method: 'POST',
           });
           setAlreadyCounted(true);
@@ -542,7 +542,7 @@ const BoardTableContent = ({
         if (state.selectedView === true) {
           setTimeout(() => {
             navigate(
-              `/api/boards/view/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
+              `boards/view/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
               {
                 state: { searchType: null, keyword: null },
               },
@@ -551,7 +551,7 @@ const BoardTableContent = ({
         } else {
           setTimeout(() => {
             navigate(
-              `/api/boards/view/${boards.workBoard?.wno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
+              `boards/view/${boards.workBoard?.wno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
               {
                 state: { searchType: null, keyword: null },
               },
@@ -658,7 +658,7 @@ const BoardTableContent = ({
 
       setTimeout(() => {
         navigate(
-          `/api/boards/modify/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+          `boards/modify/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
           {
             state: { searchType: null, keyword: null },
           },
@@ -773,7 +773,7 @@ const BoardTableContent = ({
 
         dispatch(fetchList(selected as any));
         navigate(
-          `/api/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
+          `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
         );
         // dispatch(fetchCommentAndScroll({ wno, scrollTop }));
       } catch (e: any) {
@@ -781,7 +781,7 @@ const BoardTableContent = ({
           alert('잘못된 요청입니다.');
         } else if (e.response.status === 401) {
           alert('로그인이 필요합니다.');
-          navigate('/api/login');
+          navigate('/login');
         } else {
           alert(e.response.data.message);
         }
@@ -829,7 +829,7 @@ const BoardTableContent = ({
       });
 
       navigate(
-        `/api/boards/fetchHashTag?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=hashTag`,
+        `/boards/fetchHashTag?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=hashTag`,
       );
     },
     [actions, navigate, searchTypeQParam, state.selectedList],
@@ -857,7 +857,7 @@ const BoardTableContent = ({
       });
 
       navigate(
-        `/api/boards/fetchTool?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=tool`,
+        `/boards/fetchTool?selected=${state.selectedList}&searchType=${searchTypeQParam}&keyword=${selectedTag}&toolOrHashTag=tool`,
       );
     },
     [actions, navigate, searchTypeQParam, state.selectedList],
