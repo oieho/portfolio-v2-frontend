@@ -361,9 +361,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
         : state.prevtDupFromKeyword,
       selectedList: state.selectedList,
     };
-    if (state.onGlobalSearch === true) {
-      dispatch(fetchList(selected as any));
-    } else if (state.onGlobalSearch === false) {
+    if (state.onGlobalSearch === false) {
       if (searchTypeQParam === null && state.toggleSelected === false) {
         navigate(
           `/api/boards?searchType=${searchType}&keyword=${state.prevtDupFromKeyword}`,
