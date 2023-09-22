@@ -28,9 +28,8 @@ const Logo = styled.span`
   position: absolute;
   width: 100%;
   height: 3.6rem;
-  top: -1.25rem;
-  left: 3.27rem;
-  transform: rotate(45deg);
+  top: -1.063rem;
+  left: 0.1rem;
   z-index: 4;
   animation: mainLogo 1.1s ease-out infinite normal;
 
@@ -83,8 +82,9 @@ const LogoEye = styled.hr`
 
 const NailImg = styled.img`
   position: absolute;
-  top: -1.21rem;
-  left: 2.95rem;
+  top: -1.25rem;
+  left: 3.27rem;
+  transform: rotate(45deg);
   z-index: 4;
 `;
 
