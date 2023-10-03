@@ -363,7 +363,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
         : state.prevtDupFromKeyword,
       selectedList: state.selectedList,
     };
-
     if (state.onGlobalSearch === true) {
       dispatch(fetchList(selected as any)).then(() => {
         const elementsWithBoardTitleId =
