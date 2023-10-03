@@ -224,6 +224,7 @@ const HashTag3 = styled.span`
     font-weight: 300;
   }
 `;
+
 const BoardTableContent = ({
   index,
   boards,
@@ -813,6 +814,7 @@ const BoardTableContent = ({
       ) as HTMLInputElement;
       searchInput.value = '';
       actions.setPrevtDupFromKeyword('');
+      actions.setOnGlobalSearch(false);
       actions.setHashSelected(true);
       actions.setToolsSelected(false);
       actions.setToggleSelected(false);
@@ -841,6 +843,7 @@ const BoardTableContent = ({
       ) as HTMLInputElement;
       searchInput.value = '';
       actions.setPrevtDupFromKeyword('');
+      actions.setOnGlobalSearch(false);
       actions.setToolsSelected(true);
       actions.setHashSelected(false);
       actions.setToggleSelected(false);
@@ -907,7 +910,8 @@ const BoardTableContent = ({
             <BoardHeadUL>
               <li>
                 <BoardTitle>
-                  {boards.workBoard?.title}&nbsp;
+                  <span className="boardTitle">{boards.workBoard?.title}</span>
+                  &nbsp;
                   <BoardComment>[{boards.commentCount}]</BoardComment>
                   <Tools>
                     {boards.workBoard?.tools?.map(

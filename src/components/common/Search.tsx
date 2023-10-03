@@ -90,15 +90,6 @@ const Search = () => {
     inputRef.current.focus();
   });
   useEffect(() => {
-    let selected = {
-      title: titleQParam,
-      count: countQParam,
-      regDate: regDateQParam,
-      searchType: 'All',
-      keyword: !state.prevtDupFromKeywordOnGlobal
-        ? keywordQParam
-        : state.prevtDupFromKeywordOnGlobal,
-    };
     inputRef.current.focus();
   }, [
     countQParam,
@@ -140,6 +131,7 @@ const Search = () => {
 
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
+      actions.setPrevtDupFromKeyword('');
       try {
         e.preventDefault();
         actions.setOnGlobalSearch(true);

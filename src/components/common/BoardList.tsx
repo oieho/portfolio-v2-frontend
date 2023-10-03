@@ -347,7 +347,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
 
   useEffect(() => {
     if (state.searchGear === true) {
-      searchInput.value = '';
       searchFormType.value = 'All';
       actions.setSearchGear(false);
     }
@@ -356,13 +355,34 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       count: countQParam,
       regDate: regDateQParam,
       searchType: !searchTypeQParam ? typeRef.current.value : searchTypeQParam,
+
       keyword: !state.prevtDupFromKeyword
         ? keywordQParam
+        : state.prevtDupFromKeywordOnGlobal
+        ? state.prevtDupFromKeywordOnGlobal
         : state.prevtDupFromKeyword,
       selectedList: state.selectedList,
     };
+
     if (state.onGlobalSearch === true) {
-      dispatch(fetchList(selected as any));
+      dispatch(fetchList(selected as any)).then(() => {
+        const elementsWithBoardTitleId =
+          document.querySelectorAll('.boardTitle');
+        elementsWithBoardTitleId.forEach((element: any) => {
+          const keyword = selected.keyword;
+          if (keyword) {
+            const textContent = element.textContent;
+            const newTextContent = textContent?.replace(
+              new RegExp(keyword, 'g'),
+              (match: any) => {
+                return `<span style="background-color: #000000; color: yellow;">${match}</span>`;
+              },
+            );
+
+            element.innerHTML = newTextContent;
+          }
+        });
+      });
     } else if (state.onGlobalSearch === false) {
       if (searchTypeQParam === null && state.toggleSelected === false) {
         navigate(
@@ -399,6 +419,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     state.hashSelected,
     state.onGlobalSearch,
     state.prevtDupFromKeyword,
+    state.prevtDupFromKeywordOnGlobal,
     state.searchGear,
     state.selectedList,
     state.selectedView,
@@ -596,6 +617,8 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   };
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
+      actions.setPrevtDupFromKeywordOnGlobal('');
+
       try {
         e.preventDefault();
         actions.setOnGlobalSearch(false);
