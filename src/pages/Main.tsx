@@ -39,8 +39,6 @@ export const MainContext = createContext({
     toggleBackBtn: false,
     hashSelected: false,
     toolsSelected: false,
-    prevtDupFromKeyword: '',
-    prevtDupFromKeywordOnGlobal: '',
     onGlobalSearch: false,
     toggleAddCommentForm: true,
     hideEditorGear: false,
@@ -98,12 +96,6 @@ export const MainContext = createContext({
     }),
     setToolsSelected: (toolsSelected: boolean) => ({
       toolsSelected,
-    }),
-    setPrevtDupFromKeyword: (prevtDupFromKeyword: string) => ({
-      prevtDupFromKeyword,
-    }),
-    setPrevtDupFromKeywordOnGlobal: (prevtDupFromKeywordOnGlobal: string) => ({
-      prevtDupFromKeywordOnGlobal,
     }),
     setOnGlobalSearch: (onGlobalSearch: boolean) => ({
       onGlobalSearch,
@@ -164,9 +156,6 @@ const Main = () => {
   const [toggleBackBtn, setToggleBackBtn] = useState<boolean>(false);
   const [hashSelected, setHashSelected] = useState<boolean>(false);
   const [toolsSelected, setToolsSelected] = useState<boolean>(false);
-  const [prevtDupFromKeyword, setPrevtDupFromKeyword] = useState<string>('');
-  const [prevtDupFromKeywordOnGlobal, setPrevtDupFromKeywordOnGlobal] =
-    useState<string>('');
   const [onGlobalSearch, setOnGlobalSearch] = useState<boolean>(false);
   const [toggleAddCommentForm, setToggleAddCommentForm] =
     useState<boolean>(true);
@@ -199,8 +188,6 @@ const Main = () => {
       toggleBackBtn,
       hashSelected,
       toolsSelected,
-      prevtDupFromKeyword,
-      prevtDupFromKeywordOnGlobal,
       onGlobalSearch,
       toggleAddCommentForm,
       hideEditorGear,
@@ -231,8 +218,6 @@ const Main = () => {
       setToggleBackBtn,
       setHashSelected,
       setToolsSelected,
-      setPrevtDupFromKeyword,
-      setPrevtDupFromKeywordOnGlobal,
       setOnGlobalSearch,
       setToggleAddCommentForm,
       setHideEditorGear,

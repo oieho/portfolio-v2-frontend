@@ -282,6 +282,9 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   const searchInput = document.getElementById(
     'searchInput',
   ) as HTMLInputElement;
+  const globalSearchInput = document.getElementById(
+    'globalSearchInput',
+  ) as HTMLInputElement;
   const searchFormType = document.getElementById(
     'searchFormType',
   ) as HTMLSelectElement;
@@ -356,11 +359,11 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       regDate: regDateQParam,
       searchType: !searchTypeQParam ? typeRef.current.value : searchTypeQParam,
 
-      keyword: !state.prevtDupFromKeyword
+      keyword: !searchInput?.value
         ? keywordQParam
-        : state.prevtDupFromKeywordOnGlobal
-        ? state.prevtDupFromKeywordOnGlobal
-        : state.prevtDupFromKeyword,
+        : globalSearchInput?.value
+        ? globalSearchInput?.value
+        : searchInput?.value,
       selectedList: state.selectedList,
     };
     if (state.onGlobalSearch === true) {
@@ -385,7 +388,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     } else if (state.onGlobalSearch === false) {
       if (searchTypeQParam === null && state.toggleSelected === false) {
         navigate(
-          `/boards?searchType=${searchType}&keyword=${state.prevtDupFromKeyword}`,
+          `/boards?searchType=${searchType}&keyword=${searchInput?.value}`,
         );
       } else if (state.hashSelected === true) {
         dispatch(fetchHashTags(selected) as any);
@@ -408,6 +411,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     applyMore,
     countQParam,
     dispatch,
+    globalSearchInput?.value,
     keywordQParam,
     navigate,
     regDateQParam,
@@ -417,8 +421,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     searchTypeQParam,
     state.hashSelected,
     state.onGlobalSearch,
-    state.prevtDupFromKeyword,
-    state.prevtDupFromKeywordOnGlobal,
     state.searchGear,
     state.selectedList,
     state.selectedView,
@@ -538,13 +540,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     [],
   );
 
-  const onChangeKeyword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      actions.setPrevtDupFromKeyword(searchInput!.value);
-    },
-    [actions, searchInput],
-  );
-
   const onSelect = useCallback(() => {
     actions.setOnGlobalSearch(false);
     actions.setHashSelected(false);
@@ -560,7 +555,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       actions.setToggleSelected(true);
       onSelectedList(state.selectedList);
       navigate(
-        `/boards?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${state.prevtDupFromKeyword}`,
+        `/boards?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${searchInput?.value}`,
       );
     }
   }, [
@@ -568,7 +563,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     applyMore,
     state.toggleSelected,
     state.selectedList,
-    state.prevtDupFromKeyword,
     rmTrBlack,
     rmTrBlackOnModify,
     onSelectedList,
@@ -577,11 +571,12 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     countQParam,
     regDateQParam,
     searchTypeQParam,
+    searchInput?.value,
   ]);
   const setBoardDefault = () => {
     //게시판 설정 최초 상태로 초기화
     // typeRef.current.value = 'All';
-    // searchInput.value = '';
+    // searchInput?.value = '';
     // actions.setOnGlobalSearch(false);
     // actions.setToggleBackBtn(false);
     // actions.setCompleteOrModify(false);
@@ -589,7 +584,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     // actions.setSelectedView(false);
     // actions.setHashSelected(false);
     // actions.setToolsSelected(false);
-    // actions.setPrevtDupFromKeyword('');
+    // searchInput?.value('');
     // actions.setToggleSelected(false);
     // const emptyArr = [] as any;
     // actions.setSelectedList(emptyArr);
@@ -616,7 +611,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   };
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      actions.setPrevtDupFromKeywordOnGlobal('');
+      globalSearchInput!.value = '';
 
       try {
         e.preventDefault();
@@ -624,7 +619,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
         actions.setHashSelected(false);
         actions.setToolsSelected(false);
         actions.setSelectedList(selectedList);
-        const encodedKeyword = encodeURIComponent(state.prevtDupFromKeyword);
+        const encodedKeyword = encodeURIComponent(searchInput?.value);
         rmTrBlack();
         rmTrBlackOnModify();
         applyMore();
@@ -637,9 +632,10 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
       } catch (e) {}
     },
     [
+      globalSearchInput,
       actions,
       selectedList,
-      state.prevtDupFromKeyword,
+      searchInput?.value,
       rmTrBlack,
       rmTrBlackOnModify,
       applyMore,
@@ -683,11 +679,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                 className={searchLineHover ? 'hoverSearchLine' : ''}
               />
 
-              <Button
-                type="submit"
-                onClick={onChangeKeyword as any}
-                title="검색"
-              ></Button>
+              <Button type="submit" title="검색"></Button>
               <SearchInput
                 id="searchInput"
                 onFocus={() => setLine()}

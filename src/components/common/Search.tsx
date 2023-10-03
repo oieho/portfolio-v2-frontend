@@ -76,6 +76,12 @@ const Search = () => {
   const [magnifierHover, setMagnifierHover] = useState(false);
 
   const inputRef = useRef(null) as any;
+  const searchInput = document.getElementById(
+    'searchInput',
+  ) as HTMLInputElement;
+  const globalSearchInput = document.getElementById(
+    'globalSearchInput',
+  ) as HTMLInputElement;
 
   const [searchParams] = useSearchParams();
   const titleQParam = searchParams.get('title');
@@ -97,7 +103,6 @@ const Search = () => {
     keywordQParam,
     regDateQParam,
     state.onGlobalSearch,
-    state.prevtDupFromKeywordOnGlobal,
     state.selectedList,
     state.selectedView,
     titleQParam,
@@ -122,38 +127,37 @@ const Search = () => {
     }
   };
 
-  const onChangeKeyword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      actions.setPrevtDupFromKeywordOnGlobal(inputRef.current.value);
-    },
-    [actions],
-  );
-
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
-      actions.setPrevtDupFromKeyword('');
+      searchInput!.value = '';
+
       try {
         e.preventDefault();
         actions.setOnGlobalSearch(true);
         actions.setHashSelected(false);
         actions.setToolsSelected(false);
-        const encodedKeyword = encodeURIComponent(
-          state.prevtDupFromKeywordOnGlobal,
-        );
+        const encodedKeyword = encodeURIComponent(globalSearchInput?.value);
 
         navigate(
           `/boards?searchType=${searchTypeQParam}&keyword=${encodedKeyword}`,
         );
-      } catch (e) {}
+      } catch (e) {
+        console.log('error message : ' + e);
+      }
     },
-    [actions, navigate, searchTypeQParam, state.prevtDupFromKeywordOnGlobal],
+    [
+      actions,
+      globalSearchInput?.value,
+      navigate,
+      searchInput,
+      searchTypeQParam,
+    ],
   );
   return (
     <>
       <form onSubmit={onSubmit}>
         <Line className={searchLineHover ? 'hoverSearchLine' : ''} />
         <Button
-          onClick={onChangeKeyword as any}
           className={magnifierHover ? 'magnifierhover' : 'magnifierNOThover'}
           onMouseOver={() => setAni()}
           onMouseOut={() => setAni()}

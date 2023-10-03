@@ -211,6 +211,10 @@ const Left = (props: leftProps) => {
   const [isFirstLoadPortfolio, setIsFirstLoadPortfolio] =
     useState<boolean>(false);
 
+  const searchInput = document.getElementById(
+    'searchInput',
+  ) as HTMLInputElement;
+
   const initSelectedList = () => {
     const searchType = document.getElementById(
       'searchFormType',
@@ -243,7 +247,7 @@ const Left = (props: leftProps) => {
     });
 
     navigate(
-      `/boards?searchType=${searchType}&keyword='${state.prevtDupFromKeyword}'`,
+      `/boards?searchType=${searchType}&keyword='${searchInput?.value}'`,
     );
   };
 

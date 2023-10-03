@@ -254,6 +254,13 @@ const BoardTableContent = ({
 
   const [toggleView, setToggleView] = useState(0);
 
+  const searchInput = document.getElementById(
+    'searchInput',
+  ) as HTMLInputElement;
+  const globalSearchInput = document.getElementById(
+    'globalSearchInput',
+  ) as HTMLInputElement;
+
   useEffect(() => {
     if (state.boardRemovable === true) {
       const trElements = document.querySelectorAll('.table-class tr');
@@ -761,9 +768,11 @@ const BoardTableContent = ({
           count: countQParam,
           regDate: regDateQParam,
           searchType: searchTypeQParam,
-          keyword: !state.prevtDupFromKeyword
+          keyword: !searchInput?.value
             ? keywordQParam
-            : state.prevtDupFromKeyword,
+            : globalSearchInput?.value
+            ? globalSearchInput?.value
+            : searchInput?.value,
           selectedList: state.selectedList,
         };
 
@@ -812,8 +821,7 @@ const BoardTableContent = ({
       const searchInput = document.getElementById(
         'searchInput',
       ) as HTMLInputElement;
-      searchInput.value = '';
-      actions.setPrevtDupFromKeyword('');
+      searchInput!.value = '';
       actions.setOnGlobalSearch(false);
       actions.setHashSelected(true);
       actions.setToolsSelected(false);
@@ -841,8 +849,7 @@ const BoardTableContent = ({
       const searchInput = document.getElementById(
         'searchInput',
       ) as HTMLInputElement;
-      searchInput.value = '';
-      actions.setPrevtDupFromKeyword('');
+      searchInput!.value = '';
       actions.setOnGlobalSearch(false);
       actions.setToolsSelected(true);
       actions.setHashSelected(false);
