@@ -66,13 +66,16 @@ export const sendingEmail = (formData: FormData) =>
   });
 
 export const refresh = () =>
-  client.get('/auth/refresh').then(function (response) {
-    const { authorization } = response.headers;
-    const accessToken = authorization?.substring(7) as string;
-    const { refreshauthorization } = response.headers;
-    const refreshToken = refreshauthorization?.substring(7) as string;
-
-    if (authorization === undefined && refreshauthorization === undefined) {
+  client.get('/auth/refresh').then(function (response: any) {
+    const accessToken = response.config.headers.authorization?.substring(
+      7,
+    ) as string;
+    const refreshToken =
+      response.config.headers.refreshauthorization?.substring(7) as string;
+    Cookies.set('refreshToken', refreshToken); // 2주
+    if (
+      response.headers.invalidallauthorization?.substring(0, 7) === 'Invalid'
+    ) {
       delete client.defaults.headers.common.authorization;
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
@@ -80,9 +83,9 @@ export const refresh = () =>
       setMyInfo(null as unknown as MyInfo);
       return;
     }
-    if (authorization == null) {
+    if (refreshToken == null) {
       Cookies.set('refreshToken', refreshToken); // 2주
-    } else if (refreshauthorization == null) {
+    } else if (accessToken == null) {
       Cookies.set('accessToken', accessToken); // 1시간
     }
   });
