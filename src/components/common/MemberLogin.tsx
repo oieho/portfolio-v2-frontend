@@ -142,6 +142,9 @@ const Chkbox = styled.input.attrs({
   &:checked {
     background-image: url('/images/chkboxOv.png');
   }
+  &:not(:checked) {
+    background-image: url('/images/chkbox.png');
+  }
 `;
 const FindID = styled.span`
   position: absolute;
@@ -402,7 +405,7 @@ const MemberLogin = ({
   );
   const onSetAutoLogin = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsRemember(true);
+      setIsRemember(!isRemember);
     },
     [],
   );
@@ -413,6 +416,7 @@ const MemberLogin = ({
       onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
+      setIsRemember(false);
     },
     [onSignIn, userId, password, isRemember],
   );
