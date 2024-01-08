@@ -418,8 +418,13 @@ const MemberLogin = ({
       onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
+<<<<<<< HEAD
       setAutoLogin(false);
       setIsRemember(false);
+=======
+      setAutoLogin(!autoLogin);
+      setIsRemember(!isRemember);
+>>>>>>> 9a6bb7b6c61ace31cfebfd41632b925774bec066
     },
     [onSignIn, userId, password, isRemember],
   );
