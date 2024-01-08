@@ -365,6 +365,7 @@ const MemberLogin = ({
   const [password, setPassword] = useState('');
   const [idIconHover, setIdIconHover] = useState<boolean>();
   const [pwIconHover, setPwIconHover] = useState<boolean>();
+  const [autoLogin, setAutoLogin] = useState(false);
   const [isRemember, setIsRemember] = useState<boolean>(false);
   const [LoginInitStatus, setLoginInitStatus] = useState<boolean>();
   const [kakaoBtnHover, setKakaoBtnHover] = useState(false);
@@ -405,6 +406,7 @@ const MemberLogin = ({
   );
   const onSetAutoLogin = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      setAutoLogin(!autoLogin);
       setIsRemember(!isRemember);
     },
     [],
@@ -416,7 +418,8 @@ const MemberLogin = ({
       onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
-      setIsRemember(false);
+      setAutoLogin(!autoLogin);
+      setIsRemember(!isRemember);
     },
     [onSignIn, userId, password, isRemember],
   );
@@ -497,7 +500,11 @@ const MemberLogin = ({
               onBlur={() => setPwIconHover(false)}
             />
             <AutoLgn>
-              <Chkbox id="checkbox" onChange={onSetAutoLogin} />
+              <Chkbox
+                id="checkbox"
+                checked={autoLogin}
+                onChange={onSetAutoLogin}
+              />
               <label htmlFor="checkbox">로그인 유지</label>
             </AutoLgn>
             <span
