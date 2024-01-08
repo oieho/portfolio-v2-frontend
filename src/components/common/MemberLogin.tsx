@@ -406,10 +406,15 @@ const MemberLogin = ({
   );
   const onSetAutoLogin = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setAutoLogin(!autoLogin);
-      setIsRemember(!isRemember);
+      if (autoLogin === true) {
+        setAutoLogin(false);
+        setIsRemember(false);
+      } else if (autoLogin === false) {
+        setAutoLogin(true);
+        setIsRemember(true);
+      }
     },
-    [],
+    [autoLogin],
   );
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -418,13 +423,8 @@ const MemberLogin = ({
       onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
-<<<<<<< HEAD
       setAutoLogin(false);
       setIsRemember(false);
-=======
-      setAutoLogin(!autoLogin);
-      setIsRemember(!isRemember);
->>>>>>> 9a6bb7b6c61ace31cfebfd41632b925774bec066
     },
     [onSignIn, userId, password, isRemember],
   );
