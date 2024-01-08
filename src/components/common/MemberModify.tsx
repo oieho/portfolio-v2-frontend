@@ -514,7 +514,7 @@ const MemberModify = ({
   };
 
   const del = () => {
-    if (validatePw === true) {
+    if ((myInfo?.providerType === ('KAKAO' || 'NAVER' || 'GOOGLE')) || validatePw === true) {
       onRemove(myInfo.userNo);
     } else {
       setFMessage('비밀번호를 입력하십시오.');
