@@ -142,6 +142,9 @@ const Chkbox = styled.input.attrs({
   &:checked {
     background-image: url('/images/chkboxOv.png');
   }
+  &:not(:checked) {
+    background-image: url('/images/chkbox.png');
+  }
 `;
 const FindID = styled.span`
   position: absolute;
@@ -362,6 +365,7 @@ const MemberLogin = ({
   const [password, setPassword] = useState('');
   const [idIconHover, setIdIconHover] = useState<boolean>();
   const [pwIconHover, setPwIconHover] = useState<boolean>();
+  const [autoLogin, setAutoLogin] = useState(false);
   const [isRemember, setIsRemember] = useState<boolean>(false);
   const [LoginInitStatus, setLoginInitStatus] = useState<boolean>();
   const [kakaoBtnHover, setKakaoBtnHover] = useState(false);
@@ -402,9 +406,15 @@ const MemberLogin = ({
   );
   const onSetAutoLogin = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      setIsRemember(true);
+      if (autoLogin === true) {
+        setAutoLogin(false);
+        setIsRemember(false);
+      } else if (autoLogin === false) {
+        setAutoLogin(true);
+        setIsRemember(true);
+      }
     },
-    [],
+    [autoLogin],
   );
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -413,6 +423,8 @@ const MemberLogin = ({
       onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
+      setAutoLogin(false);
+      setIsRemember(false);
     },
     [onSignIn, userId, password, isRemember],
   );
@@ -493,7 +505,11 @@ const MemberLogin = ({
               onBlur={() => setPwIconHover(false)}
             />
             <AutoLgn>
-              <Chkbox id="checkbox" onChange={onSetAutoLogin} />
+              <Chkbox
+                id="checkbox"
+                checked={autoLogin}
+                onChange={onSetAutoLogin}
+              />
               <label htmlFor="checkbox">로그인 유지</label>
             </AutoLgn>
             <span
