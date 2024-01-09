@@ -588,6 +588,21 @@ const MemberLogin = ({
               />
               네이버 로그인
             </NaverBtnWrap>
+            <GoogleBtnWrap
+              onClick={() =>
+                (window.location.href =
+                  'http://ec2-54-180-58-152.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://54.180.58.152:3000/socialLogin')
+              }
+              onMouseOver={() => setGoogleBtnHover(true)}
+              onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
+              title="Login Google"
+            >
+              <GoogleBtn
+                src={process.env.PUBLIC_URL + '/images/googleicon.png'}
+                alt="Login Google"
+              />
+              구글 로그인
+            </GoogleBtnWrap>
           </AlignBtn>
         </Description>
 
