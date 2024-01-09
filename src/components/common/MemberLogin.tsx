@@ -606,6 +606,21 @@ const MemberLogin = ({
           </AlignBtn>
         </Description>
 
+        <BackBtn
+          alt="뒤로가기"
+          title="뒤로가기"
+          ref={BackBtnRef}
+          onClick={() => goToBackward()}
+          onMouseOver={() => setBackBtnHover(true)}
+          onMouseOut={() => setBackBtnHover(false)}
+          onMouseDown={() => setBackBtnHover(false)}
+          onMouseUp={() => setBackBtnHover(true)}
+          src={
+            backBtnHover
+              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+              : process.env.PUBLIC_URL + '/images/board/back.png'
+          }
+        />
         <MemberWrapper>
           <MemberFindIdWrapper ref={MemberFindIdRef}>
             <MemberFindId />
