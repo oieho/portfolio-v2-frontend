@@ -525,10 +525,6 @@ const MemberModify = ({
     }
   };
   const abort = () => console.log('Aborted');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const deleteMember = () => {
-    useConfirm('회원 탈퇴 하시겠습니까?', del, abort);
-  };
 
   return (
     <Wrapper>
@@ -652,7 +648,9 @@ const MemberModify = ({
                         수정
                       </Button>
                       <Button
-                        onClick={deleteMember}
+                        onClick={() =>
+                          useConfirm('회원 탈퇴 하시겠습니까?', del, abort)
+                        }
                         style={{
                           width: `4.7rem`,
                           color: `red`,
@@ -694,7 +692,7 @@ const MemberModify = ({
             />
             <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
             <Button
-              onClick={() => deleteMember()}
+              onClick={() => useConfirm('회원 탈퇴 하시겠습니까?', del, abort)}
               style={{
                 width: `4.7rem`,
                 color: `red`,
