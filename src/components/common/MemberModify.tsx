@@ -475,12 +475,6 @@ const MemberModify = ({
     ],
   );
   const useConfirm = (message: string = '', onConfirm: any, onCancel: any) => {
-    if (!onConfirm || typeof onConfirm !== 'function') {
-      return;
-    }
-    if (onCancel && typeof onCancel !== 'function') {
-      return;
-    }
     const confirmAction = () => {
       if (window.confirm(message)) {
         onConfirm();
@@ -514,10 +508,7 @@ const MemberModify = ({
   };
 
   const del = () => {
-    if (
-      myInfo?.providerType === ('KAKAO' || 'NAVER' || 'GOOGLE') ||
-      validatePw === true
-    ) {
+    if (myInfo?.providerType !== 'LOCAL' || validatePw === true) {
       onRemove(myInfo.userNo);
     } else {
       setFMessage('비밀번호를 입력하십시오.');
@@ -526,9 +517,7 @@ const MemberModify = ({
   };
   const abort = () => console.log('Aborted');
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const deleteMember = () => {
-    useConfirm('회원 탈퇴 하시겠습니까?', del, abort);
-  };
+  const deleteMember = useConfirm('회원 탈퇴 하시겠습니까?', del, abort);
 
   return (
     <Wrapper>
@@ -694,7 +683,7 @@ const MemberModify = ({
             />
             <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
             <Button
-              onClick={() => deleteMember()}
+              onClick={deleteMember}
               style={{
                 width: `4.7rem`,
                 color: `red`,
