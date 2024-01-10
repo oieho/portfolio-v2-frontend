@@ -348,6 +348,7 @@ const MemberModify = ({
             MemberModuleArray[1].current.style.display = 'block';
           } else {
             cPwInput.current.focus();
+            setSMessage('');
             setFMessage('비밀번호가 유효하지 않습니다.');
           }
         });
@@ -508,8 +509,25 @@ const MemberModify = ({
   };
 
   const del = () => {
-    if (myInfo?.providerType !== 'LOCAL' || validatePw === true) {
+    if (myInfo?.providerType !== 'LOCAL') {
       onRemove(myInfo.userNo);
+    } else if (password.length === 0) {
+      setSMessage('');
+      setFMessage('비밀번호를 입력하십시오.');
+    } else if (validatePw === true) {
+      try {
+        validatePwChk(myInfo.userId, password).then((response: boolean) => {
+          if (response === true) {
+            onRemove(myInfo.userNo);
+          } else {
+            cPwInput.current.focus();
+            setSMessage('');
+            setFMessage('비밀번호가 유효하지 않습니다.');
+          }
+        });
+      } catch (e) {
+        alert('인증 토큰이 만료되었습니다. 재로그인이 필요합니다.');
+      }
     } else {
       setFMessage('비밀번호를 입력하십시오.');
       setSMessage('');
@@ -564,97 +582,99 @@ const MemberModify = ({
               />
               {isLoading && <NowLoading>로딩 중...</NowLoading>}
               {!isLoading && myInfo && (
-                <form method="post" onSubmit={onSubmit}>
-                  <DescriptionTop>
-                    <InputTitles>
-                      <UserIdTit>아이디</UserIdTit>
-                      <UserPwTit>비밀번호</UserPwTit>
-                      <UserEmailTit>이메일</UserEmailTit>
-                      <UserNameTit>이름</UserNameTit>
-                    </InputTitles>
-                    <IdInput
-                      maxLength={10}
-                      name="userId"
-                      value={userId}
-                      disabled
-                    />
-                    <MpwInput
-                      ref={mPwInput}
-                      maxLength={20}
-                      name="password"
-                      type="password"
-                      autoComplete="new-password"
-                      onChange={onChangeUserPassword}
-                      placeholder="비밀번호"
-                      required
-                    />
+                <>
+                  <form method="post" onSubmit={onSubmit}>
+                    <DescriptionTop>
+                      <InputTitles>
+                        <UserIdTit>아이디</UserIdTit>
+                        <UserPwTit>비밀번호</UserPwTit>
+                        <UserEmailTit>이메일</UserEmailTit>
+                        <UserNameTit>이름</UserNameTit>
+                      </InputTitles>
+                      <IdInput
+                        maxLength={10}
+                        name="userId"
+                        value={userId}
+                        disabled
+                      />
+                      <MpwInput
+                        ref={mPwInput}
+                        maxLength={20}
+                        name="password"
+                        type="password"
+                        autoComplete="new-password"
+                        onChange={onChangeUserPassword}
+                        placeholder="비밀번호"
+                        required
+                      />
 
-                    <EmailInput
-                      ref={emailInput}
-                      maxLength={30}
-                      name="userEmail"
-                      type="text"
-                      autoComplete="userEmail"
-                      onChange={onChangeUserEmail}
-                      defaultValue={userEmail}
-                      spellCheck="false"
-                    />
-                    <UserNameInput
-                      ref={nameInput}
-                      maxLength={30}
-                      name="userName"
-                      type="text"
-                      autoComplete="userName"
-                      onChange={(e: any) => {
-                        onChangeUserName(e);
-                      }}
-                      defaultValue={userName}
-                      spellCheck="false"
-                      required
-                    />
-                    <SuccessMessage>{sMessage}</SuccessMessage>
-                    <ErrorMessage>{fMessage}</ErrorMessage>
-                    <InfoMessage>{Info}</InfoMessage>
-                  </DescriptionTop>
-                  {isOwn && (
-                    <>
-                      <Button
-                        onClick={(e: any) => {
-                          onDisplayMember(e, 2);
+                      <EmailInput
+                        ref={emailInput}
+                        maxLength={30}
+                        name="userEmail"
+                        type="text"
+                        autoComplete="userEmail"
+                        onChange={onChangeUserEmail}
+                        defaultValue={userEmail}
+                        spellCheck="false"
+                      />
+                      <UserNameInput
+                        ref={nameInput}
+                        maxLength={30}
+                        name="userName"
+                        type="text"
+                        autoComplete="userName"
+                        onChange={(e: any) => {
+                          onChangeUserName(e);
                         }}
-                        style={{
-                          top: `24.9rem`,
-                          left: `-0.69rem`,
-                          position: `relative`,
-                        }}
-                      >
-                        비밀번호 변경
-                      </Button>
-                      <Button
-                        style={{
-                          width: `4.7rem`,
-                          top: `25.5rem`,
-                          left: `0.09rem`,
-                          position: `relative`,
-                        }}
-                      >
-                        수정
-                      </Button>
-                      <Button
-                        onClick={deleteMember}
-                        style={{
-                          width: `4.7rem`,
-                          color: `red`,
-                          top: `25.5rem`,
-                          left: `0.9rem`,
-                          position: `relative`,
-                        }}
-                      >
-                        탈퇴
-                      </Button>
-                    </>
-                  )}
-                </form>
+                        defaultValue={userName}
+                        spellCheck="false"
+                        required
+                      />
+                      <SuccessMessage>{sMessage}</SuccessMessage>
+                      <ErrorMessage>{fMessage}</ErrorMessage>
+                      <InfoMessage>{Info}</InfoMessage>
+                    </DescriptionTop>
+                    {isOwn && (
+                      <>
+                        <Button
+                          onClick={(e: any) => {
+                            onDisplayMember(e, 2);
+                          }}
+                          style={{
+                            top: `24.9rem`,
+                            left: `-2.812rem`,
+                            position: `relative`,
+                          }}
+                        >
+                          비밀번호 변경
+                        </Button>
+                        <Button
+                          style={{
+                            width: `4.7rem`,
+                            top: `25.5rem`,
+                            left: `-2.05rem`,
+                            position: `relative`,
+                          }}
+                        >
+                          수정
+                        </Button>
+                      </>
+                    )}
+                  </form>
+                  <Button
+                    onClick={deleteMember}
+                    style={{
+                      width: `4.7rem`,
+                      color: `red`,
+                      top: `22.37rem`,
+                      left: `5.57rem`,
+                      position: `relative`,
+                    }}
+                  >
+                    탈퇴
+                  </Button>
+                </>
               )}
 
               <BackBtn
