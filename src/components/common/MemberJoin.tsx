@@ -323,6 +323,8 @@ const MemberJoin = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const idRegEx = /^[a-z0-9]*$/;
       if (!idRegEx.test(e.target.value)) {
+        setSMessage('');
+        setFMessage('아이디가 유효하지 않습니다.');
         setInfo((Warning.innerHTML = 'ID는 소문자&숫자 10자 이하입니다.'));
       } else {
         setInfo((Warning.innerHTML = ''));
