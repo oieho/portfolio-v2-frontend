@@ -53,7 +53,7 @@ const Content = styled.div`
   position: relative;
   top: -0.0319rem;
   left: -0.04rem;
-  background: rgba(255, 255, 255, 0.955);
+  background: rgba(255, 255, 255, 0.965);
   width: 52.1rem;
   height: 44.2506rem;
   z-index: 2;

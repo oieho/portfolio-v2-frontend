@@ -9,6 +9,8 @@ import {
   useContext,
 } from 'react';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { MyInfo, CountInfo } from '../../App';
 import MemberLogin from '../../containers/MemberLoginContainer';
 import MemberJoin from '../../containers/MemberJoinContainer';
@@ -58,7 +60,7 @@ const HeaderBlock = styled.div`
     display: inline-block;
     width: 11.2rem;
     bottom: 0.05rem;
-    right: 0.7rem;
+    right: -0.05rem;
     text-align: right;
     cursor: default;
     ul {
@@ -84,30 +86,32 @@ const HeaderBlock = styled.div`
   .right2 {
     position: relative;
     display: inline-block;
-    left: 0.64rem;
-    padding: 0.5rem;
-    width: 24.41rem;
+    left: 1.7rem;
+    padding: 0.5rem 0.5rem 0.5rem 0.46rem;
+    width: 19.6rem;
     height: 100%;
   }
 `;
-const User = styled.div`
+const User = styled.span`
   display: inline-block;
-  margin-left: 0.26rem;
   font-size: 0.85rem;
   position: relative;
+  margin-left: 1.06rem;
   top: 0.2rem;
 `;
 
 const MailTo = styled.img`
   position: relative;
-  bottom: 0.35rem;
-  margin-left: 0.625rem;
+  bottom: 0.15rem;
+  margin-left: 1.325rem;
   cursor: pointer;
 `;
 const Admin = styled.img`
   position: relative;
-  bottom: 0.35rem;
-  margin-left: 0.825rem;
+  bottom: 0.15rem;
+  margin-left: 0.755rem;
+  margin-right: 0.205rem;
+
   transform: rotate(0deg);
   cursor: pointer;
 
@@ -121,9 +125,18 @@ const Admin = styled.img`
     transform-origin: 50% 50%;
   }
 `;
+const Github = styled.img`
+  position: relative;
+  width: 1.5rem;
+  bottom: 0.15rem;
+  margin-left: 0.84rem;
+  cursor: pointer;
+  z-index: 9;
+`;
 
 const Name = styled.div`
-  width: 71px;
+  width: 51px;
+  margin-left: 0.17rem;
   top: -0.55rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -149,24 +162,13 @@ const Logged = styled.div`
   display: inline;
   position: relative;
   top: -0.75rem;
-  left: -0.3rem;
-`;
-const Logged2 = styled.div`
-  text-decoration: none;
-  text-align: center;
-  padding: 0 0.63rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.001rem;
-  display: inline;
-  position: relative;
-  top: -0.75rem;
 `;
 const LogAreaBtn = styled.img`
   position: relative;
   top: -0.03rem;
   width: 4.5rem;
   cursor: pointer;
+
   &:first-child {
     margin-right: 0.625rem;
   }
@@ -434,28 +436,6 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
                   {userName}
                 </Name>
                 <Logged>&nbsp;&nbsp;LOGGED</Logged>
-                <MailTo
-                  onClick={(e: any) => {
-                    onDisplayMember(e, 5);
-                  }}
-                  src={
-                    mailToHover
-                      ? process.env.PUBLIC_URL + '/images/mailiconOv.png'
-                      : process.env.PUBLIC_URL + '/images/mailicon.png'
-                  }
-                  onMouseOver={() => setMailToHover(true)}
-                  onMouseOut={() => setMailToHover(false)}
-                  alt="mail to oieho"
-                />
-                <Admin
-                  src={process.env.PUBLIC_URL + '/images/adminicon.png'}
-                  alt="admin"
-                  onClick={
-                    onAlertAdmin as unknown as
-                      | React.MouseEventHandler<HTMLImageElement>
-                      | undefined
-                  }
-                />
               </User>
             </div>
           ) : (
@@ -489,34 +469,40 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
               />
 
               <User>
-                <Logged2>
+                <Logged>
                   &nbsp;&nbsp;&nbsp;&nbsp;NOT LOGGED&nbsp;&nbsp;&nbsp;
-                </Logged2>
-                <MailTo
-                  onClick={(e: any) => {
-                    onDisplayMember(e, 5);
-                  }}
-                  src={
-                    mailToHover
-                      ? process.env.PUBLIC_URL + '/images/mailiconOv.png'
-                      : process.env.PUBLIC_URL + '/images/mailicon.png'
-                  }
-                  onMouseOver={() => setMailToHover(true)}
-                  onMouseOut={() => setMailToHover(false)}
-                  alt="mail to oieho"
-                />
-                <Admin
-                  src={process.env.PUBLIC_URL + '/images/adminicon.png'}
-                  alt="admin"
-                  onClick={
-                    onAlertAdmin as unknown as
-                      | React.MouseEventHandler<HTMLImageElement>
-                      | undefined
-                  }
-                />
+                </Logged>
               </User>
             </div>
           )}
+          <MailTo
+            onClick={(e: any) => {
+              onDisplayMember(e, 5);
+            }}
+            src={
+              mailToHover
+                ? process.env.PUBLIC_URL + '/images/mailiconOv.png'
+                : process.env.PUBLIC_URL + '/images/mailicon.png'
+            }
+            onMouseOver={() => setMailToHover(true)}
+            onMouseOut={() => setMailToHover(false)}
+            alt="mail to oieho"
+          />
+          <Link to="https://github.com/oieho" target="_blank">
+            <Github
+              src={process.env.PUBLIC_URL + '/images/githubicon.png'}
+              alt="github"
+            />
+          </Link>
+          <Admin
+            src={process.env.PUBLIC_URL + '/images/adminicon.png'}
+            alt="admin"
+            onClick={
+              onAlertAdmin as unknown as
+                | React.MouseEventHandler<HTMLImageElement>
+                | undefined
+            }
+          />
         </div>
         <MemberWrapper ref={MemberWrapperRef}>
           <MemberLoginWrapper ref={MemberLoginRef}>
