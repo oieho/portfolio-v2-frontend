@@ -102,14 +102,30 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
       `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
     );
   }, [actions, deliveryImgInfoOnWriting, navigate, searchParams]);
+
+  const message = '정말로 창을 닫으시겠습니까?';
+
+  const confirmHideContent = useCallback(() => {
+    if (window.confirm(message)) {
+      hideContent();
+    }
+    return confirmHideContent;
+  }, [hideContent]);
+
   useEffect(() => {
     setContent('');
 
     if (state.hideEditorGear === true) {
-      hideContent();
+      confirmHideContent();
       actions.setHideEditorGear(false);
     }
-  }, [actions, deliveryImgInfoOnWriting, hideContent, state.hideEditorGear]);
+  }, [
+    actions,
+    confirmHideContent,
+    deliveryImgInfoOnWriting,
+    hideContent,
+    state.hideEditorGear,
+  ]);
 
   const getSunEditorInstance = (sunEditor: SunEditorCore) => {
     editor.current = sunEditor;
@@ -165,7 +181,12 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
 
   return (
     <Wrapper>
-      <OuterWrapper onClick={() => hideContent()} title="쓰기 폼 닫기" />
+      <OuterWrapper
+        onClick={() => {
+          confirmHideContent();
+        }}
+        title="쓰기 폼 닫기"
+      />
       <Content ref={contentRef}>
         <CloseBtn
           style={{

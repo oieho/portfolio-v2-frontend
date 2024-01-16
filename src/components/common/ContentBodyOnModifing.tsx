@@ -108,16 +108,21 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
       );
     }, [actions, deliveryImgInfoOnWriting, navigate, searchParams]);
 
+    const message = '정말로 창을 닫으시겠습니까?';
+
+    const confirmHideContent = useCallback(() => {
+      if (window.confirm(message)) {
+        hideContent();
+      }
+      return confirmHideContent;
+    }, [hideContent]);
+
     useEffect(() => {
       setPortfolioContent(board.portfolioContent);
-      if (state.hideEditorGear === true && state.allImgsAreLoaded === true) {
-        hideContent();
-        actions.setHideEditorGear(false);
-        actions.setAllImgsAreLoaded(false);
-      }
     }, [
       actions,
       board.portfolioContent,
+      confirmHideContent,
       deliveryImgInfoOnWriting,
       hideContent,
       portfolioContent,
@@ -200,10 +205,9 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
     return (
       <Wrapper>
         <OuterWrapper
-          onClick={() => {
+          onClick={(e: any) => {
             if (state.allImgsAreLoaded === true) {
-              hideContent();
-              actions.setAllImgsAreLoaded(false);
+              confirmHideContent();
             }
           }}
           title="수정 폼 닫기"
