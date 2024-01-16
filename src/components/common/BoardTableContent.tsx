@@ -225,13 +225,7 @@ const HashTag3 = styled.span`
   }
 `;
 
-const BoardTableContent = ({
-  index,
-  boards,
-  board,
-  style,
-  modifiable,
-}: any) => {
+const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
   const { state, actions } = useContext(MainContext);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -440,7 +434,6 @@ const BoardTableContent = ({
     boards.workBoard?.hashTag,
     state.boardModifiable,
     actions,
-    board,
     state.hashSelected,
     state.selectedListOthers,
     selectedIndex,

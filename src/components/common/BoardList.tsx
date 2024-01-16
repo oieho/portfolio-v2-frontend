@@ -311,7 +311,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
           key={index}
           index={index}
           boards={board}
-          board={boards}
           style={style}
         />
       );
