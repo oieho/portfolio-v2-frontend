@@ -340,7 +340,7 @@ const CoverBackBtn = styled.span`
   width: 1.55rem;
   height: 3.65rem;
   right: -1.55rem;
-  top: 4.464rem;
+  top: 4.457rem;
   z-index: 1;
 `;
 interface Props {

@@ -214,7 +214,7 @@ const BackBtn = styled.img`
   width: 1.5rem;
   height: 3.6rem;
   right: -1.5rem;
-  top: 8.275rem;
+  top: 8.272rem;
   z-index: 2;
 `;
 const CoverBackBtn = styled.span`
