@@ -373,7 +373,7 @@ const MemberLogin = ({
   const [googleBtnHover, setGoogleBtnHover] = useState(false);
   const [IdInfo, setIdInfo] = useState('');
   const [backBtnHover, setBackBtnHover] = useState<boolean>();
-  const [blockBool, setBlockBool] = useState<boolean>();
+  const [hideBackBtn, setHideBackBtn] = useState<boolean>();
 
   const LoginRef = useRef(null) as unknown as HTMLSpanElement &
     (LegacyRef<HTMLSpanElement> | undefined) as any;
@@ -435,16 +435,16 @@ const MemberLogin = ({
     selectItem: number,
   ) => {
     MemberModuleArray[selectItem].current.style.display = 'block';
-    setBlockBool(true);
+    setHideBackBtn(true);
   };
   const goToBackward = () => {
     MemberModuleArray[0].current.style.display = 'none';
     MemberModuleArray[1].current.style.display = 'none';
 
-    setBlockBool(false);
+    setHideBackBtn(false);
   };
   useEffect(() => {
-    if (blockBool === true) {
+    if (hideBackBtn === true) {
       BackBtnRef.current.style.display = 'block';
     } else {
       BackBtnRef.current.style.display = 'none';
@@ -458,7 +458,7 @@ const MemberLogin = ({
       window.onpopstate = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [blockBool]);
+  }, [hideBackBtn]);
   return (
     <Wrapper>
       <RightBlock>
