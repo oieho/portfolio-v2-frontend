@@ -67,25 +67,23 @@ export const sendingEmail = (formData: FormData) =>
 
 export const refresh = () =>
   client.get('/auth/refresh').then(function (response: any) {
-    const accessToken = response.config.headers.authorization?.substring(
-      7,
-    ) as string;
-    const refreshToken =
-      response.config.headers.refreshauthorization?.substring(7) as string;
-    Cookies.set('refreshToken', refreshToken); // 2주
     if (
-      response.headers.invalidallauthorization?.substring(0, 7) === 'Invalid'
+      response.headers.invalidalltokens &&
+      response.headers.invalidalltokens.substring(0, 7) === 'invalid'
     ) {
-      delete client.defaults.headers.common.authorization;
+      //response.headers.invalidalltokens 만 호출할 경우 정의되어 있지 않기 때문에 undefined가 반환되며 타입 에러가 발생. 해당 값이 유효한지 확인한 후에 substring을 호출
+      delete client.defaults.headers.common.Authorization;
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
       setAccessToken('');
       setMyInfo(null as unknown as MyInfo);
       return;
     }
-    if (refreshToken == null) {
+    const accessToken = response.headers.authorization?.substring(7); // response.config.header로 헤더를 불러올 경우 한박자 느린 (예:)최초 로그인 이 후 새로고침시 최초 로그인에서 발급한 토큰을 가져옴
+    const refreshToken = response.headers.refreshauth?.substring(7);
+    if (refreshToken !== undefined) {
       Cookies.set('refreshToken', refreshToken); // 2주
-    } else if (accessToken == null) {
+    } else if (accessToken !== undefined) {
       Cookies.set('accessToken', accessToken); // 1시간
     }
   });

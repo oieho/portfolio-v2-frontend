@@ -26,13 +26,13 @@ function loadUser() {
   try {
     const savedToken = Cookies.get('accessToken');
     const savedRefreshToken = Cookies.get('refreshToken');
-    client.defaults.headers.common.authorization = `Bearer ${savedToken}`;
-    client.defaults.headers.common.refreshauthorization = `Bearer ${savedRefreshToken}`;
+    client.defaults.headers.common.Authorization = `Bearer ${savedToken}`;
+    client.defaults.headers.common.Refreshauth = `Bearer ${savedRefreshToken}`;
 
     store.dispatch(checkMyInfo());
     api.refresh();
     if (!savedToken) {
-      return null;
+      return;
     }
 
     store.dispatch(setAccessToken(savedToken));

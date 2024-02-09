@@ -135,8 +135,8 @@ const Github = styled.img`
 `;
 
 const Name = styled.div`
-  width: 51px;
-  margin-left: 0.17rem;
+  width: 56px;
+  margin-left: 0.014rem;
   top: -0.55rem;
   overflow: hidden;
   text-overflow: ellipsis;

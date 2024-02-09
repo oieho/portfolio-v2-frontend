@@ -57,11 +57,13 @@ function* loginSaga(action: ReturnType<typeof login>) {
   try {
     const { userId, password, autoLogin } = action.payload;
     const response: AxiosResponse = yield call(api.signIn, userId, password);
-    const { authorization } = response.headers;
-    const accessToken = authorization?.substring(7) as string;
+    const accessToken = (response.headers.authorization as string)?.substring(
+      7,
+    ) as string;
     client.defaults.headers.common.authorization = `Bearer ${accessToken}`;
-    const { refreshauthorization } = response.headers;
-    const refreshToken = refreshauthorization?.substring(7) as string;
+    const refreshToken = (response.headers.refreshauth as string)?.substring(
+      7,
+    ) as string;
     yield put(checkMyInfo(response.data));
     yield put(setLoginInfo(response.data));
 
