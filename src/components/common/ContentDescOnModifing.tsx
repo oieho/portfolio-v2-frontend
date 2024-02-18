@@ -8,7 +8,7 @@ import {
   useState,
   useCallback,
 } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { MyInfo } from '../../App';
 import { Board } from '../../App';
 import { observer } from 'mobx-react';
@@ -418,8 +418,10 @@ const ContentDescOnModifing: React.FC<Props> = observer(
     const [hashTag2, setHashTag2] = useState<any>('');
     const [hashTag3, setHashTag3] = useState<any>('');
     const [hits, setHits] = useState<string>('');
-    const [wno, setWno] = useState<string>();
+    const [, setWno] = useState<string>();
     const [thumbnailStyle, setThumbnailStyle] = useState({});
+
+    const { wno } = useParams<{ wno: any }>();
 
     useLayoutEffect(() => {
       const fetchData = async () => {
@@ -436,7 +438,7 @@ const ContentDescOnModifing: React.FC<Props> = observer(
     }, []); // 빈 배열 유지
 
     useEffect(() => {
-      setWno(board.wno);
+      setWno(wno);
       setTitle(board.title);
       setTools(board.tools);
       setDescription(board.description);
@@ -614,7 +616,7 @@ const ContentDescOnModifing: React.FC<Props> = observer(
             }
           }
 
-          modifyArticle(
+          const response = await modifyArticle(
             wno!,
             portfolioContentToServer,
             title,
@@ -627,37 +629,42 @@ const ContentDescOnModifing: React.FC<Props> = observer(
             hits!,
           );
 
-          try {
-            const response = await fetch(`/display/${wno}`);
-
-            const arrayBuffer = await response.arrayBuffer();
-            const imageURL = URL.createObjectURL(new Blob([arrayBuffer]));
-
-            actions.setBoardThumbnail(imageURL);
-          } catch (error) {
-            console.log('Error:', error);
-          }
-
-          actions.setHideEditorGear(true); // useeEffect hideContent
-
-          if (state.selectedView === true) {
-            setTimeout(() => {
-              navigate(
-                `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=false`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 160);
+          if (response === 'preventExecutionFromJS') {
+            // 권한이 있는 사용자 로그아웃 후 권한 제어 (e.preventDefault() 적용이 불가능하여 if문으로 구성)
+            return;
           } else {
-            setTimeout(() => {
-              navigate(
-                `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=true`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 160);
+            try {
+              const response = await fetch(`/display/${wno}`);
+
+              const arrayBuffer = await response.arrayBuffer();
+              const imageURL = URL.createObjectURL(new Blob([arrayBuffer]));
+
+              actions.setBoardThumbnail(imageURL);
+            } catch (error) {
+              console.log('Error:', error);
+            }
+
+            actions.setHideEditorGear(true); // useeEffect hideContent
+
+            if (state.selectedView === true) {
+              setTimeout(() => {
+                navigate(
+                  `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=false`,
+                  {
+                    state: { searchType: null, keyword: null },
+                  },
+                );
+              }, 160);
+            } else {
+              setTimeout(() => {
+                navigate(
+                  `/boards/view/${wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&isModified=true`,
+                  {
+                    state: { searchType: null, keyword: null },
+                  },
+                );
+              }, 160);
+            }
           }
         } catch (error) {
           console.error(error);

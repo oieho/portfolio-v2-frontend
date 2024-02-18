@@ -66,6 +66,11 @@ const ContentDescOnModifingContainer: React.FC<Props> = observer(
       combinedHashTag: string[],
       hits: string,
     ) => {
+      if (myInfo?.roleType !== 'ADMIN') {
+        alert('수정 권한이 없습니다.');
+        const preventDefault = 'preventExecutionFromJS';
+        return preventDefault;
+      }
       const formData = new FormData();
       formData.append(
         'boardImages',

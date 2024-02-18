@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React, {
   useEffect,
-  useLayoutEffect,
   useRef,
   LegacyRef,
   useContext,
@@ -362,11 +361,8 @@ interface Props {
 }
 const ContentDescOnWriting = ({
   registerArticle,
-  myInfo,
   generateThumbnailDir,
   extractsMaxWno,
-  isLoading,
-  isAuthorized,
 }: Props) => {
   const { state, actions } = useContext(MainContext);
 
@@ -433,13 +429,6 @@ const ContentDescOnWriting = ({
     };
     setBoardRegDateDays(date());
   }, [actions, state.zIdx]);
-
-  useLayoutEffect(() => {
-    if (state.closeWriting === true) {
-      // deliveryImgInfoOnWriting.setImgInfoOnWriting([]);
-      actions.setCloseWriting(false);
-    }
-  }, []);
 
   const onChangeTitle = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -544,64 +533,69 @@ const ContentDescOnWriting = ({
     setThumbnailFile(thumbnailInput.files[0]);
     setValidateThumbnail(true);
   };
-  const onSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      if (state.portfolioContent.length === 0) {
-        alert('내용을 작성하지 않았습니다.');
-        return;
-      } else if (validateTitle !== true) {
-        alert('제목을 작성하지 않았습니다.');
-        titleRef.current.focus();
-        return;
-      } else if (validateThumbnail !== true) {
-        alert('썸네일 이미지를 첨부하지 않았습니다.');
-        return;
-      } else if (validateDescription !== true) {
-        alert('설명을 작성하지 않았습니다.');
-        descriptionRef.current.focus();
-        return;
-      } else if (hashTag1.length === 0) {
-        alert('첫 번째 해시태그를 작성하지 않았습니다.');
-        hashTag1Ref.current.focus();
-        return;
-      } else if (hashTag2.length === 0) {
-        alert('두 번째 해시태그를 작성하지 않았습니다.');
-        hashTag2Ref.current.focus();
-        return;
-      } else if (hashTag1.length === 0 || hashTag2.length === 0) {
-        alert('필수 해시태그를 작성하지 않았습니다.');
-        hashTag1Ref.current.focus();
-        return;
-      } else if (validateCategory !== true) {
-        alert('분류를 선택하지 않았습니다.');
-        return;
-      } else if (
-        hashTag1 === hashTag2 ||
-        hashTag1 === hashTag3 ||
-        hashTag2 === hashTag3
-      ) {
-        alert('중복 된 해시태그는 등록할 수 없습니다.');
-        return;
-      }
+    if (state.portfolioContent.length === 0) {
+      alert('내용을 작성하지 않았습니다.');
+      return;
+    } else if (validateTitle !== true) {
+      alert('제목을 작성하지 않았습니다.');
+      titleRef.current.focus();
+      return;
+    } else if (validateThumbnail !== true) {
+      alert('썸네일 이미지를 첨부하지 않았습니다.');
+      return;
+    } else if (validateDescription !== true) {
+      alert('설명을 작성하지 않았습니다.');
+      descriptionRef.current.focus();
+      return;
+    } else if (hashTag1.length === 0) {
+      alert('첫 번째 해시태그를 작성하지 않았습니다.');
+      hashTag1Ref.current.focus();
+      return;
+    } else if (hashTag2.length === 0) {
+      alert('두 번째 해시태그를 작성하지 않았습니다.');
+      hashTag2Ref.current.focus();
+      return;
+    } else if (hashTag1.length === 0 || hashTag2.length === 0) {
+      alert('필수 해시태그를 작성하지 않았습니다.');
+      hashTag1Ref.current.focus();
+      return;
+    } else if (validateCategory !== true) {
+      alert('분류를 선택하지 않았습니다.');
+      return;
+    } else if (
+      hashTag1 === hashTag2 ||
+      hashTag1 === hashTag3 ||
+      hashTag2 === hashTag3
+    ) {
+      alert('중복 된 해시태그는 등록할 수 없습니다.');
+      return;
+    }
+
+    const combinedHashTag: string[] = [];
+    combinedHashTag[0] = hashTag1;
+    combinedHashTag[1] = hashTag2;
+    if (hashTag3.length > 0) {
+      combinedHashTag.push(hashTag3);
+    }
+    const response = await registerArticle(
+      state.portfolioContent,
+      title,
+      thumbnailInfo,
+      thumbnailFile,
+      tools,
+      description,
+      category,
+      combinedHashTag,
+    );
+    if (response === 'preventExecutionFromJS') {
+      // 권한이 있는 사용자 로그아웃 후 권한 제어 (e.preventDefault() 적용이 불가능하여 if문으로 구성)
+      console.log(response);
+      return;
+    } else {
       try {
-        const combinedHashTag: string[] = [];
-        combinedHashTag[0] = hashTag1;
-        combinedHashTag[1] = hashTag2;
-        if (hashTag3.length > 0) {
-          combinedHashTag.push(hashTag3);
-        }
-        await registerArticle(
-          state.portfolioContent,
-          title,
-          thumbnailInfo,
-          thumbnailFile,
-          tools,
-          description,
-          category,
-          combinedHashTag,
-        );
         const result = await extractsMaxWno();
         actions.setMaxWno(result! as number);
         setTitle('');
@@ -623,7 +617,7 @@ const ContentDescOnWriting = ({
               state: { searchType: null, keyword: null },
             },
           );
-        }, 1160);
+        }, 100);
 
         const tableRows = document.querySelectorAll('.black');
         tableRows.forEach((row) => {
@@ -652,35 +646,8 @@ const ContentDescOnWriting = ({
         console.error(error);
         alert('글 등록에 실패하였습니다.');
       }
-    },
-    [
-      actions,
-      category,
-      countQParam,
-      description,
-      extractsMaxWno,
-      hashTag1,
-      hashTag2,
-      hashTag3,
-      keywordQParam,
-      navigate,
-      regDateQParam,
-      registerArticle,
-      searchTypeQParam,
-      state.maxWno,
-      state.portfolioContent,
-      state.selectedList,
-      thumbnailFile,
-      thumbnailInfo,
-      title,
-      titleQParam,
-      tools,
-      validateCategory,
-      validateDescription,
-      validateThumbnail,
-      validateTitle,
-    ],
-  );
+    }
+  };
 
   return (
     <Wrapper>

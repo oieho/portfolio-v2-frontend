@@ -778,7 +778,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                       {state.completeOrRemove === true ? (
                         <span
                           style={{
-                            fontSize: '0.54rem',
+                            fontSize: '0.62rem',
                             fontWeight: 'bold',
                             right: '-0.01rem',
                             bottom: '0.20rem',

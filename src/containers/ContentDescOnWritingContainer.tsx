@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { getAuthorized } from '../modules/selector';
 import { connect, useSelector } from 'react-redux';
 import ContentDescOnWriting from '../components/common/ContentDescOnWriting';
 import { RootState } from '../modules';
 import { FETCH_ONE } from '../modules/board';
-import { MainContext } from '../pages/Main';
 import { observer } from 'mobx-react';
 import store from '../modules/mobxStore';
 import axios from 'axios';
@@ -14,7 +13,6 @@ interface Props {
 }
 const ContentDescOnWritingContainer: React.FC<Props> = observer(
   ({ isAuthorized }: Props) => {
-    const { actions } = useContext(MainContext);
     const { deliveryImgInfoOnWriting } = store;
     const { imgInfoOnWriting } = deliveryImgInfoOnWriting;
     const { myInfo, isLoading } = useSelector(
@@ -53,6 +51,11 @@ const ContentDescOnWritingContainer: React.FC<Props> = observer(
       category: string,
       combinedHashTag: string[],
     ) => {
+      if (myInfo?.roleType !== 'ADMIN') {
+        alert('관리자만 등록이 가능합니다.');
+        const preventDefault = 'preventExecutionFromJS';
+        return preventDefault;
+      }
       const formData = new FormData();
       formData.append(
         'boardImages',
