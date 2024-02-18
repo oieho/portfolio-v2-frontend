@@ -81,11 +81,11 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
   const [content, setContent] = useState('');
   const contentRef = useRef(null) as any;
   const editor = useRef<SunEditorCore>();
+
   const hideContent = useCallback(() => {
     setTimeout(() => {
       actions.setToggleBackBtn(false);
     }, 700);
-    actions.setCloseWriting(false);
     const selectedQParam = searchParams.get('selected');
     const titleQParam = searchParams.get('title');
     const countQParam = searchParams.get('count');

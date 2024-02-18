@@ -50,7 +50,6 @@ export const MainContext = createContext({
     completeOrRemove: false,
     searchGear: false,
     boardThumbnail: '',
-    closeWriting: false,
     allImgsAreLoaded: false,
     alignGear: false,
   },
@@ -129,9 +128,7 @@ export const MainContext = createContext({
     setBoardThumbnail: (boardThumbnail: any) => ({
       boardThumbnail,
     }),
-    setCloseWriting: (closeWriting: boolean) => ({
-      closeWriting,
-    }),
+
     setAllImgsAreLoaded: (allImgsAreLoaded: boolean) => ({
       allImgsAreLoaded,
     }),
@@ -169,7 +166,6 @@ const Main = () => {
   const [completeOrRemove, setCompleteOrRemove] = useState<boolean>();
   const [searchGear, setSearchGear] = useState<boolean>();
   const [boardThumbnail, setBoardThumbnail] = useState<any>('');
-  const [closeWriting, setCloseWriting] = useState<boolean>();
   const [allImgsAreLoaded, setAllImgsAreLoaded] = useState<boolean>(false);
   const [alignGear, setAlignGear] = useState<boolean>(false);
   const value = {
@@ -199,7 +195,6 @@ const Main = () => {
       completeOrRemove,
       searchGear,
       boardThumbnail,
-      closeWriting,
       allImgsAreLoaded,
       alignGear,
     },
@@ -229,7 +224,6 @@ const Main = () => {
       setCompleteOrRemove,
       setSearchGear,
       setBoardThumbnail,
-      setCloseWriting,
       setAllImgsAreLoaded,
       setAlignGear,
     },

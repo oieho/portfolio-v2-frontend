@@ -1,7 +1,6 @@
 import Left from '../components/common/Left';
 import RightBottom from '../components/common/RightBottom';
 import HeaderContainer from '../containers/HeaderContainer';
-import Desc from '../components/common/Desc';
 import Bracket from '../components/common/Bracket';
 import styled from 'styled-components';
 
@@ -26,7 +25,6 @@ const Blog = () => {
       <Left portfolioHv={true} homeHv={false} />
       <Bracket />
       <HeaderContainer />
-      <Desc />
 
       <RightBottom />
     </Wrapper>
