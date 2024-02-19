@@ -67,8 +67,6 @@ const HeaderContainer: React.FC<Props> = observer(
         hideContent();
       } else if (state.boardRemovable === true) {
         actions.setBoardRemovable((prevValue: boolean) => !prevValue);
-      } else {
-        hideContent();
       }
     };
     return (

@@ -425,6 +425,7 @@ const MemberLogin = ({
       setPassword('');
       setAutoLogin(false);
       setIsRemember(false);
+      LoginRef.current.style.zIndex -= 1;
     },
     [onSignIn, userId, password, isRemember],
   );
