@@ -584,7 +584,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
       toolOrHashTagQParam,
     ],
   );
-  const modifyArticle = async (index: number) => {
+  const modifyArticle = (index: number) => {
     actions.setToggleBackBtn(true);
 
     const tableRows = document.querySelectorAll('.black');
@@ -754,7 +754,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     }
 
     const message = '글을 삭제하시겠습니까?';
-    const onConfirm = (wno: number) => {
+    const onConfirm = async (wno: number) => {
       try {
         let selected = {
           title: titleQParam,
@@ -769,12 +769,12 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
           selectedList: state.selectedList,
         };
 
-        api.removeBoard(wno);
+        await api.removeBoard(wno);
         // const scrollArea = document.getElementById('scrollArea');
         // const scrollTop = scrollArea!.scrollTop;
         alert('삭제가 완료되었습니다.');
 
-        dispatch(fetchList(selected as any));
+        await dispatch(fetchList(selected as any));
         navigate(
           `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}`,
         );
