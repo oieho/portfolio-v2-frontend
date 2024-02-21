@@ -152,16 +152,21 @@ const BoardComment = styled.span`
 `;
 const Tools = styled.span`
   position: relative;
-  display: inline-block;
-  width: 7rem;
-  top: 0.2rem;
+  background-color: red;
+  text-align: right;
+  height: 2.261rem;
+  top: 0.1rem;
   left: 0.19rem;
-  white-space: nowrap;
   img {
-    margin-left: 0.21rem;
+    margin: 0 0 0.1rem 0.21rem;
     width: 1.02rem;
     height: 1.02rem;
   }
+`;
+const ToolsDescendant = styled.span`
+  width: 18.85rem;
+  text-align: left;
+  position: absolute;
 `;
 const BoardCategory = styled.a`
   color: #a5a5a5;
@@ -425,6 +430,19 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
 
     if (state.viewSelectedIndexGear === true) {
       setSelectedIndex(-1);
+    }
+
+    const toolDescendant = document.getElementById('toolsDescendant');
+    const spans = toolDescendant?.querySelectorAll('span');
+
+    let totalWidth = 0;
+    spans?.forEach((span: HTMLSpanElement) => {
+      totalWidth += span.offsetWidth;
+    });
+    const thresholdInRem = 301.6; // toolsDescenDant>span 의 offsetWidth
+
+    if (totalWidth >= thresholdInRem) {
+      toolDescendant!.style.textAlign = 'right';
     }
   }, [
     boards.workBoard?.wno,
@@ -914,349 +932,351 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                   &nbsp;
                   <BoardComment>[{boards.commentCount}]</BoardComment>
                   <Tools>
-                    {boards.workBoard?.tools?.map(
-                      (icon: string, index: number) => {
-                        if (icon === 'docker') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'docker')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/docker.png"
-                                alt="Docker"
-                                title="Docker"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'CSS') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'CSS')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/css.png"
-                                alt="CSS"
-                                title="CSS"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'dreamweaver') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'dreamweaver')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/dreamweaver.png"
-                                alt="Dreamweaver"
-                                title="Dreamweaver"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'eclipse') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'eclipse')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/eclipse.png"
-                                alt="Eclipse"
-                                title="Eclipse"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'excel') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'excel')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/excel.png"
-                                alt="Excel"
-                                title="Excel"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'gradle') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'gradle')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/gradle.png"
-                                alt="Gradle"
-                                title="Gradle"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'HTML') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'HTML')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/html.png"
-                                alt="HTML"
-                                title="HTML"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'illustrator') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'illustrator')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/illustrator.png"
-                                alt="Illustrator"
-                                title="Illustrator"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'java') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'java')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/java.png"
-                                alt="Java"
-                                title="Java"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'javascript') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'javascript')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/javascript.png"
-                                alt="JavaScript"
-                                title="JavaScript"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'typescript') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'typescript')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/typescript.png"
-                                alt="TypeScript"
-                                title="TypeScript"
-                              />
-                            </span>
-                          );
-                        }else if (icon === 'jQuery') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'jQuery')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/jquery.png"
-                                alt="jQuery"
-                                title="jQuery"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'heidiSQL') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'heidiSQL')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/heidisql.png"
-                                alt="HeidiSQL"
-                                title="HeidiSQL"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'mariaDB') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'mariaDB')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/mariadb.png"
-                                alt="MariaDB"
-                                title="MariaDB"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'photoshop') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'photoshop')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/photoshop.png"
-                                alt="Photoshop"
-                                title="Photoshop"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'python') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'python')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/python.png"
-                                alt="Python"
-                                title="Python"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'querydsl') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'querydsl')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/querydsl.png"
-                                alt="Querydsl"
-                                title="Querydsl"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'react') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'react')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/react.png"
-                                alt="React"
-                                title="React"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'redux') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'redux')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/redux.png"
-                                alt="Redux"
-                                title="Redux"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'mobx') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'mobx')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/mobx.png"
-                                alt="MobX"
-                                title="MobX"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'springboot') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'springboot')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/springboot.png"
-                                alt="Springboot"
-                                title="Springboot"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'jwt') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'jwt')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/jwt.png"
-                                alt="JWT(Json Web Token)"
-                                title="JWT(Json Web Token)"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'sts') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'sts')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/sts.png"
-                                alt="Spring Tool Suite"
-                                title="Spring Tool Suite"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'vscode') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'vscode')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/vscode.png"
-                                alt="Visual Studio Code"
-                                title="Visual Studio Code"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'oracle') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'oracle')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/oracle.png"
-                                alt="Oracle"
-                                title="Oracle"
-                              />
-                            </span>
-                          );
-                        } else if (icon === 'jenkins') {
-                          return (
-                            <span
-                              key={icon}
-                              onClick={(e: any) => callTool(e, 'jenkins')}
-                            >
-                              <img
-                                src="/images/board/toolThumbnails/jenkins.png"
-                                alt="Jenkins"
-                                title="Jenkins"
-                              />
-                            </span>
-                          );
-                        }
-                      },
-                    )}
+                    <ToolsDescendant id="toolsDescendant">
+                      {boards.workBoard?.tools?.map(
+                        (icon: string, index: number) => {
+                          if (icon === 'docker') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'docker')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/docker.png"
+                                  alt="Docker"
+                                  title="Docker"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'CSS') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'CSS')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/css.png"
+                                  alt="CSS"
+                                  title="CSS"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'dreamweaver') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'dreamweaver')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/dreamweaver.png"
+                                  alt="Dreamweaver"
+                                  title="Dreamweaver"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'eclipse') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'eclipse')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/eclipse.png"
+                                  alt="Eclipse"
+                                  title="Eclipse"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'excel') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'excel')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/excel.png"
+                                  alt="Excel"
+                                  title="Excel"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'gradle') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'gradle')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/gradle.png"
+                                  alt="Gradle"
+                                  title="Gradle"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'HTML') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'HTML')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/html.png"
+                                  alt="HTML"
+                                  title="HTML"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'illustrator') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'illustrator')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/illustrator.png"
+                                  alt="Illustrator"
+                                  title="Illustrator"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'java') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'java')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/java.png"
+                                  alt="Java"
+                                  title="Java"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'javascript') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'javascript')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/javascript.png"
+                                  alt="JavaScript"
+                                  title="JavaScript"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'typescript') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'typescript')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/typescript.png"
+                                  alt="TypeScript"
+                                  title="TypeScript"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'jQuery') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'jQuery')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/jquery.png"
+                                  alt="jQuery"
+                                  title="jQuery"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'heidiSQL') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'heidiSQL')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/heidisql.png"
+                                  alt="HeidiSQL"
+                                  title="HeidiSQL"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'mariaDB') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'mariaDB')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/mariadb.png"
+                                  alt="MariaDB"
+                                  title="MariaDB"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'photoshop') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'photoshop')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/photoshop.png"
+                                  alt="Photoshop"
+                                  title="Photoshop"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'python') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'python')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/python.png"
+                                  alt="Python"
+                                  title="Python"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'querydsl') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'querydsl')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/querydsl.png"
+                                  alt="Querydsl"
+                                  title="Querydsl"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'react') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'react')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/react.png"
+                                  alt="React"
+                                  title="React"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'redux') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'redux')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/redux.png"
+                                  alt="Redux"
+                                  title="Redux"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'mobx') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'mobx')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/mobx.png"
+                                  alt="MobX"
+                                  title="MobX"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'springboot') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'springboot')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/springboot.png"
+                                  alt="Springboot"
+                                  title="Springboot"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'jwt') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'jwt')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/jwt.png"
+                                  alt="JWT(Json Web Token)"
+                                  title="JWT(Json Web Token)"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'sts') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'sts')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/sts.png"
+                                  alt="Spring Tool Suite"
+                                  title="Spring Tool Suite"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'vscode') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'vscode')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/vscode.png"
+                                  alt="Visual Studio Code"
+                                  title="Visual Studio Code"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'oracle') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'oracle')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/oracle.png"
+                                  alt="Oracle"
+                                  title="Oracle"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'jenkins') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'jenkins')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/jenkins.png"
+                                  alt="Jenkins"
+                                  title="Jenkins"
+                                />
+                              </span>
+                            );
+                          }
+                        },
+                      )}
+                    </ToolsDescendant>
                   </Tools>
                 </BoardTitle>
               </li>
