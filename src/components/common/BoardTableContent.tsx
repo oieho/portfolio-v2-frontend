@@ -1046,7 +1046,20 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                               />
                             </span>
                           );
-                        } else if (icon === 'jQuery') {
+                        } else if (icon === 'typescript') {
+                          return (
+                            <span
+                              key={icon}
+                              onClick={(e: any) => callTool(e, 'typescript')}
+                            >
+                              <img
+                                src="/images/board/toolThumbnails/typescript.png"
+                                alt="TypeScript"
+                                title="TypeScript"
+                              />
+                            </span>
+                          );
+                        }else if (icon === 'jQuery') {
                           return (
                             <span
                               key={icon}
@@ -1173,6 +1186,19 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                                 src="/images/board/toolThumbnails/springboot.png"
                                 alt="Springboot"
                                 title="Springboot"
+                              />
+                            </span>
+                          );
+                        } else if (icon === 'jwt') {
+                          return (
+                            <span
+                              key={icon}
+                              onClick={(e: any) => callTool(e, 'jwt')}
+                            >
+                              <img
+                                src="/images/board/toolThumbnails/jwt.png"
+                                alt="JWT(Json Web Token)"
+                                title="JWT(Json Web Token)"
                               />
                             </span>
                           );
