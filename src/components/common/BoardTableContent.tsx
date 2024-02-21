@@ -1208,6 +1208,19 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                                 />
                               </span>
                             );
+                          } else if (icon === 'jpa') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'jpa')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/jpa.png"
+                                  alt="JPA"
+                                  title="JPA(Java Persistence API)"
+                                />
+                              </span>
+                            );
                           } else if (icon === 'jwt') {
                             return (
                               <span

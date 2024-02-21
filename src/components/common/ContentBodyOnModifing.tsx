@@ -148,7 +148,6 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
           if (remainingFilesCount === 0) {
             actions.setAllImgsAreLoaded(true);
             editor.current!.core.focus();
-            editor.current!.insertHTML('&nbsp;');
           }
         }, 0);
       };
