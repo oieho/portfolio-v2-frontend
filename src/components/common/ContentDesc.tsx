@@ -14,6 +14,7 @@ import { Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
 import AddCommentBtn from './button/AddButton';
+import Cookies from 'js-cookie';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -98,13 +99,14 @@ const RegDateDesc = styled.span`
   z-index: 2;
   font-weight: 400;
   color: #a5a5a5;
-
   position: absolute;
 `;
 const DescWrapper = styled.div`
   position: relative;
   width: 15.5rem;
   height: 10.2rem;
+  min-height: 4.66rem;
+  max-height: 19.58rem;
   border: 1px solid #ededed;
   outline: none;
   padding: 0.4rem;
@@ -126,6 +128,8 @@ const DescTextarea = styled.textarea`
   left: 0.2rem;
   width: 14.5rem;
   height: 8.3rem;
+  min-height: 2.485rem;
+  max-height: 17.7rem;
   padding-right: 0.307rem;
   font-size: 0.72rem;
   color: #a5a5a5;
@@ -156,9 +160,11 @@ const DescTextarea = styled.textarea`
 `;
 const CommentWrapper = styled.div`
   position: relative;
-  top: 7.43rem;
+  margin-top: 0.46rem;
   width: 15.5rem;
   height: 20.4rem;
+  max-height: 25.9rem;
+  min-height: 11.02rem;
   border: 1px solid #dfdfdf;
   background: linear-gradient(
     to bottom,
@@ -168,12 +174,39 @@ const CommentWrapper = styled.div`
   outline: none;
   padding: 0.25rem;
   border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 수직 가운데 정렬 */
+  align-items: center; /* 수평 가운데 정렬 */
+  z-index: 2;
+
   & div:nth-of-type(n + 2) {
     margin-top: 2.5rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: -5.86rem;
+    z-index: 2;
+  }
+`;
+const ResizeBar = styled.span`
+  position: absolute;
+  display: block;
+  background-image: url('/images/board/resizeBar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 6.775rem;
+  height: 0.2465rem;
+  top: -0.25rem;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.29s ease-in;
+  z-index: 1;
+  cursor: n-resize;
+  &.active {
+    opacity: 1;
+    z-index: 1;
   }
 `;
 const CommentScrollArea = styled.div`
+  margin-right: 0.1rem;
   width: 99.4%;
   height: 100%;
   overflow-y: scroll;
@@ -1002,7 +1035,7 @@ const AddCommentForm = styled.div`
   background-color: #ffffff;
   width: 11.52rem;
   height: 3.36rem;
-  right: 0.3rem;
+  right: 0.167rem;
   bottom: 1.8rem;
   border: 1px solid #ededed;
   outline: none;
@@ -1207,8 +1240,15 @@ const ContentDesc = ({
     useState<boolean>(false);
   const [lastReply, setLastReply] = useState<number>();
 
-  const descRef = useRef(null) as unknown as HTMLDivElement &
+  const [dragging, setDragging] = useState(false);
+  const [initialY, setInitialY] = useState(0);
+  const [initialHeightA, setInitialHeightA] = useState(0);
+  const [initialHeightB, setInitialHeightB] = useState(0);
+  const [initialHeightT, setInitialHeightT] = useState(0);
+
+  const wrapperresizingA = useRef(null) as unknown as HTMLDivElement &
     (LegacyRef<HTMLDivElement> | undefined) as any;
+
   const commentRef = useRef(null) as unknown as HTMLDivElement &
     (LegacyRef<HTMLDivElement> | undefined) as any;
   const addbtnRef = useRef(null) as unknown as HTMLSpanElement &
@@ -1227,13 +1267,38 @@ const ContentDesc = ({
     (LegacyRef<HTMLSpanElement> | undefined) as any;
   const starWrapperOnReply = useRef(null) as unknown as HTMLSpanElement &
     (LegacyRef<HTMLSpanElement> | undefined) as any;
+  const DraggerRef = useRef<HTMLSpanElement>(
+    null,
+  ) as unknown as HTMLSpanElement &
+    (LegacyRef<HTMLSpanElement> | undefined) as any;
+  const resizingA = useRef<HTMLDivElement>(null) as unknown as HTMLDivElement &
+    (LegacyRef<HTMLDivElement> | undefined) as any;
+  const resizingB = useRef<HTMLDivElement>(null) as unknown as HTMLDivElement &
+    (LegacyRef<HTMLDivElement> | undefined) as any;
+  const descTextareaRef = useRef<HTMLTextAreaElement>(
+    null,
+  ) as unknown as HTMLTextAreaElement &
+    (LegacyRef<HTMLTextAreaElement> | undefined) as any;
 
   useEffect(() => {
+    const sizesString = Cookies.get('rightComponentSizes');
+    console.log(sizesString);
+    if (sizesString) {
+      // JSON 문자열 파싱
+      const sizes = JSON.parse(sizesString);
+
+      // 각각의 변수에 할당
+      const { resizingAHeight, resizingBHeight, descTextareaHeight } = sizes;
+      // 할당된 변수들을 사용하여 작업 수행
+      resizingA.current.style.height = `${resizingAHeight}px`;
+      resizingB.current.style.height = `${resizingBHeight}px`;
+      descTextareaRef.current.style.height = `${descTextareaHeight}px`;
+    }
     if (scrollDownGear === true) {
       commentRef.current.scrollTop = commentRef.current.scrollHeight;
     }
     actions.setZIdx(state.zIdx++);
-    descRef.current.style.zIndex = state.zIdx;
+    wrapperresizingA.current.style.zIndex = state.zIdx;
 
     const convertDateForm = (newRegDate: any) => {
       if (!Array.isArray(newRegDate)) {
@@ -1253,12 +1318,71 @@ const ContentDesc = ({
       return year + '-' + month + '-' + date;
     };
     setBoardRegDateDays(convertDateForm(board.regDate));
+
+    const handleMouseMove = (event: MouseEvent) => {
+      if (dragging && resizingA.current && resizingB.current) {
+        const minHeight = 0 as any;
+
+        const deltaY = event.clientY - initialY;
+        var newHeightA = initialHeightA + deltaY;
+        var newHeightB = initialHeightB - deltaY;
+        var newHeightAofTextArea = initialHeightT + deltaY;
+
+        // 음수 높이 처리 및 최소 높이 확인
+        if (newHeightA < minHeight) {
+          newHeightA = minHeight;
+        } else {
+          resizingA.current.style.height = `${newHeightA}px`;
+        }
+        if (newHeightB < minHeight) {
+          newHeightB = minHeight;
+        } else {
+          resizingB.current.style.height = `${newHeightB}px`;
+        }
+        if (newHeightAofTextArea < minHeight) {
+          newHeightAofTextArea = minHeight;
+        } else {
+          descTextareaRef.current.style.height = `${newHeightAofTextArea}px`;
+        }
+
+        const rightComponentSizes = {
+          resizingAHeight: newHeightA,
+          resizingBHeight: newHeightB,
+          descTextareaHeight: newHeightAofTextArea,
+        };
+
+        Cookies.set('rightComponentSizes', JSON.stringify(rightComponentSizes));
+        if (!DraggerRef.current!.classList.contains('active')) {
+          DraggerRef.current!.classList.add('active');
+        }
+      }
+    };
+
+    const handleMouseUp = () => {
+      if (DraggerRef.current!.classList.contains('active')) {
+        DraggerRef.current!.classList.remove('active');
+      }
+      setDragging(false);
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
   }, [
     actions,
     board.regDate,
     board.wno,
     comment,
     dispatch,
+    dragging,
+    initialHeightA,
+    initialHeightB,
+    initialHeightT,
+    initialY,
     scrollDownGear,
     state.zIdx,
   ]);
@@ -1274,7 +1398,7 @@ const ContentDesc = ({
         actions.setToggleAddCommentForm(false);
         saying!.style.transition = 'opacity 0.3s ease-in';
         saying!.style.opacity = '0';
-        descRef.current.style.height = '39.36rem';
+        wrapperresizingA.current.style.height = '39.36rem';
         addCommentForm!.style.transition = 'opacity 0.2s 0.6s';
         addCommentForm!.style.opacity = '1';
         if (starWrapper !== null) {
@@ -1289,8 +1413,8 @@ const ContentDesc = ({
         actions.setToggleAddCommentForm(true);
         addCommentForm!.style.opacity = '0';
         addCommentForm!.style.transition = 'opacity 0.2s';
-        descRef.current.style.height = '35.66rem';
-        descRef.current.style.transition = 'height 0.45s 0.1s ease-in';
+        wrapperresizingA.current.style.height = '35.66rem';
+        wrapperresizingA.current.style.transition = 'height 0.45s 0.1s ease-in';
         if (addbtnRef === null) {
           addbtnRef!.current.style.display = 'block';
         }
@@ -1302,18 +1426,20 @@ const ContentDesc = ({
         }
       }
     },
-    [
-      actions,
-      addbtnRef,
-      addCommentForm,
-      descRef,
-      saying,
-      selectStarBtnRef,
-      setToggleAddCommentForm,
-      starWrapper,
-      textareaRef,
-    ],
+    [actions, saying, addCommentForm, starWrapper],
   );
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.button === 0) {
+      setDragging(true);
+      setInitialY(event.clientY);
+      setInitialHeightA(resizingA.current!.offsetHeight);
+      setInitialHeightB(resizingB.current!.offsetHeight);
+      setInitialHeightT(descTextareaRef.current!.offsetHeight);
+      event.stopPropagation();
+      event.preventDefault();
+    }
+  };
 
   const controlTextArea = (e: Event) => {
     if (myInfo?.roleType !== 'USER' && myInfo?.roleType !== 'ADMIN') {
@@ -1788,7 +1914,7 @@ const ContentDesc = ({
   };
   return (
     <Wrapper>
-      <Description id="addComment" ref={descRef}>
+      <Description id="addComment" ref={wrapperresizingA}>
         <Inputs>
           <InputLi>
             <TitleTit>TITLE</TitleTit>
@@ -1805,13 +1931,30 @@ const ContentDesc = ({
             />
           </InputLi>
           <InputLi>
-            <DescWrapper>
+            <DescWrapper ref={resizingA}>
               <DescTit>DESCRIPTION</DescTit>
-              <DescTextarea value={board.description} readOnly disabled />
+              <DescTextarea
+                ref={descTextareaRef}
+                value={board.description}
+                readOnly
+                disabled
+              />
             </DescWrapper>
-          </InputLi>
-          <InputLi>
-            <CommentWrapper>
+            <CommentWrapper ref={resizingB}>
+              <ResizeBar
+                ref={DraggerRef}
+                onMouseDown={handleMouseDown}
+                onMouseEnter={() => {
+                  if (!dragging) {
+                    DraggerRef.current!.classList.add('active');
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (!dragging) {
+                    DraggerRef.current!.classList.remove('active');
+                  }
+                }}
+              />
               <CommentScrollArea
                 onScroll={ifScrollingShowBtn}
                 id="scrollArea"
@@ -3845,7 +3988,7 @@ const ContentDesc = ({
                         style={{
                           width: `3.65rem`,
                           height: `3.28rem`,
-                          left: `11.76rem`,
+                          left: `11.77rem`,
                           bottom: `2.77rem`,
                           paddingTop: `0.01rem`,
                           position: `relative`,
