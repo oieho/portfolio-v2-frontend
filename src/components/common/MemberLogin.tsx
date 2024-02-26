@@ -8,10 +8,10 @@ import React, {
   LegacyRef,
 } from 'react';
 import Button from './button/Button';
-import { TryLoginAuth, ToggleLogin } from '../../App';
+import { TryLoginAuth, ToggleLogin, TimeToLive } from '../../App';
 import MemberFindId from '../../containers/MemberFindIdContainer';
 import MemberFindPassword from '../../containers/MemberFindPasswordContainer';
-import CountDownTimer from './CountDownTimer';
+import CountDownTimer from '../../containers/CountDownTimerContainer';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -353,6 +353,7 @@ interface Props {
   readonly isAuthorized: boolean;
   readonly tryLoginAuth: TryLoginAuth | any;
   readonly toggleLogin: ToggleLogin | any;
+  readonly timeToLive: TimeToLive | any;
 }
 
 const MemberLogin = ({
@@ -360,6 +361,7 @@ const MemberLogin = ({
   isAuthorized,
   tryLoginAuth,
   toggleLogin,
+  timeToLive,
 }: Props) => {
   const [userId, setUserId] = useState('');
   const [password, setPassword] = useState('');
@@ -374,7 +376,7 @@ const MemberLogin = ({
   const [IdInfo, setIdInfo] = useState('');
   const [backBtnHover, setBackBtnHover] = useState<boolean>();
   const [hideBackBtn, setHideBackBtn] = useState<boolean>();
-
+  const [ifLoginSuccessBack, setIfLoginSuccessBack] = useState<boolean>();
   const LoginRef = useRef(null) as unknown as HTMLSpanElement &
     (LegacyRef<HTMLSpanElement> | undefined) as any;
   const MemberFindIdRef = useRef(null) as unknown as HTMLSpanElement &
@@ -420,7 +422,11 @@ const MemberLogin = ({
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setLoginInitStatus(true);
-      onSignIn(userId, password, isRemember);
+      onSignIn(userId, password, isRemember)
+        .then(setIfLoginSuccessBack(true))
+        .catch(() => {
+          setIfLoginSuccessBack(false);
+        });
       setUserId('');
       setPassword('');
       setAutoLogin(false);
@@ -445,12 +451,13 @@ const MemberLogin = ({
     setHideBackBtn(false);
   };
   useEffect(() => {
-    if (hideBackBtn === true) {
+    if (ifLoginSuccessBack === true) {
       BackBtnRef.current.style.display = 'block';
     } else {
       BackBtnRef.current.style.display = 'none';
     }
     window.onpopstate = () => {
+      // 브라우저의 뒤로 가기 버튼을 클릭했을 때 발생하는 이벤트
       for (const ref of MemberModuleArray) {
         ref.current.style.display = 'none';
       }
@@ -539,7 +546,7 @@ const MemberLogin = ({
                 '로그인 실패'}
               {tryLoginAuth ? (
                 <SetPosCountDownTimer>
-                  <CountDownTimer />
+                  <CountDownTimer timeToLive={timeToLive} />
                 </SetPosCountDownTimer>
               ) : (
                 <></>

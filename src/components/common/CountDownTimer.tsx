@@ -13,12 +13,15 @@ const ErrorMessage = styled.div`
   width: 266px;
   margin-top: 121px;
   position: absolute;
-  color: red;
+  color: #00b300;
   text-align: center;
   font-size: 0.875rem;
 `;
-const CountDownTimer = () => {
-  const [remainingTime, setRemainingTime] = useState(5 * 60);
+interface Props {
+  readonly timeToLive: number;
+}
+const CountDownTimer = ({ timeToLive }: Props) => {
+  const [remainingTime, setRemainingTime] = useState(timeToLive);
   const [showTimer, setShowTimer] = useState(false);
   useEffect(() => {
     if (!showTimer) {

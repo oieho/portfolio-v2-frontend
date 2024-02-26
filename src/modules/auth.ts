@@ -20,6 +20,7 @@ const LOGIN_INFO = 'auth/LOGIN_INFO';
 const SET_MODIFY_INFO = 'auth/SET_MODIFY_INFO';
 const SET_MY_INFO = 'auth/SET_MY_INFO';
 const CHECK_MY_INFO = 'auth/CHECK_MY_INFO';
+const SET_TIME_TO_LIVE = 'auth/TIME_TO_LIVE';
 
 export const setAccessToken = createAction(
   SET_ACCESS_TOKEN,
@@ -53,6 +54,12 @@ export const setLoginInfo = createAction(
   LOGIN_INFO,
   (toggleLogin: ToggleLogin) => toggleLogin,
 );
+
+export const setTimeToLive = createAction(
+  SET_TIME_TO_LIVE,
+  (timeToLive: number) => timeToLive,
+);
+
 function* loginSaga(action: ReturnType<typeof login>) {
   try {
     const { userId, password, autoLogin } = action.payload;
@@ -66,19 +73,31 @@ function* loginSaga(action: ReturnType<typeof login>) {
     ) as string;
     yield put(checkMyInfo(response.data));
     yield put(setLoginInfo(response.data));
-
     if (autoLogin === true) {
       yield put(setAccessToken(accessToken));
       Cookies.set('accessToken', accessToken); // 1시간
       Cookies.set('refreshToken', refreshToken); // 2주
     }
+
     if (response && response.status === 200) {
       yield put(setTryLoginAuth(false as any));
       return response;
     }
   } catch (e: any) {
-    if (e.message === '인증 실패') {
-      alert('로그인 3회 연속 실패로 5분 후 이용 바랍니다.');
+    if (e.message.includes('인증 실패')) {
+      const ttl = e.message.substring(e.message.indexOf(',') + 1).trim();
+      const minutes = Math.floor(ttl / 60); // 분으로 변환한 후 정수 부분만 취함
+      const seconds = ttl % 60; // 초 부분
+
+      alert(
+        '로그인 3회 연속 실패로 ' +
+          minutes +
+          '분 ' +
+          seconds +
+          '초 후 이용 바랍니다.',
+      );
+
+      yield put(setTimeToLive(ttl));
       yield put(setTryLoginAuth(true as any));
     }
   }
@@ -117,6 +136,7 @@ export interface AuthState {
   modifyInfo: ModifyInfo | null;
   tryLoginAuth: TryLoginAuth | null;
   toggleLogin: ToggleLogin | null;
+  timeToLive: number;
   token: string;
   error: any;
 }
@@ -127,6 +147,7 @@ const initialState: AuthState = {
   modifyInfo: null,
   tryLoginAuth: null,
   toggleLogin: null,
+  timeToLive: 0,
   token: '',
   error: null,
 };
@@ -148,6 +169,10 @@ const auth = createReducer(initialState, {
   [SET_MODIFY_INFO]: (state, action) => ({
     ...state,
     modifyInfo: action.payload,
+  }),
+  [SET_TIME_TO_LIVE]: (state, action) => ({
+    ...state,
+    timeToLive: action.payload,
   }),
 });
 

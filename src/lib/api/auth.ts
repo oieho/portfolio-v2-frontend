@@ -8,9 +8,10 @@ export const signIn = (userId: string, password: string) =>
     .post(`/auth/authenticate?username=${userId}&password=${password}`)
     .catch(function (error) {
       if (error.response && error.response.status === 401) {
-        throw new Error('인증 실패');
+        const errorMessage = '인증 실패';
+        const ttl = error.response.headers.ttl;
+        throw new Error([errorMessage, ttl] as any);
       }
-      throw error;
     });
 
 export const signInChk = () =>

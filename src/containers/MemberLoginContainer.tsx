@@ -12,14 +12,19 @@ interface Props {
 const MemberLoginContainer = ({ isAuthorized }: Props) => {
   const dispatch = useDispatch();
 
-  const { accessToken, tryLoginAuth, toggleLogin } = useSelector(
+  const { accessToken, tryLoginAuth, toggleLogin, timeToLive } = useSelector(
     ({ auth }: RootState) => ({
       accessToken: auth.accessToken,
       tryLoginAuth: auth.tryLoginAuth,
       toggleLogin: auth.toggleLogin,
+      timeToLive: auth.timeToLive,
     }),
   );
-  const onSignIn = (userId: string, password: string, autoLogin: boolean) => {
+  const onSignIn = async (
+    userId: string,
+    password: string,
+    autoLogin: boolean,
+  ) => {
     try {
       dispatch(login({ userId, password, autoLogin }));
     } catch (e) {
@@ -39,6 +44,7 @@ const MemberLoginContainer = ({ isAuthorized }: Props) => {
       isAuthorized={isAuthorized}
       tryLoginAuth={tryLoginAuth}
       toggleLogin={toggleLogin}
+      timeToLive={timeToLive}
     />
   );
 };

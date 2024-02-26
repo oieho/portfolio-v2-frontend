@@ -1117,6 +1117,19 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                                 />
                               </span>
                             );
+                          } else if (icon === 'redis') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'redis')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/redis.png"
+                                  alt="Redis"
+                                  title="Redis"
+                                />
+                              </span>
+                            );
                           } else if (icon === 'photoshop') {
                             return (
                               <span

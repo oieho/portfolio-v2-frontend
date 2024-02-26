@@ -152,6 +152,9 @@ export interface TryLoginAuth {
 export interface ToggleLogin {
   toggleLogin: boolean;
 }
+export interface TimeToLive {
+  timeToLive: number;
+}
 export interface CountInfo {
   todayVar: number;
   totalVar: number;

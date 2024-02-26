@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import Button from './button/Button';
 import { useNavigate } from 'react-router-dom';
-import CountDownTimer from './CountDownTimer';
+import CountDownTimer from '../../containers/CountDownTimerContainer';
 import { CircularProgress } from '@mui/material';
 
 const Wrapper = styled.div`
@@ -565,7 +565,7 @@ const MemberFindPassword = ({
             {showTimer ? (
               <form method="post" onSubmit={onSubmit}>
                 <DescriptionTop>
-                  <CountDownTimer />
+                  <CountDownTimer timeToLive={300} />
                 </DescriptionTop>
               </form>
             ) : (
