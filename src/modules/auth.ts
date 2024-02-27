@@ -9,6 +9,7 @@ import {
   MyInfo,
   ModifyInfo,
   TryLoginAuth,
+  IfNotLoggedDisplayBlock,
   ToggleLogin,
 } from '../App';
 import Cookies from 'js-cookie';
@@ -21,6 +22,7 @@ const SET_MODIFY_INFO = 'auth/SET_MODIFY_INFO';
 const SET_MY_INFO = 'auth/SET_MY_INFO';
 const CHECK_MY_INFO = 'auth/CHECK_MY_INFO';
 const SET_TIME_TO_LIVE = 'auth/TIME_TO_LIVE';
+const IF_NOT_LOGGED_DISPLAY_BLOCK = 'auth/IF_NOT_LOGGED_DISPLAY_BLOCK';
 
 export const setAccessToken = createAction(
   SET_ACCESS_TOKEN,
@@ -55,6 +57,11 @@ export const setLoginInfo = createAction(
   (toggleLogin: ToggleLogin) => toggleLogin,
 );
 
+export const ifNotLoggedDisplayBlock = createAction(
+  IF_NOT_LOGGED_DISPLAY_BLOCK,
+  (ifNotLoggedDisplayBlock: IfNotLoggedDisplayBlock) => ifNotLoggedDisplayBlock,
+);
+
 export const setTimeToLive = createAction(
   SET_TIME_TO_LIVE,
   (timeToLive: number) => timeToLive,
@@ -81,6 +88,7 @@ function* loginSaga(action: ReturnType<typeof login>) {
 
     if (response && response.status === 200) {
       yield put(setTryLoginAuth(false as any));
+      yield put(ifNotLoggedDisplayBlock({ ifNotLoggedDisplayBlock: false }));
       return response;
     }
   } catch (e: any) {
@@ -99,6 +107,8 @@ function* loginSaga(action: ReturnType<typeof login>) {
 
       yield put(setTimeToLive(ttl));
       yield put(setTryLoginAuth(true as any));
+    } else if (e.message.includes('2회 시도까지 로그인창 block')) {
+      yield put(ifNotLoggedDisplayBlock({ ifNotLoggedDisplayBlock: true }));
     }
   }
 }
@@ -136,6 +146,7 @@ export interface AuthState {
   modifyInfo: ModifyInfo | null;
   tryLoginAuth: TryLoginAuth | null;
   toggleLogin: ToggleLogin | null;
+  ifNotLoggedDisplayBlock: IfNotLoggedDisplayBlock | any;
   timeToLive: number;
   token: string;
   error: any;
@@ -147,6 +158,7 @@ const initialState: AuthState = {
   modifyInfo: null,
   tryLoginAuth: null,
   toggleLogin: null,
+  ifNotLoggedDisplayBlock: true,
   timeToLive: 0,
   token: '',
   error: null,
@@ -164,6 +176,10 @@ const auth = createReducer(initialState, {
   [LOGIN_INFO]: (state, action) => ({
     ...state,
     toggleLogin: action.payload,
+  }),
+  [IF_NOT_LOGGED_DISPLAY_BLOCK]: (state, action) => ({
+    ...state,
+    ifNotLoggedDisplayBlock: action.payload,
   }),
   [SET_MY_INFO]: (state, action) => ({ ...state, myInfo: action.payload }),
   [SET_MODIFY_INFO]: (state, action) => ({

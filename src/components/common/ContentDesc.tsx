@@ -8,9 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { useDispatch } from 'react-redux';
-
-import { MyInfo } from '../../App';
-import { Board, Comment } from '../../App';
+import { MyInfo, IfNotLoggedDisplayBlock, Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
 import AddCommentBtn from './button/AddButton';
@@ -1182,6 +1180,7 @@ interface Props {
     userNo: number,
   ) => any;
   readonly myInfo: MyInfo | null;
+  readonly ifNotLoggedDisplayBlock: IfNotLoggedDisplayBlock | null;
   readonly board: Board[] | any;
   readonly comment: Comment[] | any;
   readonly onRemove: (
@@ -1200,6 +1199,7 @@ const ContentDesc = ({
   modifyComment,
   replyComment,
   myInfo,
+  ifNotLoggedDisplayBlock,
   board,
   comment,
   onRemove,
@@ -1282,7 +1282,6 @@ const ContentDesc = ({
 
   useEffect(() => {
     const sizesString = Cookies.get('rightComponentSizes');
-    console.log(sizesString);
     if (sizesString) {
       // JSON 문자열 파싱
       const sizes = JSON.parse(sizesString);
@@ -1297,8 +1296,13 @@ const ContentDesc = ({
     if (scrollDownGear === true) {
       commentRef.current.scrollTop = commentRef.current.scrollHeight;
     }
-    actions.setZIdx(state.zIdx++);
-    wrapperresizingA.current.style.zIndex = state.zIdx;
+    if (
+      ifNotLoggedDisplayBlock !== null &&
+      ifNotLoggedDisplayBlock.ifNotLoggedDisplayBlock !== true
+    ) {
+      actions.setZIdx(state.zIdx++);
+      wrapperresizingA.current.style.zIndex = state.zIdx;
+    }
 
     const convertDateForm = (newRegDate: any) => {
       if (!Array.isArray(newRegDate)) {
@@ -1379,6 +1383,7 @@ const ContentDesc = ({
     comment,
     dispatch,
     dragging,
+    ifNotLoggedDisplayBlock,
     initialHeightA,
     initialHeightB,
     initialHeightT,

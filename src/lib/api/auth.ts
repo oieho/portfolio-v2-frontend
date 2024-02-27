@@ -11,6 +11,9 @@ export const signIn = (userId: string, password: string) =>
         const errorMessage = '인증 실패';
         const ttl = error.response.headers.ttl;
         throw new Error([errorMessage, ttl] as any);
+      } else if (error.response && error.response.status === 403) {
+        const forbiddenMessage = '2회 시도까지 로그인창 block';
+        throw new Error(forbiddenMessage as any);
       }
     });
 

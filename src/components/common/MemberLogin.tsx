@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import React, {
   useState,
   useEffect,
@@ -376,7 +375,7 @@ const MemberLogin = ({
   const [IdInfo, setIdInfo] = useState('');
   const [backBtnHover, setBackBtnHover] = useState<boolean>();
   const [hideBackBtn, setHideBackBtn] = useState<boolean>();
-  const [ifLoginSuccessBack, setIfLoginSuccessBack] = useState<boolean>();
+
   const LoginRef = useRef(null) as unknown as HTMLSpanElement &
     (LegacyRef<HTMLSpanElement> | undefined) as any;
   const MemberFindIdRef = useRef(null) as unknown as HTMLSpanElement &
@@ -422,11 +421,7 @@ const MemberLogin = ({
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       setLoginInitStatus(true);
-      onSignIn(userId, password, isRemember)
-        .then(setIfLoginSuccessBack(true))
-        .catch(() => {
-          setIfLoginSuccessBack(false);
-        });
+      onSignIn(userId, password, isRemember);
       setUserId('');
       setPassword('');
       setAutoLogin(false);
@@ -451,7 +446,7 @@ const MemberLogin = ({
     setHideBackBtn(false);
   };
   useEffect(() => {
-    if (ifLoginSuccessBack === true) {
+    if (hideBackBtn === true) {
       BackBtnRef.current.style.display = 'block';
     } else {
       BackBtnRef.current.style.display = 'none';

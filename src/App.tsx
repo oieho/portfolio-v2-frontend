@@ -152,6 +152,9 @@ export interface TryLoginAuth {
 export interface ToggleLogin {
   toggleLogin: boolean;
 }
+export interface IfNotLoggedDisplayBlock {
+  ifNotLoggedDisplayBlock: boolean;
+}
 export interface TimeToLive {
   timeToLive: number;
 }

@@ -37,15 +37,14 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
     dispatch(fetchOne(wno));
     dispatch(fetchComment(wno));
   }, [dispatch, wno]);
-  const { myInfo, board, comment, isLoading } = useSelector(
-    ({ auth, board, loading }: RootState) => ({
+  const { myInfo, ifNotLoggedDisplayBlock, board, comment, isLoading } =
+    useSelector(({ auth, board, loading }: RootState) => ({
       myInfo: auth.myInfo,
+      ifNotLoggedDisplayBlock: auth.ifNotLoggedDisplayBlock,
       board: board.board,
       comment: board.comment,
       isLoading: loading[FETCH_ONE],
-    }),
-  );
-
+    }));
   const registerComment = async (
     face: number,
     text: string,
@@ -180,6 +179,7 @@ const ContentDescContainer = ({ isAuthorized }: Props) => {
       modifyComment={modifyComment}
       replyComment={replyComment}
       myInfo={myInfo}
+      ifNotLoggedDisplayBlock={ifNotLoggedDisplayBlock}
       board={board}
       comment={comment}
       onRemove={onRemove}
