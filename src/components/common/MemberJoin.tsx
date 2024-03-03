@@ -462,7 +462,7 @@ const MemberJoin = ({
     (e: React.MouseEvent<HTMLDivElement>) => {
       const { scrollTop, scrollHeight, clientHeight } = tAndc.current;
 
-      if (scrollHeight - scrollTop === clientHeight) {
+      if (scrollHeight - scrollTop - 10 <= clientHeight) {
         setAgreeChk(true);
       }
     },

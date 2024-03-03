@@ -152,7 +152,6 @@ const BoardComment = styled.span`
 `;
 const Tools = styled.span`
   position: relative;
-  background-color: red;
   text-align: right;
   height: 2.261rem;
   top: 0.1rem;
@@ -182,7 +181,6 @@ const BoardTags = styled.a`
   font-weight: 500;
   letter-spacing: -0.02rem;
   vertical-align: top;
-  z-index: 5;
 `;
 const BoardCount = styled.a`
   position: relative;
@@ -200,6 +198,7 @@ const HashTag1 = styled.span`
   }
 `;
 const HashTag2 = styled.span`
+  position: relative;
   &:hover {
     font-style: italic;
     font-weight: 600;
@@ -210,6 +209,7 @@ const HashTag2 = styled.span`
   }
 `;
 const HashTag3SharpAndComma = styled.span`
+  position: relative;
   &:hover {
     font-style: italic;
     font-weight: 600;
@@ -220,6 +220,7 @@ const HashTag3SharpAndComma = styled.span`
   }
 `;
 const HashTag3 = styled.span`
+  position: relative;
   &:hover {
     font-style: italic;
     font-weight: 600;
@@ -433,7 +434,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     }
 
     const toolDescendant = document.getElementById('toolsDescendant');
-    const spans = toolDescendant?.querySelectorAll('span');
+    const spans = toolDescendant?.querySelectorAll('span') as any;
 
     let totalWidth = 0;
     spans?.forEach((span: HTMLSpanElement) => {
@@ -443,6 +444,8 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
 
     if (totalWidth >= thresholdInRem) {
       toolDescendant!.style.textAlign = 'right';
+    } else {
+      toolDescendant!.style.textAlign = 'left';
     }
   }, [
     boards.workBoard?.wno,
@@ -1308,9 +1311,10 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
               </li>
               <li>
                 <BoardCategory>{boards.workBoard?.category}</BoardCategory>
-                <BoardTags>
+                <BoardTags id="hashTags">
                   #
                   <HashTag1
+                    className="hashTags"
                     onClick={(e: any) =>
                       callHashtag(e, boards.workBoard?.hashTag[0])
                     }
@@ -1319,6 +1323,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                   </HashTag1>
                   #
                   <HashTag2
+                    className="hashTags"
                     onClick={(e: any) =>
                       callHashtag(e, boards.workBoard?.hashTag[1])
                     }
@@ -1329,6 +1334,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                     <>
                       {sharpAndComma}
                       <HashTag3SharpAndComma
+                        className="hashTags"
                         onClick={(e: any) =>
                           callHashtag(e, boards.workBoard?.hashTag[2])
                         }
@@ -1337,7 +1343,9 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                       </HashTag3SharpAndComma>
                     </>
                   ) : (
-                    <HashTag3>{boards.workBoard?.hashTag[2]}</HashTag3>
+                    <HashTag3 className="hashTags">
+                      {boards.workBoard?.hashTag[2]}
+                    </HashTag3>
                   )}
                 </BoardTags>
               </li>
