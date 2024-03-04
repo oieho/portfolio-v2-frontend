@@ -48,7 +48,7 @@ const SRbracket = styled.img`
   position: absolute;
   transition: all 1.5s ease-out;
 `;
-const Stexttit = styled.span`
+const StextTit = styled.span`
   width: 90%;
   position: absolute;
   left: 1.65rem;
@@ -137,12 +137,12 @@ const RightBottom = () => {
             src={process.env.PUBLIC_URL + '/images/slbracket.png'}
             alt="Square Left Bracket of Saying"
           />
-          <Stexttit
+          <StextTit
             style={{ top: `${mvstexttit}rem`, opacity: `${octstexttit}` }}
             ref={movestexttit}
           >
             Random Saying when changing a path
-          </Stexttit>
+          </StextTit>
           <Stext
             style={{ top: `${mvstext}rem`, opacity: `${octstext}` }}
             ref={movestext}

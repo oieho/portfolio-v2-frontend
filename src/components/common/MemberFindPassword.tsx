@@ -600,7 +600,7 @@ const MemberFindPassword = ({
                   </Inputs>
                   <Button
                     style={{
-                      width: `6.683rem`,
+                      width: `6.7rem`,
                       top: `18.272rem`,
                       left: `5.17rem`,
                       position: `relative`,

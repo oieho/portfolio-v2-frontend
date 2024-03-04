@@ -302,7 +302,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
               maxCharCount: 200000,
               imageAccept: '.jpg, .png, .bmp, .gif',
               imageMultipleFile: true,
-              imageUploadSizeLimit: 5242880,
+              imageUploadSizeLimit: 8388608,
               popupDisplay: 'local',
               iframeAttributes: {
                 scrolling: 'yes',

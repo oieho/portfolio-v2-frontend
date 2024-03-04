@@ -325,7 +325,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
                 maxCharCount: 200000,
                 imageAccept: '.jpg, .png, .bmp, .gif',
                 imageMultipleFile: true,
-                imageUploadSizeLimit: 5242880,
+                imageUploadSizeLimit: 8388608,
                 popupDisplay: 'local',
                 iframeAttributes: {
                   scrolling: 'yes',
