@@ -60,7 +60,7 @@ const HeaderBlock = styled.div`
     display: inline-block;
     width: 11.2rem;
     bottom: 0.05rem;
-    right: -0.05rem;
+    right: 0.5rem;
     text-align: right;
     cursor: default;
     ul {
@@ -170,7 +170,8 @@ const LogAreaBtn = styled.img`
   cursor: pointer;
 
   &:first-child {
-    margin-right: 0.625rem;
+    margin-left: -0.3rem;
+    margin-right: 0.925rem;
   }
 `;
 const MemberWrapper = styled.div`
@@ -292,7 +293,11 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     }
 
     if (myInfo) {
-      setUserName(myInfo.userName);
+      if (myInfo.providerType !== 'LOCAL') {
+        setUserName(myInfo.userName + myInfo.providerType.charAt(0));
+      } else {
+        setUserName(myInfo.userName);
+      }
     }
     setTimeout(() => {
       if (Array.isArray(countInfos)) {

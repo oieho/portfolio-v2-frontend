@@ -4012,7 +4012,7 @@ const ContentDesc = ({
                       />
                       <Button
                         style={{
-                          width: `3.53rem`,
+                          width: `3.66rem`,
                           height: `3.28rem`,
                           left: `11.76rem`,
                           bottom: `2.77rem`,

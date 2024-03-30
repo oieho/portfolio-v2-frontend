@@ -615,7 +615,7 @@ const MemberModify = ({
                         type="text"
                         autoComplete="userEmail"
                         onChange={onChangeUserEmail}
-                        defaultValue={userEmail}
+                        defaultValue={myInfo.userEmail}
                         spellCheck="false"
                       />
                       <UserNameInput
@@ -627,7 +627,7 @@ const MemberModify = ({
                         onChange={(e: any) => {
                           onChangeUserName(e);
                         }}
-                        defaultValue={userName}
+                        defaultValue={myInfo.userName}
                         spellCheck="false"
                         required
                       />

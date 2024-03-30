@@ -168,7 +168,7 @@ const UploadFile = styled.input`
 const SuccessMessage = styled.div`
   width: 266px;
   left: 0rem;
-  margin-top: 94px;
+  margin-top: 83px;
   text-align: center;
   position: absolute;
   color: #00b300;
@@ -178,7 +178,7 @@ const SuccessMessage = styled.div`
 const ErrorMessage = styled.div`
   width: 266px;
   left: 0rem;
-  margin-top: 94px;
+  margin-top: 83px;
   text-align: center;
   position: absolute;
   color: red;
@@ -188,7 +188,7 @@ const ErrorMessage = styled.div`
 const InfoMessage = styled.div`
   width: 266px;
   left: 0rem;
-  margin-top: 94px;
+  margin-top: 83px;
   text-align: center;
   position: absolute;
   color: #000000;
