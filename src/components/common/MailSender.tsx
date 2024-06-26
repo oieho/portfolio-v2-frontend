@@ -405,7 +405,7 @@ const MailSender = ({ myInfo, sendAnEmail }: Props) => {
 
             <Button
               style={{
-                top: `29.96rem`,
+                top: `28.86rem`,
                 left: `0.17rem`,
                 position: `relative`,
               }}

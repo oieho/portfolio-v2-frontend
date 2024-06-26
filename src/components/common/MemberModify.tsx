@@ -652,7 +652,7 @@ const MemberModify = ({
                         <Button
                           style={{
                             width: `4.7rem`,
-                            top: `25.5rem`,
+                            top: `24.3rem`,
                             left: `-2.05rem`,
                             position: `relative`,
                           }}
@@ -667,7 +667,7 @@ const MemberModify = ({
                     style={{
                       width: `4.7rem`,
                       color: `red`,
-                      top: `22.37rem`,
+                      top: `21.77rem`,
                       left: `5.57rem`,
                       position: `relative`,
                     }}

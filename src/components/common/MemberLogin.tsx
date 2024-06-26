@@ -564,7 +564,7 @@ const MemberLogin = ({
             <KakaoBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://54.180.58.152:8088/oauth2/authorization/kakao?redirect_uri=http://54.180.58.152:3000/socialLogin')
+                  'http://52.78.70.226:8088/oauth2/authorization/kakao?redirect_uri=http://52.78.70.226:3000/socialLogin')
               }
               onMouseOver={() => setKakaoBtnHover(true)}
               onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
@@ -579,7 +579,7 @@ const MemberLogin = ({
             <NaverBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://54.180.58.152:8088/oauth2/authorization/naver?redirect_uri=http://54.180.58.152:3000/socialLogin')
+                  'http://52.78.70.226:8088/oauth2/authorization/naver?redirect_uri=http://52.78.70.226:3000/socialLogin')
               }
               onMouseOver={() => setNaverBtnHover(true)}
               onMouseOut={() => setNaverBtnHover(naverBtnHover)}
@@ -594,7 +594,7 @@ const MemberLogin = ({
             <GoogleBtnWrap
               onClick={() =>
                 (window.location.href =
-                  'http://ec2-54-180-58-152.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://54.180.58.152:3000/socialLogin')
+                  'http://ec2-52-78-70-226.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://52.78.70.226:3000/socialLogin')
               }
               onMouseOver={() => setGoogleBtnHover(true)}
               onMouseOut={() => setGoogleBtnHover(googleBtnHover)}

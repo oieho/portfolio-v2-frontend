@@ -265,6 +265,8 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [loadingText, setLoadingText] = useState('Now Loading.');
+
   const [searchParams] = useSearchParams();
   const titleQParam = searchParams.get('title');
   const countQParam = searchParams.get('count');
@@ -405,6 +407,14 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     setTitleTit(sortArr[0]);
     setCountTit(sortArr[1]);
     setRegDateTit(sortArr[2]);
+
+    let index = 0;
+    const interval = setInterval(() => {
+      setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
+      index += 1;
+    }, 350);
+
+    return () => clearInterval(interval);
   }, [
     actions,
     applyMore,
@@ -591,7 +601,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     // rmTrBlack();
     // rmTrBlackOnModify();
     window.location.href =
-      'http://54.180.58.152:3000/boards?searchType=All&keyword=';
+      'http://52.78.70.226:3000/boards?searchType=All&keyword=';
   };
   const showWriteForm = () => {
     const titleQParam = searchParams.get('title');
@@ -861,14 +871,13 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
               </thead>
             </BoardTableHeader>
             <BoardTableBody>
-              {!boards.length && (
+              {!boards.length ? (
                 <tbody>
                   <tr>
-                    <EmptyTd colSpan={4}>List is empty.</EmptyTd>
+                    <EmptyTd colSpan={4}>{loadingText}</EmptyTd>
                   </tr>
                 </tbody>
-              )}
-              {!!boards.length && (
+              ) : !!boards.length ? (
                 <tbody>
                   <tr>
                     <td>
@@ -883,6 +892,12 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                         style={{ outline: 'none' }}
                       />
                     </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  <tr>
+                    <EmptyTd colSpan={4}>List is empty.</EmptyTd>
                   </tr>
                 </tbody>
               )}
