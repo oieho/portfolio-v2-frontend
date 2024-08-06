@@ -57,23 +57,19 @@ const Content = styled.div`
   width: 52.1rem;
   height: 44.2506rem;
   z-index: 2;
-
   overflow: hidden;
   img {
     opacity: 1;
   }
-
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
     width: 10px;
   }
-
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #000;
   }
-
   ::-webkit-scrollbar-thumb:hover {
     background: #444;
   }
@@ -82,11 +78,34 @@ const Content = styled.div`
   }
 `;
 
+const LoadingMessage = styled.div`
+  position: absolute;
+  top: calc(50% - 0.2125rem);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  font-size: 0.85rem;
+  font-weight: bold;
+`;
+
 interface Props {
   readonly board: Board[] | any;
 }
 const ContentBody = ({ board }: Props) => {
   const { actions, state } = useContext(MainContext);
+
+  const [loading, setLoading] = useState(true); // 로딩 상태 관리
+  const [loadingText, setLoadingText] = useState('Now Loading.');
+
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
+      index += 1;
+    }, 350);
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+  }, []);
 
   const createMarkup = () => {
     return { __html: board.portfolioContent };
@@ -131,6 +150,12 @@ const ContentBody = ({ board }: Props) => {
   }, [board.title]);
   const fetchBoardsBySorting = async (sortParams: any) => {
     try {
+      let index = 0;
+      const interval = setInterval(() => {
+        setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
+        index += 1;
+      }, 350);
+
       const response = await axios.get('/boards/prevnextImgs', {
         params: {
           searchType: sortParams.searchTypeQParam,
@@ -144,9 +169,12 @@ const ContentBody = ({ board }: Props) => {
         },
       });
       setBoards(response.data);
+      return () => clearInterval(interval);
     } catch (error) {
       console.error('Error fetching boards:', error);
       return [];
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -226,7 +254,7 @@ const ContentBody = ({ board }: Props) => {
 
     const maxWno = boards.reduce(
       (max: number, board: any) => Math.max(max, board.workBoard.wno),
-      0,
+      Number.MIN_VALUE,
     );
 
     if (state.alignGear === true) {
@@ -403,11 +431,17 @@ const ContentBody = ({ board }: Props) => {
               +
             </span>
           </CloseBtn>
-          <Content
-            ref={contentRef}
-            className="sun-editor-editable"
-            dangerouslySetInnerHTML={createMarkup()}
-          ></Content>
+          {loading ? (
+            <Content>
+              <LoadingMessage>{loadingText}</LoadingMessage>
+            </Content>
+          ) : (
+            <Content
+              ref={contentRef}
+              className="sun-editor-editable"
+              dangerouslySetInnerHTML={createMarkup()}
+            ></Content>
+          )}
         </ContentWrapper>
       </Wrapper>
     </>
