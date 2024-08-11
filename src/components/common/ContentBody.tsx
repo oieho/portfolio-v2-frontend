@@ -341,7 +341,11 @@ const ContentBody = ({ board }: Props) => {
     const regDateQParam = searchParams.get('regDate');
     const searchTypeQParam = searchParams.get('searchType');
     const keywordQParam = searchParams.get('keyword');
-    contentRef.current.style.display = 'none';
+
+    if (contentRef.current) {
+      contentRef.current.style.display = 'none';
+    }
+
     const saying = document.getElementById('saying');
     saying!.style.opacity = '1';
     saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
