@@ -433,20 +433,28 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
       setSelectedIndex(-1);
     }
 
-    const toolDescendant = document.getElementById('toolsDescendant');
-    const spans = toolDescendant?.querySelectorAll('span') as any;
+    const toolDescendants = document.querySelectorAll(
+      '[id^="toolsDescendant"]',
+    );
 
-    let totalWidth = 0;
-    spans?.forEach((span: HTMLSpanElement) => {
-      totalWidth += span.offsetWidth;
+    toolDescendants.forEach((toolDescendant: Element) => {
+      const spans = toolDescendant.querySelectorAll(
+        'span',
+      ) as NodeListOf<HTMLSpanElement>;
+
+      let totalWidth = 0;
+      spans.forEach((span: HTMLSpanElement) => {
+        totalWidth += span.offsetWidth;
+      });
+
+      const thresholdInRem = 301.6; // 기준값 설정
+
+      if (totalWidth >= thresholdInRem) {
+        (toolDescendant as HTMLElement).style.textAlign = 'right';
+      } else {
+        (toolDescendant as HTMLElement).style.textAlign = 'left';
+      }
     });
-    const thresholdInRem = 301.6; // toolsDescenDant>span 의 offsetWidth
-
-    if (totalWidth >= thresholdInRem) {
-      toolDescendant!.style.textAlign = 'right';
-    } else {
-      toolDescendant!.style.textAlign = 'left';
-    }
   }, [
     boards.workBoard?.wno,
     boards.workBoard?.regDate,
@@ -935,7 +943,10 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                   &nbsp;
                   <BoardComment>[{boards.commentCount}]</BoardComment>
                   <Tools>
-                    <ToolsDescendant id="toolsDescendant">
+                    <ToolsDescendant
+                      id={`toolsDescendant${boards.workBoard?.wno}`}
+                      key={index}
+                    >
                       {boards.workBoard?.tools?.map(
                         (icon: string, index: number) => {
                           if (icon === 'docker') {
