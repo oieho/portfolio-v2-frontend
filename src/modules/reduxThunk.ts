@@ -20,7 +20,7 @@ const initialState: ListState = {
 };
 
 export const fetchList = createAsyncThunk(
-  'boardSlice/fetchList',
+  'reduxThunk/fetchList',
   async (selected: BoardListPayload) => {
     try {
       const { title, count, regDate, searchType, keyword } = selected;
@@ -35,7 +35,7 @@ export const fetchList = createAsyncThunk(
 );
 
 export const fetchSelectedList = createAsyncThunk<any[], any>(
-  'boardSlice/fetchSelectedList',
+  'reduxThunk/fetchSelectedList',
   async (selected: BoardListPayload) => {
     try {
       const { title, count, regDate, searchType, keyword, selectedList } =
@@ -52,7 +52,7 @@ export const fetchSelectedList = createAsyncThunk<any[], any>(
   },
 );
 export const fetchHashTags = createAsyncThunk(
-  'boardSlice/fetchHashTags',
+  'reduxThunk/fetchHashTags',
   async (selected: BoardListPayload) => {
     try {
       const { title, count, regDate, searchType, keyword } = selected;
@@ -66,7 +66,7 @@ export const fetchHashTags = createAsyncThunk(
   },
 );
 export const fetchTools = createAsyncThunk(
-  'boardSlice/fetchTools',
+  'reduxThunk/fetchTools',
   async (selected: BoardListPayload) => {
     try {
       const { title, count, regDate, searchType, keyword } = selected;
@@ -79,7 +79,7 @@ export const fetchTools = createAsyncThunk(
     }
   },
 );
-const boardSlice = createSlice({
+const reduxThunk = createSlice({
   name: 'board',
   initialState,
   reducers: {},
@@ -135,4 +135,4 @@ const boardSlice = createSlice({
   },
 });
 
-export default boardSlice;
+export default reduxThunk;

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../index';
-import { fetchList } from '../../modules/boardSlice';
+import { fetchList } from '../../modules/reduxThunk';
 import * as api from '../../lib/api/board';
 import { MainContext } from '../../pages/Main';
 
@@ -547,12 +547,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
 
           return;
         }
-        if (alreadyCounted === false && state.selectedView === false) {
-          fetch(`/boards/increase/${boards.workBoard?.wno}`, {
-            method: 'POST',
-          });
-          setAlreadyCounted(true);
-        }
+
         //선택 화면에서 중복 값 없이 selectedIndex처리
         const newSelectedList = [...state.selectedList];
         const isAlreadySelected = newSelectedList.includes(

@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { useRef, useContext, useCallback, useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../index';
-import { fetchList } from '../../modules/boardSlice';
 import { MainContext } from '../../pages/Main';
 import hotkeys from 'hotkeys-js';
 const Line = styled.div`

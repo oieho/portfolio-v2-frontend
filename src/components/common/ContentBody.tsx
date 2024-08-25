@@ -13,6 +13,8 @@ import CloseBtn from './button/AddButton';
 import MiniBtn from './button/AddButton';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
+import store from '../../modules/mobxStore';
+import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
 
 const Wrapper = styled.div`
@@ -136,14 +138,33 @@ const Dot = styled.span<{ index: number }>`
 interface Props {
   readonly board: Board[] | any;
 }
-const ContentBody = ({ board }: Props) => {
+const ContentBody: React.FC<Props> = observer(({ board }) => {
   const { actions, state } = useContext(MainContext);
-
+  const { deliveryCountedWnos } = store;
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchBoardsBySorting(sortParams);
-  }, []);
+    if (
+      !deliveryCountedWnos.countedWnos.includes(board.wno) &&
+      state.selectedView === false
+    ) {
+      fetch(`/boards/increase/${board.wno}`, {
+        method: 'POST',
+      })
+        .then(() => {
+          const alreadyCountedWnos = [
+            ...deliveryCountedWnos.countedWnos,
+            board.wno,
+          ];
+          deliveryCountedWnos.setCountedWnos(alreadyCountedWnos);
+          console.log(alreadyCountedWnos);
+        })
+        .catch((error) => {
+          console.error('Failed to update count:', error);
+        });
+    }
+  }, [board.wno, deliveryCountedWnos, state.selectedView]);
 
   const createMarkup = () => {
     return { __html: board.portfolioContent };
@@ -501,6 +522,5 @@ const ContentBody = ({ board }: Props) => {
       </Wrapper>
     </>
   );
-};
-
+});
 export default ContentBody;

@@ -16,7 +16,7 @@ import {
   fetchSelectedList,
   fetchHashTags,
   fetchTools,
-} from '../../modules/boardSlice';
+} from '../../modules/reduxThunk';
 import { useAppDispatch } from '../../index';
 import ControlBtn from './button/AddButton';
 import { MainContext } from '../../pages/Main';

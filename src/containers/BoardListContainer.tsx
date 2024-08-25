@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import BoardList from '../components/common/BoardList';
 import { connect, useDispatch } from 'react-redux';
-import { BoardListPayload, fetchSelectedList } from '../modules/boardSlice';
+import { BoardListPayload, fetchSelectedList } from '../modules/reduxThunk';
 import { RootState } from '../modules';
 import { getAuthorized } from '../modules/selector';
 
@@ -14,7 +14,7 @@ const BoardListContainer = ({ isAuthorized }: Props) => {
 
   const { myInfo, boards } = useSelector((state: any) => ({
     myInfo: state.auth.myInfo,
-    boards: state.boardSlice.data,
+    boards: state.reduxThunk.data,
   }));
   const onSelectedList = (selected: BoardListPayload) => {
     dispatch(fetchSelectedList(selected) as any);

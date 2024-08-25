@@ -4,7 +4,7 @@ import board, { boardSaga } from './board';
 import member, { memberSaga } from './member';
 import count, { countSaga } from './count';
 import loading from './loading';
-import boardSlice from './boardSlice';
+import reduxThunk from './reduxThunk';
 
 import { AuthState } from './auth';
 import { BoardState } from './board';
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   member,
   count,
   loading,
-  boardSlice: boardSlice.reducer,
+  reduxThunk: reduxThunk.reducer,
 });
 
 export function* rootSaga() {
