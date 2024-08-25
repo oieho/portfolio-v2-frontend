@@ -4,7 +4,7 @@ import styled, { CSSProperties } from 'styled-components';
 const StyledButton = styled.button`
   position: absolute;
   cursor: pointer;
-  font-family: 'Noto Sans KR';
+  font-family: 'Pretendard Variable';
   font-size: 0.8rem;
   background: #000;
   width: 5.222rem;
@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   border-radius: 17px;
   letter-spacing: 0.01rem;
   &:hover {
-    font-family: 'Noto Sans KR';
+    font-family: 'Pretendard Variable';
     font-weight: 800;
     background: #000;
     color: #fff;

@@ -66,7 +66,7 @@ const HeaderBlock = styled.div`
     ul {
       position: relative;
       bottom: 0.2rem;
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       list-style: none;
       left: 0;
       margin: 0;
@@ -78,7 +78,7 @@ const HeaderBlock = styled.div`
         &:nth-child(1) {
           width: 2.7rem;
           position: relative;
-          font-weight: 800;
+          font-weight: 600;
         }
       }
     }
@@ -97,7 +97,7 @@ const User = styled.span`
   font-size: 0.85rem;
   position: relative;
   margin-left: 1.06rem;
-  top: 0.2rem;
+  top: 0.15rem;
 `;
 
 const MailTo = styled.img`
@@ -153,6 +153,16 @@ const Name = styled.div`
     text-decoration: underline;
     font-weight: 600;
   }
+`;
+const NotLogged = styled.div`
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.001rem;
+  display: inline;
+  position: relative;
+  left: 0.5rem;
+  top: -0.75rem;
 `;
 const Logged = styled.div`
   text-decoration: none;
@@ -474,9 +484,9 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
               />
 
               <User>
-                <Logged>
+                <NotLogged>
                   &nbsp;&nbsp;&nbsp;&nbsp;NOT LOGGED&nbsp;&nbsp;&nbsp;
-                </Logged>
+                </NotLogged>
               </User>
             </div>
           )}

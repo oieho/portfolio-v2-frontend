@@ -240,7 +240,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
                 fontWeight: '400',
                 color: '#ffffff',
                 left: '0.3rem',
-                top: '-0.38rem',
+                top: '-0.28rem',
                 transform: 'rotate(45deg)',
               }}
             >

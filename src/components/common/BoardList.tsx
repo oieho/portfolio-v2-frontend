@@ -18,7 +18,7 @@ import {
   fetchTools,
 } from '../../modules/boardSlice';
 import { useAppDispatch } from '../../index';
-import AddCommentBtn from './button/AddButton';
+import ControlBtn from './button/AddButton';
 import { MainContext } from '../../pages/Main';
 
 const Wrapper = styled.div`
@@ -696,7 +696,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
               />
               {isAuthorized && myInfo?.roleType === 'ADMIN' && (
                 <>
-                  <AddCommentBtn
+                  <ControlBtn
                     style={{
                       marginBottom: '-1.5em',
                       marginLeft: '9.87rem',
@@ -711,8 +711,8 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                     }}
                   >
                     <span title="글 쓰기">+</span>
-                  </AddCommentBtn>
-                  <AddCommentBtn
+                  </ControlBtn>
+                  <ControlBtn
                     style={{
                       marginBottom: '-1.5em',
                       marginLeft: '11.26rem',
@@ -738,7 +738,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                       title="글 수정"
                       style={{
                         fontSize: '0.734rem',
-                        fontWeight: 'bold',
+                        fontWeight: '450',
                         left: '0.11rem',
                         bottom: '0.16rem',
                       }}
@@ -756,8 +756,8 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                         <span title="글 수정">△</span>
                       )}
                     </span>
-                  </AddCommentBtn>
-                  <AddCommentBtn
+                  </ControlBtn>
+                  <ControlBtn
                     style={{
                       marginBottom: '-1.5em',
                       marginLeft: '12.65rem',
@@ -811,7 +811,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                         </span>
                       )}
                     </span>
-                  </AddCommentBtn>
+                  </ControlBtn>
                 </>
               )}
             </SearchArea>

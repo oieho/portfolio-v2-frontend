@@ -26,8 +26,8 @@ const AddButton = styled.span`
   } */
   span {
     position: absolute;
-    right: 0.156rem;
-    bottom: -0.062rem;
+    right: 0.19rem;
+    bottom: -0.042rem;
     &:hover {
       color: greenyellow;
     }
@@ -64,8 +64,8 @@ const AddButton = styled.span`
   }
   span[title='Prev'] {
     position: absolute;
-    left: 0.22rem;
-    bottom: 0.055rem;
+    left: 0.25rem;
+    bottom: 0.0799rem;
     font-weight: 500;
     font-size: 0.9rem;
     color: #ffffff;
@@ -79,8 +79,8 @@ const AddButton = styled.span`
   }
   span[title='Next'] {
     position: absolute;
-    left: 0.28rem;
-    bottom: 0.055rem;
+    left: 0.318rem;
+    bottom: 0.0799rem;
     font-weight: 500;
     font-size: 0.9rem;
     color: #ffffff;

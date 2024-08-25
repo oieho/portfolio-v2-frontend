@@ -168,7 +168,7 @@ const FindIdandPassword = styled.span`
   position: absolute;
   pointer-events: none;
   top: 19.09rem;
-  right: 0.56rem;
+  right: 0.96rem;
   font-size: 0.72rem;
 `;
 const FindPassword = styled.span`
@@ -523,7 +523,7 @@ const MemberLogin = ({
               <FindID>아이디</FindID>
             </span>
             <FindIdandPassword>
-              /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;찾기
+              /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;찾기
             </FindIdandPassword>
             <span
               onClick={(e: any) => {

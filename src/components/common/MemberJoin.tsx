@@ -225,7 +225,6 @@ const ShowAgreement = styled.span`
   display: flex;
   flex-direction: column;
   font-size: 0.72rem;
-  letter-spacing: -0.02rem;
   text-decoration: underline;
   text-underline-position: under;
   cursor: default;

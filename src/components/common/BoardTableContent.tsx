@@ -20,7 +20,7 @@ const TableTr = styled.tr`
   transition: transform 0.6s ease-out;
   border: 1px solid #e2e2e2;
   background-color: #ffffff;
-  border-radius: 17px;
+  border-radius: 19px;
   margin-bottom: 0.225rem;
   cursor: pointer;
   z-index: 0;
@@ -74,7 +74,6 @@ const TableTd = styled.td`
     position: relative;
     left: 0.5rem;
     font-size: 1.1rem;
-    letter-spacing: -0.05rem;
     width: 6.129rem;
   }
   &.td3 {
@@ -88,7 +87,7 @@ const TableTd = styled.td`
     right: 0.55rem;
     font-weight: 600;
     font-size: 0.85rem;
-    top: 0.08rem;
+    top: 0.14rem;
   }
 `;
 const More = styled.hr`
@@ -102,6 +101,7 @@ const More = styled.hr`
 `;
 const RegDate = styled.div`
   position: absolute;
+  font-size: 0.81rem;
   top: 0.8rem;
   right: 0;
   font-weight: 600;
@@ -123,7 +123,7 @@ const BoardBodyThumbnailImg = styled.img`
   height: 3.313rem;
   background-color: #ffffff;
   border: 1px solid #e2e2e2;
-  border-radius: 0.3rem;
+  border-radius: 0.4rem;
 `;
 const BoardHeadUL = styled.ul`
   display: inline-block;
@@ -136,10 +136,9 @@ const BoardHeadUL = styled.ul`
 `;
 const BoardTitle = styled.a`
   display: inline-block;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.52rem;
   font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: -0.02rem;
+  font-weight: 700;
   vertical-align: top;
 `;
 const BoardComment = styled.span`
@@ -154,7 +153,6 @@ const Tools = styled.span`
   position: relative;
   text-align: right;
   height: 2.261rem;
-  top: 0.1rem;
   left: 0.19rem;
   img {
     margin: 0 0 0.1rem 0.21rem;
@@ -169,22 +167,22 @@ const ToolsDescendant = styled.span`
 `;
 const BoardCategory = styled.a`
   color: #a5a5a5;
-  font-size: 0.75rem;
+  font-size: 0.77rem;
   font-weight: 600;
-  letter-spacing: -0.02rem;
   vertical-align: top;
 `;
 const BoardTags = styled.a`
   margin-left: 0.5rem;
   color: #a5a5a5;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: -0.02rem;
+  font-size: 0.77rem;
+  font-weight: 400;
   vertical-align: top;
 `;
 const BoardCount = styled.a`
+  font-size: 1rem;
   position: relative;
-  font-weight: 900;
+  font-weight: 750;
+  letter-spacing: -0.015rem;
   bottom: 0.07rem;
 `;
 const HashTag1 = styled.span`

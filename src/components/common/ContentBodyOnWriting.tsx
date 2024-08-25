@@ -213,7 +213,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
               fontWeight: '400',
               color: '#ffffff',
               left: '0.3rem',
-              top: '-0.38rem',
+              top: '-0.28rem',
               transform: 'rotate(45deg)',
             }}
           >

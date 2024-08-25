@@ -224,7 +224,6 @@ const DescTit = styled.span`
   z-index: 2;
   font-weight: 600;
   color: #000000;
-  letter-spacing: 0.015rem;
 `;
 const DescTextarea = styled.textarea`
   position: relative;
@@ -312,7 +311,7 @@ const Button = styled.button`
   position: relative;
   top: -0.95rem;
   left: 0.37rem;
-  font-family: 'Noto Sans KR';
+  font-family: 'Pretendard Variable';
   font-size: 0.8rem;
   background: #000;
   width: 15.5rem;
@@ -325,7 +324,7 @@ const Button = styled.button`
   letter-spacing: 0.01rem;
   cursor: pointer;
   &:hover {
-    font-family: 'Noto Sans KR';
+    font-family: 'Pretendard Variable';
     font-weight: 800;
     background: #000;
     color: #fff;

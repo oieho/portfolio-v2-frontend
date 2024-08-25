@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import React, {
   useState,
   useLayoutEffect,
@@ -10,7 +10,7 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Board } from '../../App';
 import { MainContext } from '../../pages/Main';
 import CloseBtn from './button/AddButton';
-import AddCommentBtn from './button/AddButton';
+import MiniBtn from './button/AddButton';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
@@ -51,6 +51,10 @@ const ContentWrapper = styled.div`
 `;
 const Content = styled.div`
   position: relative;
+  font-size: 0.8rem;
+  font-weight: 350;
+  line-height: 168%;
+  letter-spacing: 0.018rem;
   top: -0.0319rem;
   left: -0.04rem;
   background: rgba(255, 255, 255, 0.98);
@@ -88,6 +92,47 @@ const LoadingMessage = styled.div`
   font-weight: bold;
 `;
 
+const LoadingText = styled.h1`
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: inline;
+  position: relative;
+`;
+
+const DotContainer = styled.div`
+  display: flex;
+  width: 100%; // 컨테이너의 너비를 전체로 설정
+  overflow: hidden;
+`;
+
+const dotSequence = keyframes`
+  0% {
+    opacity: .75;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const Dot = styled.span<{ index: number }>`
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  opacity: 0;
+  background: black;
+  border-radius: 50%;
+  margin-right: 0.37em;
+  position: relative;
+  animation: ${dotSequence} 1s ease-out infinite;
+  animation-delay: ${({ index }) => index * 0.1}s;
+`;
+
 interface Props {
   readonly board: Board[] | any;
 }
@@ -95,7 +140,6 @@ const ContentBody = ({ board }: Props) => {
   const { actions, state } = useContext(MainContext);
 
   const [loading, setLoading] = useState(true);
-  const [loadingText, setLoadingText] = useState('Now Loading.');
 
   useEffect(() => {
     fetchBoardsBySorting(sortParams);
@@ -138,14 +182,7 @@ const ContentBody = ({ board }: Props) => {
   };
 
   useLayoutEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setLoadingText(`Now Loading${'.'.repeat((index % 5) + 1)}`);
-      index += 1;
-    }, 350);
-
     setPageTitle(`${board.title}`);
-    return () => clearInterval(interval);
   }, [board.title]);
 
   const fetchBoardsBySorting = async (sortParams: any) => {
@@ -369,7 +406,7 @@ const ContentBody = ({ board }: Props) => {
       <Wrapper>
         <OuterWrapper onClick={() => hideContent()} title="보기 폼 닫기" />
         <ContentWrapper>
-          <AddCommentBtn
+          <MiniBtn
             style={{
               top: '0.4rem',
               left: '47.28rem',
@@ -388,8 +425,8 @@ const ContentBody = ({ board }: Props) => {
             onMouseDown={handleMouseDown}
           >
             <span title="Prev">&lt;</span>
-          </AddCommentBtn>
-          <AddCommentBtn
+          </MiniBtn>
+          <MiniBtn
             style={{
               top: '0.4rem',
               left: '48.68rem',
@@ -408,7 +445,7 @@ const ContentBody = ({ board }: Props) => {
             onMouseDown={handleMouseDown}
           >
             <span title="Next">&gt;</span>
-          </AddCommentBtn>
+          </MiniBtn>
           <CloseBtn
             style={{
               backgroundColor: '#ff0b0b',
@@ -433,8 +470,8 @@ const ContentBody = ({ board }: Props) => {
                 fontSize: '1.2rem',
                 fontWeight: '400',
                 color: '#ffffff',
-                left: '0.3rem',
-                top: '-0.41rem',
+                left: '0.27rem',
+                top: '-0.252rem',
                 transform: 'rotate(45deg)',
               }}
             >
@@ -443,7 +480,15 @@ const ContentBody = ({ board }: Props) => {
           </CloseBtn>
           {loading ? (
             <Content>
-              <LoadingMessage>{loadingText}</LoadingMessage>
+              <LoadingMessage>
+                <LoadingText>
+                  <DotContainer>
+                    {[...Array(5)].map((_, index) => (
+                      <Dot key={index} index={index} />
+                    ))}
+                  </DotContainer>
+                </LoadingText>
+              </LoadingMessage>
             </Content>
           ) : (
             <Content

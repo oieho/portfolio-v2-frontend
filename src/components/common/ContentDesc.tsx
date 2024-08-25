@@ -61,7 +61,7 @@ const TitleTit = styled.span`
   top: 0.45rem;
   left: 0.85rem;
   z-index: 2;
-  font-weight: 600;
+  font-weight: 700;
   color: #000000;
   position: absolute;
 `;
@@ -72,8 +72,9 @@ const TitleDesc = styled.span`
   top: 1.5rem;
   left: 0.85rem;
   z-index: 2;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 400;
+  letter-spacing: 0.014rem;
   color: #a5a5a5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -85,7 +86,7 @@ const RegDateTit = styled.span`
   top: 0.45rem;
   left: 10.42rem;
   z-index: 2;
-  font-weight: 600;
+  font-weight: 700;
   color: #000000;
   word-spacing: -0.1rem;
   position: absolute;
@@ -116,7 +117,7 @@ const DescTit = styled.span`
   top: 0.45rem;
   left: 0.73rem;
   z-index: 2;
-  font-weight: 600;
+  font-weight: 700;
   color: #000000;
   position: absolute;
 `;
@@ -129,7 +130,8 @@ const DescTextarea = styled.textarea`
   min-height: 2.485rem;
   max-height: 17.7rem;
   padding-right: 0.307rem;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.014rem;
   color: #a5a5a5;
   background-color: #ffffff;
   line-height: 1.168rem;
@@ -568,7 +570,7 @@ const CommentDescUl = styled.ul`
   font-size: 0.72rem;
   line-height: 1.19rem;
   list-style: none;
-
+  letter-spacing: 0.014rem;
   & li:nth-child(1) {
     width: 7.5rem;
     font-weight: 600;
@@ -583,6 +585,11 @@ const CommentDescUl = styled.ul`
   }
   & li:nth-child(3) {
     position: relative;
+    font-weight: 300;
+  }
+  & li:nth-child(4) {
+    position: relative;
+    top: 0.2rem;
     font-weight: 300;
   }
 `;
@@ -3985,7 +3992,6 @@ const ContentDesc = ({
                         maxLength={150}
                         value={commentVal}
                         onChange={onChangeContent}
-                        onKeyPress={(e: any) => controlTextArea(e)}
                         disabled
                         readOnly
                       />
