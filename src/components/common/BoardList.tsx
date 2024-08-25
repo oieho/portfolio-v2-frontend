@@ -410,7 +410,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
 
     let index = 0;
     const interval = setInterval(() => {
-      setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
+      setLoadingText(`Now Loading${'.'.repeat((index % 5) + 1)}`);
       index += 1;
     }, 350);
 

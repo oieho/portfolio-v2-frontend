@@ -94,17 +94,11 @@ interface Props {
 const ContentBody = ({ board }: Props) => {
   const { actions, state } = useContext(MainContext);
 
-  const [loading, setLoading] = useState(true); // 로딩 상태 관리
+  const [loading, setLoading] = useState(true);
   const [loadingText, setLoadingText] = useState('Now Loading.');
 
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
-      index += 1;
-    }, 350);
-
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 인터벌 정리
+    fetchBoardsBySorting(sortParams);
   }, []);
 
   const createMarkup = () => {
@@ -142,20 +136,20 @@ const ContentBody = ({ board }: Props) => {
     toolOrHashTagQParam,
     isModifiedQParam,
   };
-  useEffect(() => {
-    fetchBoardsBySorting(sortParams);
-  }, []);
+
   useLayoutEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setLoadingText(`Now Loading${'.'.repeat((index % 5) + 1)}`);
+      index += 1;
+    }, 350);
+
     setPageTitle(`${board.title}`);
+    return () => clearInterval(interval);
   }, [board.title]);
+
   const fetchBoardsBySorting = async (sortParams: any) => {
     try {
-      let index = 0;
-      const interval = setInterval(() => {
-        setLoadingText(`Now Loading${'.'.repeat((index % 3) + 1)}`);
-        index += 1;
-      }, 350);
-
       const response = await axios.get('/boards/prevnextImgs', {
         params: {
           searchType: sortParams.searchTypeQParam,
@@ -169,7 +163,6 @@ const ContentBody = ({ board }: Props) => {
         },
       });
       setBoards(response.data);
-      return () => clearInterval(interval);
     } catch (error) {
       console.error('Error fetching boards:', error);
       return [];
@@ -177,25 +170,27 @@ const ContentBody = ({ board }: Props) => {
       setLoading(false);
     }
   };
-
   const navigateToPrevBoard = async (currentWno: number, sortParams: any) => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 400));
     actions.setViewSelectedIndexGear(true);
     actions.setModifySelectedIndex(-1);
+
     if (boards.length <= 0) {
+      setLoading(false);
       return alert('이전 글이 없습니다.');
     }
+
     const minWno = boards.reduce(
       (min: number, board: any) => Math.min(min, board.workBoard.wno),
       Number.MIN_VALUE,
     );
 
     if (state.alignGear === true) {
-      let wnoArray: number[] = [];
-      wnoArray = boards.map((board: any) => board.workBoard.wno);
+      let wnoArray: number[] = boards.map((board: any) => board.workBoard.wno);
       console.log(wnoArray);
 
       const currentIndex = wnoArray.indexOf(currentWno + 1);
-
       let prevWno = wnoArray[currentIndex - 1];
 
       while (prevWno !== undefined) {
@@ -213,6 +208,7 @@ const ContentBody = ({ board }: Props) => {
               `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           }
+          setLoading(false);
           return;
         } else {
           let newIdx = currentIndex - 1;
@@ -237,18 +233,25 @@ const ContentBody = ({ board }: Props) => {
               `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
             );
           }
+          setLoading(false);
           return;
         } else {
           prevWno--;
         }
       }
     }
+
+    setLoading(false);
     alert('이전 글이 없습니다.');
   };
+
   const navigateToNextBoard = async (currentWno: number, sortParams: any) => {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 400));
     actions.setViewSelectedIndexGear(true);
     actions.setModifySelectedIndex(-1);
     if (boards.length === 0) {
+      setLoading(false);
       return alert('다음 글이 없습니다.');
     }
 
@@ -287,6 +290,7 @@ const ContentBody = ({ board }: Props) => {
               },
             );
           }
+          setLoading(false);
           return;
         } else {
           let newIdx = currentIndex + 1;
@@ -317,12 +321,14 @@ const ContentBody = ({ board }: Props) => {
               },
             );
           }
+          setLoading(false);
           return;
         } else {
           nextWno++;
         }
       }
     }
+    setLoading(false);
     alert('다음 글이 없습니다.');
   };
 
