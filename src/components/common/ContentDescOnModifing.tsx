@@ -19,21 +19,40 @@ const Wrapper = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-`;
 
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    position: relative;
+    left: -2.35rem;
+    width: 100%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    left: -1.4rem;
+    width: 100%;
+  }
+`;
 const Description = styled.div`
   position: absolute;
-  background: #f5f5f5;
+  background-color: #f5f5f5;
   top: -20.54rem;
   left: 22.28rem;
-  width: 16.64rem;
+  width: 16.61rem;
   height: 35.66rem;
   border-radius: 1rem;
   font-size: 0.75rem;
   z-index: 2;
   transition: height 0.45s 0.3s ease-out;
+  overflow: hidden;
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    top: -21.45rem;
+    left: calc(100% - (304.99px - 38.5px));
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: -20.51rem;
+    left: calc(100% - (315.99px - 38.5px));
+  }
 `;
 const Inputs = styled.ul`
   position: relative;
@@ -339,12 +358,19 @@ const CoverBackBtn = styled.span`
   position: absolute;
   background-color: #afafaf;
   background-image: url('/images/coverBackBtnbg.png');
-  width: 1.55rem;
-  height: 3.65rem;
-  right: -1.55rem;
-  top: 4.457rem;
+  width: 1.73rem;
+  height: 3.85rem;
+  right: -1.78rem;
+  top: 4.257rem;
   z-index: 1;
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    top: 4.28rem;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    right: -2.1rem;
+  }
 `;
+
 interface Props {
   readonly modifyArticle: (
     wno: string,

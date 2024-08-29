@@ -24,6 +24,7 @@ const AddButton = styled.span`
     }
     animation: rotate_image 2s linear infinite;
   } */
+
   span {
     position: absolute;
     right: 0.19rem;
@@ -91,6 +92,9 @@ const AddButton = styled.span`
     &:active {
       color: #ffffff;
     }
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    right: -2%;
   }
 `;
 

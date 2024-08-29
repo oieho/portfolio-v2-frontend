@@ -47,14 +47,47 @@ const Content = styled.div`
   position: relative;
   left: -4.8rem;
   top: 1.92rem;
-  background: #ffffff;
-  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
+  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.33);
   border-radius: 1rem;
   width: 52.8rem;
   height: 44.92rem;
-  border: 6px solid #000000;
-  z-index: 999999999;
+  border: 0.375rem solid #000000;
+  z-index: 2;
+  box-sizing: border-box;
+  background: #ffffff;
   overflow: hidden;
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    margin: 0.5rem;
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #000;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    background: #000;
+  }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.8rem;
+    margin-left: 2.2rem;
+    width: calc(100% - 324.99px - 28.16px);
+    z-index: 2;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.49rem;
+    width: calc(100% - 303.99px - 28.16px);
+    margin-left: 1.7rem;
+  }
 `;
 const ToolBar = styled.div`
   width: 52.8rem;
@@ -62,12 +95,23 @@ const ToolBar = styled.div`
   position: relative;
   z-index: 2;
 `;
+const MiniBtnWrapper = styled.span`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    left: calc(100% - 836px);
+  }
+`;
 const SunEditorWrapper = styled.div`
   position: relative;
   opacity: 0.955;
   top: -0.12rem;
   width: 52.17rem;
   left: -0.05rem;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    width: 100%;
+  }
 `;
 interface Props {
   readonly uploadToServer: (files: any) => any;
@@ -188,38 +232,40 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
         title="쓰기 폼 닫기"
       />
       <Content ref={contentRef}>
-        <CloseBtn
-          style={{
-            backgroundColor: '#ff0b0b',
-            top: '0.4rem',
-            left: '50.6rem',
-            zIndex: '1',
-          }}
-          onClick={() => {
-            hideContent();
-          }}
-        >
-          <span
-            title="닫기"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#ffffff';
-              e.currentTarget.style.fontWeight = '600';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.fontWeight = '400';
-            }}
+        <MiniBtnWrapper>
+          <CloseBtn
             style={{
-              fontSize: '1.2rem',
-              fontWeight: '400',
-              color: '#ffffff',
-              left: '0.3rem',
-              top: '-0.28rem',
-              transform: 'rotate(45deg)',
+              backgroundColor: '#ff0b0b',
+              top: '0.4rem',
+              left: '50.6rem',
+              zIndex: '1',
+            }}
+            onClick={() => {
+              hideContent();
             }}
           >
-            +
-          </span>
-        </CloseBtn>
+            <span
+              title="닫기"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.fontWeight = '600';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.fontWeight = '400';
+              }}
+              style={{
+                fontSize: '1.2rem',
+                fontWeight: '400',
+                color: '#ffffff',
+                left: '0.3rem',
+                top: '-0.28rem',
+                transform: 'rotate(45deg)',
+              }}
+            >
+              +
+            </span>
+          </CloseBtn>
+        </MiniBtnWrapper>
         <SunEditorWrapper>
           <ToolBar className="sun-editor" />
           <SunEditor

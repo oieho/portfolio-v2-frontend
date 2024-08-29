@@ -9,7 +9,6 @@ import React, {
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Board } from '../../App';
 import { MainContext } from '../../pages/Main';
-import CloseBtn from './button/AddButton';
 import MiniBtn from './button/AddButton';
 import 'suneditor/dist/css/suneditor.min.css';
 import axios from 'axios';
@@ -50,6 +49,30 @@ const ContentWrapper = styled.div`
   border: 0.375rem solid #000000;
   z-index: 2;
   overflow: hidden;
+  box-sizing: border-box;
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.8rem;
+    margin-left: 2.2rem;
+    width: calc(100% - 324.99px - 28.16px);
+    z-index: 2;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.49rem;
+    width: calc(100% - 303.99px - 28.16px);
+    margin-left: 1.7rem;
+  }
+`;
+const MiniBtnWrapper = styled.span`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    left: calc(100% - 836px);
+  }
 `;
 const Content = styled.div`
   position: relative;
@@ -81,6 +104,9 @@ const Content = styled.div`
   }
   ::-webkit-scrollbar-thumb:active {
     background: #000;
+  }
+  @media (min-width: 769px) and (max-width: 1280px) {
+    width: 100%;
   }
 `;
 
@@ -145,24 +171,26 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
 
   useEffect(() => {
     fetchBoardsBySorting(sortParams);
-    if (
-      !deliveryCountedWnos.countedWnos.includes(board.wno) &&
-      state.selectedView === false
-    ) {
-      fetch(`/boards/increase/${board.wno}`, {
-        method: 'POST',
-      })
-        .then(() => {
-          const alreadyCountedWnos = [
-            ...deliveryCountedWnos.countedWnos,
-            board.wno,
-          ];
-          deliveryCountedWnos.setCountedWnos(alreadyCountedWnos);
-          console.log(alreadyCountedWnos);
+    if (board && board.wno) {
+      if (
+        !deliveryCountedWnos.countedWnos.includes(board.wno) &&
+        state.selectedView === false
+      ) {
+        fetch(`/boards/increase/${board.wno}`, {
+          method: 'POST',
         })
-        .catch((error) => {
-          console.error('Failed to update count:', error);
-        });
+          .then(() => {
+            const alreadyCountedWnos = [
+              ...deliveryCountedWnos.countedWnos,
+              board.wno,
+            ];
+            deliveryCountedWnos.setCountedWnos(alreadyCountedWnos);
+            console.log(alreadyCountedWnos);
+          })
+          .catch((error) => {
+            console.error('Failed to update count:', error);
+          });
+      }
     }
   }, [board.wno, deliveryCountedWnos, state.selectedView]);
 
@@ -427,78 +455,80 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
       <Wrapper>
         <OuterWrapper onClick={() => hideContent()} title="보기 폼 닫기" />
         <ContentWrapper>
-          <MiniBtn
-            style={{
-              top: '0.4rem',
-              left: '47.28rem',
-              zIndex: '3',
-            }}
-            onClick={() =>
-              navigateToPrevBoard(board.wno - 1, {
-                titleQParam,
-                countQParam,
-                regDateQParam,
-                searchTypeQParam,
-                keywordQParam,
-                toolOrHashTagQParam,
-              })
-            }
-            onMouseDown={handleMouseDown}
-          >
-            <span title="Prev">&lt;</span>
-          </MiniBtn>
-          <MiniBtn
-            style={{
-              top: '0.4rem',
-              left: '48.68rem',
-              zIndex: '3',
-            }}
-            onClick={() =>
-              navigateToNextBoard(board.wno + 1, {
-                titleQParam,
-                countQParam,
-                regDateQParam,
-                searchTypeQParam,
-                keywordQParam,
-                toolOrHashTagQParam,
-              })
-            }
-            onMouseDown={handleMouseDown}
-          >
-            <span title="Next">&gt;</span>
-          </MiniBtn>
-          <CloseBtn
-            style={{
-              backgroundColor: '#ff0b0b',
-              top: '0.4rem',
-              left: '50.04rem',
-              zIndex: '3',
-            }}
-            onClick={() => {
-              hideContent();
-            }}
-          >
-            <span
-              title="닫기"
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#ffffff';
-                e.currentTarget.style.fontWeight = '600';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.fontWeight = '400';
-              }}
+          <MiniBtnWrapper>
+            <MiniBtn
               style={{
-                fontSize: '1.2rem',
-                fontWeight: '400',
-                color: '#ffffff',
-                left: '0.27rem',
-                top: '-0.252rem',
-                transform: 'rotate(45deg)',
+                top: '0.4rem',
+                left: '47.28rem',
+                zIndex: '3',
+              }}
+              onClick={() =>
+                navigateToPrevBoard(board.wno - 1, {
+                  titleQParam,
+                  countQParam,
+                  regDateQParam,
+                  searchTypeQParam,
+                  keywordQParam,
+                  toolOrHashTagQParam,
+                })
+              }
+              onMouseDown={handleMouseDown}
+            >
+              <span title="Prev">&lt;</span>
+            </MiniBtn>
+            <MiniBtn
+              style={{
+                top: '0.4rem',
+                left: '48.68rem',
+                zIndex: '3',
+              }}
+              onClick={() =>
+                navigateToNextBoard(board.wno + 1, {
+                  titleQParam,
+                  countQParam,
+                  regDateQParam,
+                  searchTypeQParam,
+                  keywordQParam,
+                  toolOrHashTagQParam,
+                })
+              }
+              onMouseDown={handleMouseDown}
+            >
+              <span title="Next">&gt;</span>
+            </MiniBtn>
+            <MiniBtn
+              style={{
+                backgroundColor: '#ff0b0b',
+                top: '0.4rem',
+                left: '50.04rem',
+                zIndex: '3',
+              }}
+              onClick={() => {
+                hideContent();
               }}
             >
-              +
-            </span>
-          </CloseBtn>
+              <span
+                title="닫기"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#ffffff';
+                  e.currentTarget.style.fontWeight = '600';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.fontWeight = '400';
+                }}
+                style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '400',
+                  color: '#ffffff',
+                  left: '0.27rem',
+                  top: '-0.252rem',
+                  transform: 'rotate(45deg)',
+                }}
+              >
+                +
+              </span>
+            </MiniBtn>
+          </MiniBtnWrapper>
           {loading ? (
             <Content>
               <LoadingMessage>

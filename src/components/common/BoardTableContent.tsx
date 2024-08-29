@@ -13,17 +13,19 @@ import * as api from '../../lib/api/board';
 import { MainContext } from '../../pages/Main';
 
 const TableTr = styled.tr`
-  display: block;
+  position: relative;
+  display: inline-block;
   margin-left: 0.16rem;
-  width: 49.61rem;
+  width: 99%;
+  height: 72.01px;
   transform: scale(1) translate(0%, 0%);
-  transition: transform 0.6s ease-out;
+  transition: transform 0.7s ease-out;
   border: 1px solid #e2e2e2;
   background-color: #ffffff;
   border-radius: 19px;
-  margin-bottom: 0.225rem;
-  cursor: pointer;
+  transition: border 0.4s ease-out;
   z-index: 0;
+  cursor: pointer;
   &.black {
     color: #ffffff;
     background-color: #000000;
@@ -61,13 +63,26 @@ const TableTr = styled.tr`
   }
   &.normal {
   }
+  &:hover {
+    border: 1px solid #bbbbbb;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    height: 100%;
+  }
 `;
 const TableTd = styled.td`
-  height: 4.175rem;
-
+  position: relative;
+  top: 0.4rem;
+  width: 100%;
   &.td1 {
     text-align: left;
     width: 28.586rem;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      width: calc(62.8%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      padding-right: 0.8rem;
+    }
   }
   &.td2 {
     z-index: -1;
@@ -75,11 +90,29 @@ const TableTd = styled.td`
     left: 0.5rem;
     font-size: 1.1rem;
     width: 6.129rem;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      left: 0;
+      width: calc(13%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      left: 3.5rem;
+      top: -0.2rem;
+    }
   }
   &.td3 {
     position: relative;
     right: 0.5rem;
     width: 5.164rem;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      text-align: center;
+      right: 0;
+      width: calc(9%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      text-align: center;
+      right: calc(1% + 0.3rem);
+      top: 1.6rem;
+    }
   }
   &.td4 {
     position: relative;
@@ -87,7 +120,17 @@ const TableTd = styled.td`
     right: 0.55rem;
     font-weight: 600;
     font-size: 0.85rem;
-    top: 0.14rem;
+    top: 0.4rem;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      right: 0rem;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      top: 0.74rem;
+      right: -0.4rem;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: 0.5rem;
   }
 `;
 const More = styled.hr`
@@ -100,15 +143,13 @@ const More = styled.hr`
   background-size: cover;
 `;
 const RegDate = styled.div`
-  position: absolute;
+  position: relative;
   font-size: 0.81rem;
-  top: 0.8rem;
   right: 0;
   font-weight: 600;
 `;
 const Ago = styled.div`
-  position: absolute;
-  right: 0;
+  position: relative;
   margin-top: 0.15rem;
   color: #b2b2b2;
   font-weight: 500;
@@ -117,13 +158,16 @@ const Ago = styled.div`
 
 const BoardBodyThumbnailImg = styled.img`
   position: relative;
-  top: 0.12rem;
   margin-left: 0.6rem;
   width: 3.313rem;
   height: 3.313rem;
   background-color: #ffffff;
   border: 1px solid #e2e2e2;
   border-radius: 0.4rem;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: absolute;
+    top: 4%;
+  }
 `;
 const BoardHeadUL = styled.ul`
   display: inline-block;
@@ -132,7 +176,7 @@ const BoardHeadUL = styled.ul`
   list-style: none;
   position: relative;
   left: 0.75rem;
-  bottom: 0.33rem;
+  bottom: 0.43rem;
 `;
 const BoardTitle = styled.a`
   display: inline-block;
@@ -140,6 +184,11 @@ const BoardTitle = styled.a`
   font-size: 0.85rem;
   font-weight: 700;
   vertical-align: top;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 0.5rem;
+    left: 3.7rem;
+  }
 `;
 const BoardComment = styled.span`
   color: #999999;
@@ -151,7 +200,6 @@ const BoardComment = styled.span`
 `;
 const Tools = styled.span`
   position: relative;
-  text-align: right;
   height: 2.261rem;
   left: 0.19rem;
   img {
@@ -159,17 +207,33 @@ const Tools = styled.span`
     width: 1.02rem;
     height: 1.02rem;
   }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: 0.33rem;
+  }
 `;
 const ToolsDescendant = styled.span`
   width: 18.85rem;
   text-align: left;
   position: absolute;
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    width: 22vw;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    left: 0rem;
+    text-align: left !important;
+  }
 `;
 const BoardCategory = styled.a`
   color: #a5a5a5;
   font-size: 0.77rem;
   font-weight: 600;
   vertical-align: top;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 0.6rem;
+    left: 3.7rem;
+  }
 `;
 const BoardTags = styled.a`
   margin-left: 0.5rem;
@@ -177,6 +241,11 @@ const BoardTags = styled.a`
   font-size: 0.77rem;
   font-weight: 400;
   vertical-align: top;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 0.6rem;
+    left: 3.7rem;
+  }
 `;
 const BoardCount = styled.a`
   font-size: 1rem;
@@ -445,12 +514,70 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
         totalWidth += span.offsetWidth;
       });
 
-      const thresholdInRem = 301.6; // 기준값 설정
-
-      if (totalWidth >= thresholdInRem) {
+      const desktopToolsWidth = 301.6; // 기준값 설정
+      if (totalWidth >= desktopToolsWidth) {
         (toolDescendant as HTMLElement).style.textAlign = 'right';
       } else {
         (toolDescendant as HTMLElement).style.textAlign = 'left';
+      }
+
+      if (
+        totalWidth >= 221.1733333333333 &&
+        window.matchMedia('(min-width: 769px) and (max-width: 1024px)').matches
+      ) {
+        // toolDescendant의 상위 4번째 부모 요소 선택
+        let parentElement = toolDescendant;
+        let nextSibling: HTMLElement | null | any = null;
+        let nextNextSibling: HTMLElement | null | any = null;
+        let nextNextNextSibling: HTMLElement | null | any = null;
+
+        for (let i = 0; i < 7; i++) {
+          if (parentElement.parentElement) {
+            parentElement = parentElement.parentElement;
+
+            switch (i) {
+              case 3:
+                (parentElement as HTMLElement).style.bottom = '0.81rem';
+                break;
+
+              case 4:
+                nextSibling = parentElement.nextSibling;
+                if (nextSibling && nextSibling instanceof HTMLElement) {
+                  nextSibling.style.top = '-0.81rem';
+                }
+                break;
+
+              case 5:
+                if (nextSibling) {
+                  nextNextSibling = nextSibling.nextSibling;
+                  if (
+                    nextNextSibling &&
+                    nextNextSibling instanceof HTMLElement
+                  ) {
+                    nextNextSibling.style.top = '0.81rem';
+                  }
+                }
+                break;
+
+              case 6:
+                if (nextNextSibling) {
+                  nextNextNextSibling = nextNextSibling.nextSibling;
+                  if (
+                    nextNextNextSibling &&
+                    nextNextNextSibling instanceof HTMLElement
+                  ) {
+                    nextNextNextSibling.style.top = '0.09rem';
+                  }
+                }
+                break;
+
+              default:
+                break;
+            }
+          } else {
+            break;
+          }
+        }
       }
     });
   }, [
@@ -889,11 +1016,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
   );
 
   return (
-    <table
-      id="scrollArea"
-      className="BoardTableContent-virtualized table-class"
-      style={style}
-    >
+    <table className="BoardTableContent-virtualized table-class" style={style}>
       <tbody>
         <TableTr
           onClick={() => {
@@ -942,7 +1065,20 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
                     >
                       {boards.workBoard?.tools?.map(
                         (icon: string, index: number) => {
-                          if (icon === 'docker') {
+                          if (icon === 'figma') {
+                            return (
+                              <span
+                                key={icon}
+                                onClick={(e: any) => callTool(e, 'figma')}
+                              >
+                                <img
+                                  src="/images/board/toolThumbnails/figma.png"
+                                  alt="Figma"
+                                  title="Figma"
+                                />
+                              </span>
+                            );
+                          } else if (icon === 'docker') {
                             return (
                               <span
                                 key={icon}

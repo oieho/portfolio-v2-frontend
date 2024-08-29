@@ -11,10 +11,10 @@ const ResponsiveBlock = styled.div`
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   z-index: 1;
-  @media (max-width: 1024px) {
-    width: 768px;
+  @media (max-width: 1025px) {
+    width: 769px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 769px) {
     width: 100%;
   }
 `;

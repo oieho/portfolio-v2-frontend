@@ -2,29 +2,15 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
 import { MyInfo } from '../../App';
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
+
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
-  height: 10rem;
-  top: 0;
+  width: 16.61rem;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   border-radius: 1rem;
   width: 100%;
@@ -173,74 +159,72 @@ const MemberInfo = ({ myInfo, isLoading }: Props) => {
     }
   }, [myInfo, myInfo?.regDate]);
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description>
-          <Confirmpwtit
-            src={process.env.PUBLIC_URL + '/images/memberinfotit.png'}
-            alt="Member Information"
-          />
-          {isLoading && <NowLoading>로딩 중...</NowLoading>}
-          {!isLoading && myInfo && (
-            <DescriptionTop>
-              <InputTitles>
-                <UserIdTit>아이디</UserIdTit>
-                <UserEmailTit>이메일</UserEmailTit>
-                <UserNameTit>이름</UserNameTit>
-                <ProviderTit>소셜가입</ProviderTit>
-                <ProviderTit>가입일자</ProviderTit>
-              </InputTitles>
-              <Inputs>
-                <InputLi>
-                  <IdInput
-                    maxLength={10}
-                    name="userId"
-                    value={myInfo.userId}
-                    disabled
-                  />
-                </InputLi>
-                <InputLi>
-                  <EmailInput
-                    maxLength={30}
-                    name="userEmail"
-                    type="text"
-                    value={myInfo.userEmail}
-                    disabled
-                  />
-                </InputLi>
-                <InputLi>
-                  <UserNameInput
-                    maxLength={30}
-                    name="userName"
-                    type="text"
-                    value={myInfo.userName}
-                    disabled
-                  />
-                </InputLi>
-                <InputLi>
-                  <UserNameInput
-                    maxLength={30}
-                    name="provider"
-                    type="text"
-                    value={myInfo.providerType}
-                    disabled
-                  />
-                </InputLi>
-                <InputLi>
-                  <UserNameInput
-                    maxLength={30}
-                    name="provider"
-                    type="text"
-                    value={boardRegDateDays}
-                    disabled
-                  />
-                </InputLi>
-              </Inputs>
-            </DescriptionTop>
-          )}
-        </Description>
-      </RightBlock>
-    </Wrapper>
+    <RightBlock>
+      <Description>
+        <Confirmpwtit
+          src={process.env.PUBLIC_URL + '/images/memberinfotit.png'}
+          alt="Member Information"
+        />
+        {isLoading && <NowLoading>로딩 중...</NowLoading>}
+        {!isLoading && myInfo && (
+          <DescriptionTop>
+            <InputTitles>
+              <UserIdTit>아이디</UserIdTit>
+              <UserEmailTit>이메일</UserEmailTit>
+              <UserNameTit>이름</UserNameTit>
+              <ProviderTit>소셜가입</ProviderTit>
+              <ProviderTit>가입일자</ProviderTit>
+            </InputTitles>
+            <Inputs>
+              <InputLi>
+                <IdInput
+                  maxLength={10}
+                  name="userId"
+                  value={myInfo.userId}
+                  disabled
+                />
+              </InputLi>
+              <InputLi>
+                <EmailInput
+                  maxLength={30}
+                  name="userEmail"
+                  type="text"
+                  value={myInfo.userEmail}
+                  disabled
+                />
+              </InputLi>
+              <InputLi>
+                <UserNameInput
+                  maxLength={30}
+                  name="userName"
+                  type="text"
+                  value={myInfo.userName}
+                  disabled
+                />
+              </InputLi>
+              <InputLi>
+                <UserNameInput
+                  maxLength={30}
+                  name="provider"
+                  type="text"
+                  value={myInfo.providerType}
+                  disabled
+                />
+              </InputLi>
+              <InputLi>
+                <UserNameInput
+                  maxLength={30}
+                  name="provider"
+                  type="text"
+                  value={boardRegDateDays}
+                  disabled
+                />
+              </InputLi>
+            </Inputs>
+          </DescriptionTop>
+        )}
+      </Description>
+    </RightBlock>
   );
 };
 

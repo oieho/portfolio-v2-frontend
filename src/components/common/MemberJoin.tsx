@@ -11,29 +11,15 @@ import React, {
 import Button from './button/Button';
 import { MainContext } from '../../pages/Main';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
+  width: 16.61rem;
   height: 10rem;
-  top: 0;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   border-radius: 1rem;
   width: 100%;
@@ -564,125 +550,123 @@ const MemberJoin = ({
   );
 
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description>
-          <Jointit
-            src={process.env.PUBLIC_URL + '/images/jointit.png'}
-            alt="Join Members"
-          />
-          <form method="post" onSubmit={onSubmit}>
-            <DescriptionTop>
-              <Inputs>
-                <InputLi>
-                  <IdInput
-                    ref={idInput}
-                    maxLength={10}
-                    name="userId"
-                    autoComplete="userId"
-                    onChange={onChangeUserId}
-                    onBlur={chkDuplicatedId}
-                    placeholder="아이디"
-                    spellCheck="false"
-                    required
-                  />
-                </InputLi>
-                <InputLi>
-                  <PwInput
-                    ref={pwInput}
-                    maxLength={20}
-                    name="password"
-                    type="password"
-                    autoComplete="new-password"
-                    onChange={onChangeUserPassword}
-                    placeholder="비밀번호"
-                    required
-                  />
-                  <PwInputConfirm
-                    ref={pwInputConfirm}
-                    maxLength={20}
-                    name="passwordConfirm"
-                    type="password"
-                    autoComplete="new-password confirm"
-                    onChange={onChangeUserPasswordConfirm}
-                    placeholder="비밀번호 확인"
-                    required
-                  />
-                </InputLi>
-                <InputLi>
-                  <UserEmailInput
-                    ref={emailInput}
-                    maxLength={30}
-                    name="userEmail"
-                    type="text"
-                    autoComplete="userEmail"
-                    onChange={onChangeUserEmail}
-                    placeholder="이메일"
-                    spellCheck="false"
-                    required
-                  />
-                </InputLi>
-                <InputLi>
-                  <UserNameInput
-                    ref={nameInput}
-                    maxLength={30}
-                    name="userName"
-                    autoComplete="userName"
-                    onChange={onChangeUserName}
-                    placeholder="회원이름"
-                    spellCheck="false"
-                    required
-                  />
-                </InputLi>
-              </Inputs>
-              <Agree>
-                <Chkbox
-                  id="agree"
-                  value={agreeChk as string | undefined}
-                  onClick={chkTandC}
+    <RightBlock>
+      <Description>
+        <Jointit
+          src={process.env.PUBLIC_URL + '/images/jointit.png'}
+          alt="Join Members"
+        />
+        <form method="post" onSubmit={onSubmit}>
+          <DescriptionTop>
+            <Inputs>
+              <InputLi>
+                <IdInput
+                  ref={idInput}
+                  maxLength={10}
+                  name="userId"
+                  autoComplete="userId"
+                  onChange={onChangeUserId}
+                  onBlur={chkDuplicatedId}
+                  placeholder="아이디"
+                  spellCheck="false"
+                  required
                 />
-                <label htmlFor="agree">동의</label>
-              </Agree>
-              {tac && (
-                <TermsAndConditions
-                  ref={tAndc}
-                  onScroll={onScrollTandC}
-                  onMouseOut={() => setTac(false)}
-                >
-                  1. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Vero repellendus est iusto voluptatibus magnam cupiditate illo
-                  nesciunt asperiores sunt alias natus, vel, labore optio.
-                  <br />
-                  2. Illum perspiciatis facilis unde perferendis libero.Lorem
-                  ipsum, dolor sit amet consectetur adipisicing elit.Vero
-                  repellendus est iusto voluptatibus magnam cupiditate illo
-                  nesciunt asperiores sunt alias natus, vel, labore optio.
-                  <br />
-                  3. Illum perspiciatis facilis unde perferendis libero.
-                </TermsAndConditions>
-              )}
+              </InputLi>
+              <InputLi>
+                <PwInput
+                  ref={pwInput}
+                  maxLength={20}
+                  name="password"
+                  type="password"
+                  autoComplete="new-password"
+                  onChange={onChangeUserPassword}
+                  placeholder="비밀번호"
+                  required
+                />
+                <PwInputConfirm
+                  ref={pwInputConfirm}
+                  maxLength={20}
+                  name="passwordConfirm"
+                  type="password"
+                  autoComplete="new-password confirm"
+                  onChange={onChangeUserPasswordConfirm}
+                  placeholder="비밀번호 확인"
+                  required
+                />
+              </InputLi>
+              <InputLi>
+                <UserEmailInput
+                  ref={emailInput}
+                  maxLength={30}
+                  name="userEmail"
+                  type="text"
+                  autoComplete="userEmail"
+                  onChange={onChangeUserEmail}
+                  placeholder="이메일"
+                  spellCheck="false"
+                  required
+                />
+              </InputLi>
+              <InputLi>
+                <UserNameInput
+                  ref={nameInput}
+                  maxLength={30}
+                  name="userName"
+                  autoComplete="userName"
+                  onChange={onChangeUserName}
+                  placeholder="회원이름"
+                  spellCheck="false"
+                  required
+                />
+              </InputLi>
+            </Inputs>
+            <Agree>
+              <Chkbox
+                id="agree"
+                value={agreeChk as string | undefined}
+                onClick={chkTandC}
+              />
+              <label htmlFor="agree">동의</label>
+            </Agree>
+            {tac && (
+              <TermsAndConditions
+                ref={tAndc}
+                onScroll={onScrollTandC}
+                onMouseOut={() => setTac(false)}
+              >
+                1. Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Vero repellendus est iusto voluptatibus magnam cupiditate illo
+                nesciunt asperiores sunt alias natus, vel, labore optio.
+                <br />
+                2. Illum perspiciatis facilis unde perferendis libero.Lorem
+                ipsum, dolor sit amet consectetur adipisicing elit.Vero
+                repellendus est iusto voluptatibus magnam cupiditate illo
+                nesciunt asperiores sunt alias natus, vel, labore optio.
+                <br />
+                3. Illum perspiciatis facilis unde perferendis libero.
+              </TermsAndConditions>
+            )}
 
-              <ShowAgreement onClick={showAgreement}>
-                이용약관 펼쳐보기
-              </ShowAgreement>
-              <SuccessMessage>{sMessage}</SuccessMessage>
-              <ErrorMessage>{fMessage}</ErrorMessage>
-              <InfoMessage ref={Warning}>{Info}</InfoMessage>
-            </DescriptionTop>
-            <Button
-              style={{
-                width: `5.227rem`,
-                top: `27.23rem`,
-                left: `0rem`,
-                position: `relative`,
-              }}
-            >
-              회원 가입
-            </Button>
-          </form>
-        </Description>
-      </RightBlock>
-    </Wrapper>
+            <ShowAgreement onClick={showAgreement}>
+              이용약관 펼쳐보기
+            </ShowAgreement>
+            <SuccessMessage>{sMessage}</SuccessMessage>
+            <ErrorMessage>{fMessage}</ErrorMessage>
+            <InfoMessage ref={Warning}>{Info}</InfoMessage>
+          </DescriptionTop>
+          <Button
+            style={{
+              width: `5.227rem`,
+              top: `27.23rem`,
+              left: `0rem`,
+              position: `relative`,
+            }}
+          >
+            회원 가입
+          </Button>
+        </form>
+      </Description>
+    </RightBlock>
   );
 };
 export default MemberJoin;

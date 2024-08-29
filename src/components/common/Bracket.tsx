@@ -23,10 +23,12 @@ const LeftBracket = () => {
   const lBracket = useRef<any>();
   const rBracket = useRef<any>();
   onmousemove = (e) => {
-    lBracket.current.style.top = 367 + e.pageX / 150 + 'px';
-    lBracket.current.style.left = -524 + e.pageY / 90 + 'px';
-    rBracket.current.style.bottom = -314 + e.pageX / 150 + 'px';
-    rBracket.current.style.right = 578 + e.pageY / 100 + 'px';
+    if (lBracket.current) {
+      lBracket.current.style.top = 367 + e.pageX / 150 + 'px';
+      lBracket.current.style.left = -524 + e.pageY / 90 + 'px';
+      rBracket.current.style.bottom = -314 + e.pageX / 150 + 'px';
+      rBracket.current.style.right = 578 + e.pageY / 100 + 'px';
+    }
   };
 
   return (

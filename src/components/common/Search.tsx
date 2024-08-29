@@ -5,12 +5,20 @@ import { useAppDispatch } from '../../index';
 import { MainContext } from '../../pages/Main';
 import hotkeys from 'hotkeys-js';
 const Line = styled.div`
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: 3rem;
+    width: 38%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: 3rem;
+    width: 34%;
+  }
   position: relative;
   display: inline-block;
   top: 0.9rem;
   left: 1.1rem;
   height: 0.12rem;
-  width: 26.5rem;
+  width: 38%;
   border-radius: 10rem;
   background: #000000;
   z-index: 2;
@@ -18,7 +26,7 @@ const Line = styled.div`
     height: 0.15rem;
     top: 0.9rem;
     background: #000000;
-    z-index: 3;
+    z-index: 2;
   }
 `;
 const Button = styled.button`
@@ -29,7 +37,6 @@ const Button = styled.button`
   width: 1.8rem;
   height: 1.8rem;
   top: 0.55rem;
-  left: -1.1rem;
   z-index: 2;
   border: none;
   cursor: pointer;
@@ -39,16 +46,50 @@ const Button = styled.button`
     left: -1rem;
   }
   &.magnifierhover {
-    left: -1.12rem;
+    left: -1.12%;
     transition: 0.1s ease-in;
   }
   &.magnifierNOThover {
-    left: -0.05rem;
+    left: -0.05%;
 
     transition: 0.1s 0.65s ease-out;
   }
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    cursor: pointer;
+
+    &.magnifierhover {
+      left: 1.4%;
+      transition: 0.1s ease-in;
+    }
+    &.magnifierNOThover {
+      left: 2.5%;
+
+      transition: 0.1s 0.65s ease-out;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    &.magnifierhover {
+      left: 1.4%;
+      transition: 0.1s ease-in;
+    }
+    &.magnifierNOThover {
+      left: 2.5%;
+
+      transition: 0.1s 0.65s ease-out;
+    }
+  }
 `;
 const SearchInput = styled.input`
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    position: absolute;
+    left: 3rem;
+    width: 38%;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: absolute;
+    left: 3rem;
+    width: 34%;
+  }
   position: relative;
   top: 0.1rem;
   left: -27.3rem;

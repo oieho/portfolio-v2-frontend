@@ -12,34 +12,19 @@ import MemberFindId from '../../containers/MemberFindIdContainer';
 import MemberFindPassword from '../../containers/MemberFindPasswordContainer';
 import CountDownTimer from '../../containers/CountDownTimerContainer';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
-  height: 10rem;
-  top: 0;
+  width: 16.61rem;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
+  top: -15.535rem;
   z-index: 1;
   opacity: 1;
   display: flex;
@@ -463,177 +448,175 @@ const MemberLogin = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hideBackBtn]);
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description ref={LoginRef}>
-          <Logintit
-            src={process.env.PUBLIC_URL + '/images/logintit.png'}
-            alt="login"
-          />
-          <form method="post" onSubmit={onSubmit}>
-            <IdInputIcon
-              src={
-                idIconHover
-                  ? process.env.PUBLIC_URL + '/images/loginidIconOv.png'
-                  : process.env.PUBLIC_URL + '/images/loginidIcon.png'
-              }
-            />
-            <IdInput
-              maxLength={50}
-              name="username"
-              autoComplete="username"
-              onChange={onChangeUserId}
-              placeholder="아이디"
-              value={userId}
-              onFocus={() => setIdIconHover(true)}
-              onBlur={() => setIdIconHover(false)}
-              spellCheck="false"
-            />
-            <PwInputIcon
-              src={
-                pwIconHover
-                  ? process.env.PUBLIC_URL + '/images/loginpwIconOv.png'
-                  : process.env.PUBLIC_URL + '/images/loginpwIcon.png'
-              }
-            />
-            <PwInput
-              maxLength={30}
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              onChange={onChangeUserPassword}
-              placeholder="비밀번호"
-              value={password}
-              onFocus={() => setPwIconHover(true)}
-              onBlur={() => setPwIconHover(false)}
-            />
-            <AutoLgn>
-              <Chkbox
-                id="checkbox"
-                checked={autoLogin}
-                onChange={onSetAutoLogin}
-              />
-              <label htmlFor="checkbox">로그인 유지</label>
-            </AutoLgn>
-            <span
-              onClick={(e: any) => {
-                onDisplayMember(e, 0);
-              }}
-            >
-              <FindID>아이디</FindID>
-            </span>
-            <FindIdandPassword>
-              /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;찾기
-            </FindIdandPassword>
-            <span
-              onClick={(e: any) => {
-                onDisplayMember(e, 1);
-              }}
-            >
-              <FindPassword>비밀번호</FindPassword>
-            </span>
-            <SuccessMessage>
-              {isAuthorized && toggleLogin && '로그인 성공'}
-            </SuccessMessage>
-            <ErrorMessage>
-              {(!isAuthorized || !toggleLogin) &&
-                LoginInitStatus &&
-                '로그인 실패'}
-              {tryLoginAuth ? (
-                <SetPosCountDownTimer>
-                  <CountDownTimer timeToLive={timeToLive} />
-                </SetPosCountDownTimer>
-              ) : (
-                <></>
-              )}
-            </ErrorMessage>
-            <IdInfoMessage>{IdInfo}</IdInfoMessage>
-            <Button
-              style={{
-                borderRadius: `1.12rem`,
-                width: `15.5rem`,
-                top: `20.4rem`,
-                left: `0.19rem`,
-                position: `relative`,
-              }}
-            >
-              로그인
-            </Button>
-          </form>
-          <AlignBtn>
-            <KakaoBtnWrap
-              onClick={() =>
-                (window.location.href =
-                  'http://52.78.70.226:8088/oauth2/authorization/kakao?redirect_uri=http://52.78.70.226:3000/socialLogin')
-              }
-              onMouseOver={() => setKakaoBtnHover(true)}
-              onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
-              title="Login Kakao"
-            >
-              <KakaoBtn
-                src={process.env.PUBLIC_URL + '/images/kakaoicon.png'}
-                alt="Login Kakao"
-              />
-              카카오 로그인
-            </KakaoBtnWrap>
-            <NaverBtnWrap
-              onClick={() =>
-                (window.location.href =
-                  'http://52.78.70.226:8088/oauth2/authorization/naver?redirect_uri=http://52.78.70.226:3000/socialLogin')
-              }
-              onMouseOver={() => setNaverBtnHover(true)}
-              onMouseOut={() => setNaverBtnHover(naverBtnHover)}
-              title="Login Naver"
-            >
-              <NaverBtn
-                src={process.env.PUBLIC_URL + '/images/navericon.png'}
-                alt="Login Naver"
-              />
-              네이버 로그인
-            </NaverBtnWrap>
-            <GoogleBtnWrap
-              onClick={() =>
-                (window.location.href =
-                  'http://ec2-52-78-70-226.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://52.78.70.226:3000/socialLogin')
-              }
-              onMouseOver={() => setGoogleBtnHover(true)}
-              onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
-              title="Login Google"
-            >
-              <GoogleBtn
-                src={process.env.PUBLIC_URL + '/images/googleicon.png'}
-                alt="Login Google"
-              />
-              구글 로그인
-            </GoogleBtnWrap>
-          </AlignBtn>
-        </Description>
-
-        <BackBtn
-          alt="뒤로가기"
-          title="뒤로가기"
-          ref={BackBtnRef}
-          onClick={() => goToBackward()}
-          onMouseOver={() => setBackBtnHover(true)}
-          onMouseOut={() => setBackBtnHover(false)}
-          onMouseDown={() => setBackBtnHover(false)}
-          onMouseUp={() => setBackBtnHover(true)}
-          src={
-            backBtnHover
-              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-              : process.env.PUBLIC_URL + '/images/board/back.png'
-          }
+    <RightBlock>
+      <Description ref={LoginRef}>
+        <Logintit
+          src={process.env.PUBLIC_URL + '/images/logintit.png'}
+          alt="login"
         />
-        <MemberWrapper>
-          <MemberFindIdWrapper ref={MemberFindIdRef}>
-            <MemberFindId />
-          </MemberFindIdWrapper>
-          <MemberFindPasswordWrapper ref={MemberFindPasswordRef}>
-            <MemberFindPassword />
-          </MemberFindPasswordWrapper>
-        </MemberWrapper>
-      </RightBlock>
-    </Wrapper>
+        <form method="post" onSubmit={onSubmit}>
+          <IdInputIcon
+            src={
+              idIconHover
+                ? process.env.PUBLIC_URL + '/images/loginidIconOv.png'
+                : process.env.PUBLIC_URL + '/images/loginidIcon.png'
+            }
+          />
+          <IdInput
+            maxLength={50}
+            name="username"
+            autoComplete="username"
+            onChange={onChangeUserId}
+            placeholder="아이디"
+            value={userId}
+            onFocus={() => setIdIconHover(true)}
+            onBlur={() => setIdIconHover(false)}
+            spellCheck="false"
+          />
+          <PwInputIcon
+            src={
+              pwIconHover
+                ? process.env.PUBLIC_URL + '/images/loginpwIconOv.png'
+                : process.env.PUBLIC_URL + '/images/loginpwIcon.png'
+            }
+          />
+          <PwInput
+            maxLength={30}
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            onChange={onChangeUserPassword}
+            placeholder="비밀번호"
+            value={password}
+            onFocus={() => setPwIconHover(true)}
+            onBlur={() => setPwIconHover(false)}
+          />
+          <AutoLgn>
+            <Chkbox
+              id="checkbox"
+              checked={autoLogin}
+              onChange={onSetAutoLogin}
+            />
+            <label htmlFor="checkbox">로그인 유지</label>
+          </AutoLgn>
+          <span
+            onClick={(e: any) => {
+              onDisplayMember(e, 0);
+            }}
+          >
+            <FindID>아이디</FindID>
+          </span>
+          <FindIdandPassword>
+            /&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;찾기
+          </FindIdandPassword>
+          <span
+            onClick={(e: any) => {
+              onDisplayMember(e, 1);
+            }}
+          >
+            <FindPassword>비밀번호</FindPassword>
+          </span>
+          <SuccessMessage>
+            {isAuthorized && toggleLogin && '로그인 성공'}
+          </SuccessMessage>
+          <ErrorMessage>
+            {(!isAuthorized || !toggleLogin) &&
+              LoginInitStatus &&
+              '로그인 실패'}
+            {tryLoginAuth ? (
+              <SetPosCountDownTimer>
+                <CountDownTimer timeToLive={timeToLive} />
+              </SetPosCountDownTimer>
+            ) : (
+              <></>
+            )}
+          </ErrorMessage>
+          <IdInfoMessage>{IdInfo}</IdInfoMessage>
+          <Button
+            style={{
+              borderRadius: `1.12rem`,
+              width: `15.5rem`,
+              top: `20.4rem`,
+              left: `0.19rem`,
+              position: `relative`,
+            }}
+          >
+            로그인
+          </Button>
+        </form>
+        <AlignBtn>
+          <KakaoBtnWrap
+            onClick={() =>
+              (window.location.href =
+                'http://52.78.70.226:8088/oauth2/authorization/kakao?redirect_uri=http://52.78.70.226:3000/socialLogin')
+            }
+            onMouseOver={() => setKakaoBtnHover(true)}
+            onMouseOut={() => setKakaoBtnHover(kakaoBtnHover)}
+            title="Login Kakao"
+          >
+            <KakaoBtn
+              src={process.env.PUBLIC_URL + '/images/kakaoicon.png'}
+              alt="Login Kakao"
+            />
+            카카오 로그인
+          </KakaoBtnWrap>
+          <NaverBtnWrap
+            onClick={() =>
+              (window.location.href =
+                'http://52.78.70.226:8088/oauth2/authorization/naver?redirect_uri=http://52.78.70.226:3000/socialLogin')
+            }
+            onMouseOver={() => setNaverBtnHover(true)}
+            onMouseOut={() => setNaverBtnHover(naverBtnHover)}
+            title="Login Naver"
+          >
+            <NaverBtn
+              src={process.env.PUBLIC_URL + '/images/navericon.png'}
+              alt="Login Naver"
+            />
+            네이버 로그인
+          </NaverBtnWrap>
+          <GoogleBtnWrap
+            onClick={() =>
+              (window.location.href =
+                'http://ec2-52-78-70-226.ap-northeast-2.compute.amazonaws.com:8088/oauth2/authorization/google?redirect_uri=http://52.78.70.226:3000/socialLogin')
+            }
+            onMouseOver={() => setGoogleBtnHover(true)}
+            onMouseOut={() => setGoogleBtnHover(googleBtnHover)}
+            title="Login Google"
+          >
+            <GoogleBtn
+              src={process.env.PUBLIC_URL + '/images/googleicon.png'}
+              alt="Login Google"
+            />
+            구글 로그인
+          </GoogleBtnWrap>
+        </AlignBtn>
+      </Description>
+
+      <BackBtn
+        alt="뒤로가기"
+        title="뒤로가기"
+        ref={BackBtnRef}
+        onClick={() => goToBackward()}
+        onMouseOver={() => setBackBtnHover(true)}
+        onMouseOut={() => setBackBtnHover(false)}
+        onMouseDown={() => setBackBtnHover(false)}
+        onMouseUp={() => setBackBtnHover(true)}
+        src={
+          backBtnHover
+            ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+            : process.env.PUBLIC_URL + '/images/board/back.png'
+        }
+      />
+      <MemberWrapper>
+        <MemberFindIdWrapper ref={MemberFindIdRef}>
+          <MemberFindId />
+        </MemberFindIdWrapper>
+        <MemberFindPasswordWrapper ref={MemberFindPasswordRef}>
+          <MemberFindPassword />
+        </MemberFindPasswordWrapper>
+      </MemberWrapper>
+    </RightBlock>
   );
 };
 

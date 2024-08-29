@@ -18,10 +18,13 @@ import MemberModify from '../../containers/MemberModifyContainer';
 import MemberInfo from '../../containers/MemberInfoContainer';
 import MailSender from '../../containers/MailSenderContainer';
 import { MainContext } from '../../pages/Main';
+import { GiHamburgerMenu } from 'react-icons/gi';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   position: absolute;
   width: 100%;
+  height: 100%;
   left: 0;
   top: 0;
   bottom: 0;
@@ -31,23 +34,71 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const Gnb = styled.span`
+  display: none;
+  left: 0.65rem;
+  top: 0.6rem;
+  width: 1.9rem;
+  height: 1.9rem;
+
+  @media (min-width: 769px) and (max-width: 1280px) {
+    display: none;
+    position: absolute;
+    width: 9rem;
+    height: 9rem;
+    background-color: black;
+    border-radius: 1rem;
+    visibility: hidden;
+    transition: width 2s ease-out, height 2s ease-out;
+    &.expanded {
+      display: block;
+      position: absolute;
+      top: 0.652rem;
+      left: 0.702rem;
+      width: 144px;
+      height: 120.49px;
+      visibility: visible;
+      z-index: 3;
+    }
+
+    ul {
+      position: relative;
+      left: 0.7rem;
+      list-style: none;
+    }
+    li {
+      cursor: pointer;
+      color: white;
+      padding: 0rem 0 1rem 0;
+    }
+    li:last-child {
+      color: white;
+      padding-bottom: 0;
+    }
+    li:hover {
+      font-weight: 550;
+      text-decoration: underline;
+    }
+  }
+`;
 const HeaderBlock = styled.div`
+  display: block;
   position: relative;
   width: 70.125rem;
   height: 3.1rem;
   left: 3.863rem;
-  top: -22.8rem;
+  top: -22.79rem;
   box-sizing: border-box;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   z-index: 2;
-  @media (max-width: 1024px) {
-    width: 768px;
+  .hamburgerBtn {
+    left: 0.1rem;
+    top: 0.05rem;
+    display: none;
   }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
+
   .innerright {
     position: absolute;
     display: inline-block;
@@ -81,6 +132,12 @@ const HeaderBlock = styled.div`
           font-weight: 600;
         }
       }
+      @media (min-width: 769px) and (max-width: 1024px) {
+        display: none;
+      }
+    }
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      right: -0.45rem;
     }
   }
   .right2 {
@@ -91,7 +148,70 @@ const HeaderBlock = styled.div`
     width: 19.6rem;
     height: 100%;
   }
+  @media (min-width: 1024px) and (max-width: 1280px) {
+    position: relative;
+    top: -22.9rem;
+    left: 0rem;
+    width: 95.9%;
+    z-index: 3;
+    .hamburgerBtn {
+      display: block;
+      background-color: black;
+      color: white;
+      border-radius: 0.25rem;
+      transform: scale(1.8);
+      padding: 0.2rem;
+      position: absolute;
+      margin: 1rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      z-index: 3;
+      &:hover,
+      &.expanded {
+        transform: scale(1.7);
+        outline: black 2px solid;
+        background-color: #e5e5e5;
+        color: black;
+        text-decoration: underline;
+      }
+      &:active {
+        transform: scale(1.92);
+        font-weight: bold;
+      }
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1280px) {
+    position: relative;
+    top: -22.9rem;
+    left: 0rem;
+    width: 93.1%;
+    z-index: 3;
+    .hamburgerBtn {
+      display: block;
+      background-color: black;
+      color: white;
+      border-radius: 0.25rem;
+      transform: scale(1.8);
+      padding: 0.2rem;
+      position: absolute;
+      margin: 1rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      z-index: 3;
+      &:hover,
+      &.expanded {
+        transform: scale(1.7);
+        outline: black 2px solid;
+        background-color: #e5e5e5;
+        color: black;
+        text-decoration: underline;
+      }
+      &:active {
+        transform: scale(1.92);
+        font-weight: bold;
+      }
+    }
+  }
 `;
+
 const User = styled.span`
   display: inline-block;
   font-size: 0.85rem;
@@ -186,12 +306,17 @@ const LogAreaBtn = styled.img`
 `;
 const MemberWrapper = styled.div`
   position: relative;
-  top: 16.5rem;
-  margin-left: 31.15rem;
+  left: 53.5rem;
+  width: 16.61rem;
+  bottom: -16.5rem;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    top: calc(692% - 3.938rem);
+    left: calc(100% - (305.99px - 39px));
+  }
 `;
 const MemberLoginWrapper = styled.span`
-  position: absolute;
   display: block;
+  position: absolute;
   left: 0;
   top: 0;
 `;
@@ -224,9 +349,12 @@ const BackBtn = styled.img`
   position: absolute;
   width: 1.5rem;
   height: 3.6rem;
-  right: -1.5rem;
+  right: -1.52rem;
   top: 8.272rem;
   z-index: 2;
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    right: -1.545rem;
+  }
 `;
 const CoverBackBtn = styled.span`
   display: none;
@@ -247,12 +375,14 @@ type Props = {
 };
 const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
   const { state, actions } = useContext(MainContext);
+  const navigate = useNavigate();
 
   const [userName, setUserName] = useState('');
   const [loginHover, setLoginHover] = useState(false);
   const [joinHover, setJoinHover] = useState(false);
   const [mailToHover, setMailToHover] = useState(false);
   const [backBtnHover, setBackBtnHover] = useState<boolean>();
+  const [gnbExpanded, setGnbExpanded] = useState(false);
 
   const [counter, setCounter] = useState(
     Math.ceil(0 / 1.3)
@@ -294,12 +424,20 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
   useEffect(() => {
     if (state.toggleBackBtn === true) {
       setTimeout(() => {
-        BackBtnRef.current.style.display = 'block';
-        CoverBackBtnRef.current.style.display = 'none';
+        if (BackBtnRef?.current) {
+          BackBtnRef.current.style.display = 'block';
+        }
+        if (CoverBackBtnRef?.current) {
+          CoverBackBtnRef.current.style.display = 'none';
+        }
       }, 1300);
     } else if (state.toggleBackBtn === false) {
-      BackBtnRef.current.style.display = 'none';
-      CoverBackBtnRef.current.style.display = 'block';
+      if (BackBtnRef?.current) {
+        BackBtnRef.current.style.display = 'none';
+      }
+      if (CoverBackBtnRef?.current) {
+        CoverBackBtnRef.current.style.display = 'block';
+      }
     }
 
     if (myInfo) {
@@ -397,9 +535,91 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     }
     willBeShownDesc.style.display = 'block';
   };
+
+  const initSelectedList = () => {
+    const searchInput = document.getElementById(
+      'searchInput',
+    ) as HTMLInputElement;
+    const searchType = document.getElementById(
+      'searchFormType',
+    ) as HTMLSelectElement;
+    actions.setSearchGear(true);
+    setTimeout(() => {
+      actions.setToggleBackBtn(false);
+    }, 700);
+    actions.setOnGlobalSearch(false);
+    actions.setToggleSelected(false);
+    actions.setCompleteOrModify(false);
+    actions.setBoardModifiable(false);
+    actions.setSelectedList([]);
+    actions.setSelectedView(false);
+    actions.setHashSelected(false);
+    actions.setToolsSelected(false);
+
+    state.selectedList.forEach((selected) => {
+      const element = document.getElementById(`boardMore-${selected}`);
+      const element2 = document.getElementById(`board-${selected}`) as any;
+      if (element) {
+        element.style.backgroundImage = "url('/images/board/more.png')";
+      }
+
+      if (element2) {
+        element2.classList.remove('black');
+        element2.classList.remove('blackOnModify');
+        element2.classList.add('normal');
+      }
+    });
+
+    navigate(
+      `/boards?searchType=${searchType.value}&keyword=${encodeURIComponent(
+        searchInput?.value,
+      )}`,
+    );
+  };
+  const toggleGNB = () => {
+    if (gnbExpanded === true) {
+      setGnbExpanded(false);
+    } else {
+      setGnbExpanded(true);
+    }
+  };
+
   return (
     <Wrapper>
       <HeaderBlock ref={headerBlockRef}>
+        <Gnb className={gnbExpanded ? 'expanded' : ''}>
+          <ul>
+            <li
+              onClick={(e: any) => {
+                toggleGNB();
+                initSelectedList();
+              }}
+            >
+              홈
+            </li>
+            <li
+              onClick={() => {
+                toggleGNB();
+                alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+              }}
+            >
+              이력서
+            </li>
+            <li
+              onClick={() => {
+                toggleGNB();
+                alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+              }}
+            >
+              IT 블로그
+            </li>
+          </ul>
+        </Gnb>
+        <GiHamburgerMenu
+          onClick={toggleGNB}
+          className={`hamburgerBtn ${gnbExpanded ? 'expanded' : ''}`}
+          title="Global Navigation"
+        />
         <Search />
         <div className="innerright">
           <div className="right1">
@@ -519,6 +739,23 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
             }
           />
         </div>
+
+        <BackBtn
+          alt="뒤로가기"
+          title="뒤로가기"
+          ref={BackBtnRef}
+          onClick={() => goToBackward()}
+          onMouseOver={() => setBackBtnHover(true)}
+          onMouseOut={() => setBackBtnHover(false)}
+          onMouseDown={() => setBackBtnHover(false)}
+          onMouseUp={() => setBackBtnHover(true)}
+          src={
+            backBtnHover
+              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+              : process.env.PUBLIC_URL + '/images/board/back.png'
+          }
+        />
+        <CoverBackBtn ref={CoverBackBtnRef} />
         <MemberWrapper ref={MemberWrapperRef}>
           <MemberLoginWrapper ref={MemberLoginRef}>
             <MemberLogin />
@@ -536,22 +773,6 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
             <MailSender />
           </MailSenderWrapper>
         </MemberWrapper>
-        <BackBtn
-          alt="뒤로가기"
-          title="뒤로가기"
-          ref={BackBtnRef}
-          onClick={() => goToBackward()}
-          onMouseOver={() => setBackBtnHover(true)}
-          onMouseOut={() => setBackBtnHover(false)}
-          onMouseDown={() => setBackBtnHover(false)}
-          onMouseUp={() => setBackBtnHover(true)}
-          src={
-            backBtnHover
-              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-              : process.env.PUBLIC_URL + '/images/board/back.png'
-          }
-        />
-        <CoverBackBtn ref={CoverBackBtnRef} />
       </HeaderBlock>
     </Wrapper>
   );

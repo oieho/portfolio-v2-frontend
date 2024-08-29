@@ -14,7 +14,7 @@ import ContentDescOnWriting from './containers/ContentDescOnWritingContainer';
 import ContentBodyOnWriting from './containers/ContentBodyOnWritingContainer';
 import ContentDescOnModifing from './containers/ContentDescOnModifingContainer';
 import ContentBodyOnModifing from './containers/ContentBodyOnModifingContainer';
-import Blog from './pages/Blog';
+
 import { Helmet } from 'react-helmet-async';
 const App = () => {
   return (
@@ -61,7 +61,6 @@ const App = () => {
           <Route path="findPassword" element={<MemberFindPassword />} />
           <Route path="mailSender" element={<MailSender />} />
         </Route>
-        <Route path="/blog" element={<Blog />}></Route>
       </Routes>
     </>
   );

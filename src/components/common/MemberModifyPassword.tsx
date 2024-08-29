@@ -26,14 +26,14 @@ const RightBlock = styled.div`
   position: relative;
   background: #f5f5f5;
   left: 30.65rem;
-  width: 16.625rem;
+  width: 16.61rem;
   height: 10rem;
   top: 0;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;

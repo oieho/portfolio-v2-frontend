@@ -3,22 +3,32 @@ import { RefObject, useEffect, useRef, useState } from 'react';
 
 const Wrapper = styled.div`
   position: absolute;
-  left: -0.1rem;
+  left: -0.03rem;
   top: 0;
   bottom: 0;
   right: 0;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    align-items: end;
+    justify-content: end;
+  }
 `;
 const RightBlock = styled.div`
   position: relative;
-  background: f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
+  width: 16.61rem;
   height: 10rem;
-  top: 0;
+  left: 30.65rem;
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    left: -2.56rem;
+    top: calc(-44.5% + 17px);
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    left: -2.06rem;
+    top: calc(-44.5% + 17px);
+  }
 `;
 
 const Saying = styled.div`
@@ -38,6 +48,9 @@ const Copyright = styled.img`
   border-radius: 1rem;
   width: 100%;
   height: 2rem;
+  span {
+    font-weight: bold;
+  }
 `;
 
 const SLbracket = styled.img`
@@ -75,14 +88,11 @@ const Stext = styled.span`
   align-items: center;
   opacity: 1;
 `;
-const Ctxt = styled.span`
+const CopyrightTxt = styled.span`
   position: absolute;
   left: 2.6rem;
   bottom: -18.9rem;
   font-size: 0.68rem;
-  span {
-    font-weight: bold;
-  }
 `;
 const RightBottom = () => {
   const [sText, setStext] = useState<string>();
@@ -159,9 +169,9 @@ const RightBottom = () => {
           src={process.env.PUBLIC_URL + '/images/copyrightbg.png'}
           alt="Copyright Background Image"
         />
-        <Ctxt>
+        <CopyrightTxt>
           copyright ⓒ <span>oieho</span> all right reserved.
-        </Ctxt>
+        </CopyrightTxt>
       </RightBlock>
     </Wrapper>
   );

@@ -14,9 +14,9 @@ const Wrapper = styled.div`
 
 const LeftBlock = styled.div`
   position: relative;
-  top: 0;
+  top: 0.06rem;
   width: 6.25rem;
-  height: 48.75rem;
+  height: 48.73rem;
   background: #000000;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   border-radius: 1rem;
@@ -32,6 +32,7 @@ const Logo = styled.span`
   left: 0.1rem;
   z-index: 4;
   animation: mainLogo 1.1s ease-out infinite normal;
+  animation-timing-function: ease-out;
 
   @keyframes mainLogo {
     /* 대소문자 구분 */
@@ -52,8 +53,6 @@ const Logo = styled.span`
       transform-origin: center top;
       transform: rotate(0deg);
     }
-
-    animation-timing-function: ease-out;
   }
 `;
 const rotateAnimation = keyframes`
@@ -173,8 +172,9 @@ const Btn = styled.li`
   padding-top: 5rem;
 `;
 
-const LeftElement = styled(LeftEle)`
+const StyledDiv = styled.div`
   position: absolute;
+  // 다른 스타일
 `;
 type leftProps = {
   homeHv: boolean;
@@ -211,11 +211,10 @@ const Left = (props: leftProps) => {
   const [isFirstLoadPortfolio, setIsFirstLoadPortfolio] =
     useState<boolean>(false);
 
-  const searchInput = document.getElementById(
-    'searchInput',
-  ) as HTMLInputElement;
-
   const initSelectedList = () => {
+    const searchInput = document.getElementById(
+      'searchInput',
+    ) as HTMLInputElement;
     const searchType = document.getElementById(
       'searchFormType',
     ) as HTMLSelectElement;
@@ -315,7 +314,9 @@ const Left = (props: leftProps) => {
           />
         </Btn>
       </BtnWrapper>
-      <LeftElement />
+      <StyledDiv>
+        <LeftEle {...(props as any)} />
+      </StyledDiv>
     </Wrapper>
   );
 };

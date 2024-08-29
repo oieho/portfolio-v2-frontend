@@ -11,6 +11,7 @@ import { Board } from '../../App';
 import { MyInfo } from '../../App';
 import BoardTableContent from './BoardTableContent';
 import { List, ListRowRenderer } from 'react-virtualized';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import {
   fetchList,
   fetchSelectedList,
@@ -42,6 +43,21 @@ const BoardListBlock = styled.div`
   width: 52.8rem;
   height: 44.9rem;
   z-index: 1; // 중요 z-index로 순서 제어
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.8rem;
+    margin-left: 2.1rem;
+    width: calc(97.7% - 304.99px - 28.16px);
+    z-index: 2;
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    top: 1.94rem;
+    left: -9.6rem;
+    width: calc(100% - 318.99px - 28.16px);
+    margin-left: 1.7rem;
+  }
 `;
 const BoardTitle = styled.img`
   float: left;
@@ -51,6 +67,10 @@ const BoardTitle = styled.img`
   width: 6.063rem;
   height: 1.813rem;
   cursor: pointer;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    left: 1.7rem;
+  }
 `;
 const SearchArea = styled.span`
   float: right;
@@ -59,6 +79,10 @@ const SearchArea = styled.span`
   top: 0.79rem;
   width: 14rem;
   height: 1.813rem;
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    left: 1.2rem;
+  }
 `;
 const Sorting = styled.span`
   position: absolute;
@@ -101,7 +125,6 @@ const Button = styled.button`
   background-image: url('/images/board/enter.png');
   background-size: cover;
   position: relative;
-  display: inline-block;
   float: right;
   right: 0rem;
   top: -1.76rem;
@@ -140,17 +163,27 @@ const SearchInput = styled.input`
 `;
 const BoardTableHeader = styled.table`
   position: absolute;
+  width: 49.5rem;
   top: 5.9rem;
   left: 1.43rem;
-  width: 49.61rem;
+  @media (min-width: 769px) and (max-width: 1280px) {
+    width: calc(93.5%);
+    margin-left: 0.3rem;
+  }
 `;
-
 const BoardTableBody = styled.table`
   position: absolute;
   top: 7rem;
   left: 1.21rem;
   text-align: center;
-  width: 49.61rem;
+  width: 98%;
+`;
+const BoardTableExceptionBody = styled.table`
+  position: absolute;
+  top: 7rem;
+  left: 2.1%;
+  text-align: center;
+  width: 94.2%;
 `;
 const EmptyTd = styled.td`
   font-size: 0.85rem;
@@ -165,7 +198,8 @@ const EmptyTd = styled.td`
   border-radius: 17px;
 `;
 const BoardTableTitles = styled.tr`
-  width: 49.61rem;
+  width: 100%;
+  padding: 0 0.3rem;
   font-size: 0.75rem;
   font-weight: 400;
 `;
@@ -184,32 +218,65 @@ const TitleTit = styled.span`
   }
 `;
 const TitleTd = styled.td`
+  position: relative;
+  width: 100%;
   cursor: default;
+
   &.tHeadTd1 {
-    width: 30.586rem;
-    padding-left: 0.3rem;
+    width: 28.586rem;
+    padding-left: 0.5rem;
     text-align: left;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      width: calc(62.3%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      left: -0.57rem;
+      width: calc(22.6%);
+    }
   }
   &.tHeadTd2 {
+    position: relative;
     width: 6.129rem;
+    left: 0.51rem;
     text-align: center;
     &:hover {
       font-weight: bold;
     }
     &:active {
       text-decoration: underline;
+    }
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      left: 0;
+      width: calc(13.2%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      display: none;
+      left: 0;
+      width: calc(6.1%);
     }
   }
   &.tHeadTd3 {
     position: relative;
-    right: 0.8rem;
+    right: 0.42rem;
     width: 5.164rem;
     text-align: center;
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      right: 0;
+      width: calc(8.95%);
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      &::before {
+        content: 'Count / ';
+        position: relative;
+      }
+      right: 0.32rem;
+      width: calc(5%);
+    }
   }
   &.tHeadTd4 {
     position: relative;
     width: 9.123rem;
-    right: 0.24rem;
+    right: 0.44rem;
     text-align: center;
     &:hover {
       font-weight: bold;
@@ -217,6 +284,16 @@ const TitleTd = styled.td`
     &:active {
       text-decoration: underline;
     }
+    @media (min-width: 1025px) and (max-width: 1280px) {
+      right: 0rem;
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      left: 0;
+      width: calc(7.95%);
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: -0.46rem;
   }
 `;
 const Select = styled.span`
@@ -251,6 +328,10 @@ const StyledList = styled(List)`
   ::-webkit-scrollbar-thumb:active {
     background: #000;
   }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    position: relative;
+    left: -0.5rem;
+  }
 `;
 
 interface Props {
@@ -280,6 +361,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   const [countTit, setCountTit] = useState('');
   const [regDateTit, setRegDateTit] = useState('');
   const [searchType, setSearchType] = useState('');
+  const [rowHeight, setRowHeight] = useState(82.01);
 
   const searchInput = document.getElementById(
     'searchInput',
@@ -870,38 +952,48 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
                 </BoardTableTitles>
               </thead>
             </BoardTableHeader>
-            <BoardTableBody>
-              {!boards.length ? (
-                <tbody>
-                  <tr>
-                    <EmptyTd colSpan={4}>{loadingText}</EmptyTd>
-                  </tr>
-                </tbody>
-              ) : !!boards.length ? (
-                <tbody>
-                  <tr>
-                    <td>
-                      <StyledList
-                        className={'StyledList'}
-                        width={815.18}
-                        height={601.19}
-                        rowHeight={82.01}
-                        rowCount={boards.length}
-                        overscanIndicesGetter={overscanIndicesGetter}
-                        rowRenderer={rowRenderer}
-                        style={{ outline: 'none' }}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              ) : (
+            {!boards.length ? (
+              <BoardTableExceptionBody>
                 <tbody>
                   <tr>
                     <EmptyTd colSpan={4}>List is empty.</EmptyTd>
                   </tr>
                 </tbody>
-              )}
-            </BoardTableBody>
+              </BoardTableExceptionBody>
+            ) : !!boards.length ? (
+              <BoardTableBody>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div style={{ width: '98.8%', height: '599px' }}>
+                        <AutoSizer>
+                          {({ height, width }: any) => (
+                            <StyledList
+                              className={'StyledList'}
+                              width={width} // AutoSizer로부터 받은 width
+                              height={height} // AutoSizer로부터 받은 height
+                              rowHeight={82.01}
+                              rowCount={boards.length}
+                              overscanIndicesGetter={overscanIndicesGetter}
+                              rowRenderer={rowRenderer}
+                              style={{ outline: 'none' }}
+                            />
+                          )}
+                        </AutoSizer>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </BoardTableBody>
+            ) : (
+              <BoardTableExceptionBody>
+                <tbody>
+                  <tr>
+                    <EmptyTd colSpan={4}>{loadingText}</EmptyTd>
+                  </tr>
+                </tbody>
+              </BoardTableExceptionBody>
+            )}
           </>
         )}
       </BoardListBlock>

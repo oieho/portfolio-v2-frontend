@@ -3,29 +3,14 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Button from './button/Button';
 import { MyInfo } from '../../App';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
-  height: 10rem;
-  top: 0;
+  width: 16.61rem;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   border-radius: 1rem;
   width: 100%;
@@ -305,117 +290,115 @@ const MailSender = ({ myInfo, sendAnEmail }: Props) => {
     [sender, email, subject, content, file, sendAnEmail],
   );
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description>
-          <MailSendertit
-            src={process.env.PUBLIC_URL + '/images/sendmailtit.png'}
-            alt="Send an Email"
-          />
-          <form method="post" onSubmit={onSubmit}>
-            <Inputs>
-              <InputLi>
-                {myInfo ? (
-                  <SenderInput
-                    maxLength={10}
-                    name="sender"
-                    autoComplete="sender"
-                    onChange={onChangeSender}
-                    placeholder="발신자"
-                    value={sender}
-                    disabled
-                  />
-                ) : (
-                  <SenderInput
-                    maxLength={10}
-                    name="sender"
-                    autoComplete="sender"
-                    onChange={onChangeSender}
-                    placeholder="발신자"
-                    value={sender}
-                    spellCheck="false"
-                    required
-                  />
-                )}
-                {myInfo ? (
-                  <EmailInput
-                    maxLength={30}
-                    name="email"
-                    type="text"
-                    autoComplete="email"
-                    onChange={onChangeEmail}
-                    onBlur={onBlurEmail}
-                    placeholder="이메일"
-                    value={email}
-                    disabled
-                  />
-                ) : (
-                  <EmailInput
-                    maxLength={30}
-                    name="email"
-                    type="text"
-                    autoComplete="email"
-                    onChange={onChangeEmail}
-                    onBlur={onBlurEmail}
-                    placeholder="이메일"
-                    value={email}
-                    spellCheck="false"
-                    required
-                  />
-                )}
-              </InputLi>
-              <InputLi>
-                <SubjectInput
-                  maxLength={30}
-                  name="subject"
-                  type="text"
-                  autoComplete="subject"
-                  onChange={onChangeSubject}
-                  placeholder="제목"
-                  value={subject}
+    <RightBlock>
+      <Description>
+        <MailSendertit
+          src={process.env.PUBLIC_URL + '/images/sendmailtit.png'}
+          alt="Send an Email"
+        />
+        <form method="post" onSubmit={onSubmit}>
+          <Inputs>
+            <InputLi>
+              {myInfo ? (
+                <SenderInput
+                  maxLength={10}
+                  name="sender"
+                  autoComplete="sender"
+                  onChange={onChangeSender}
+                  placeholder="발신자"
+                  value={sender}
+                  disabled
+                />
+              ) : (
+                <SenderInput
+                  maxLength={10}
+                  name="sender"
+                  autoComplete="sender"
+                  onChange={onChangeSender}
+                  placeholder="발신자"
+                  value={sender}
                   spellCheck="false"
                   required
                 />
-              </InputLi>
-              <InputLi>
-                <TextareaWrapper>
-                  <ContentTextarea
-                    placeholder="내용"
-                    maxLength={1000}
-                    value={content}
-                    onChange={onChangeContent}
-                    spellCheck="false"
-                    required
-                  />
-                </TextareaWrapper>
-              </InputLi>
-              <InputLi>
-                <UploadFile
-                  type="file"
-                  id="imgupload"
-                  name="imgupload"
-                  accept="image/jpeg,image/gif,image/png,image/bmp"
-                  onChange={onChangeFile}
+              )}
+              {myInfo ? (
+                <EmailInput
+                  maxLength={30}
+                  name="email"
+                  type="text"
+                  autoComplete="email"
+                  onChange={onChangeEmail}
+                  onBlur={onBlurEmail}
+                  placeholder="이메일"
+                  value={email}
+                  disabled
                 />
-              </InputLi>
-            </Inputs>
-            <SuccessMessage>{sMessage}</SuccessMessage>
-            <ErrorMessage>{fMessage}</ErrorMessage>
-            <InfoMessage>{iMessage}</InfoMessage>
+              ) : (
+                <EmailInput
+                  maxLength={30}
+                  name="email"
+                  type="text"
+                  autoComplete="email"
+                  onChange={onChangeEmail}
+                  onBlur={onBlurEmail}
+                  placeholder="이메일"
+                  value={email}
+                  spellCheck="false"
+                  required
+                />
+              )}
+            </InputLi>
+            <InputLi>
+              <SubjectInput
+                maxLength={30}
+                name="subject"
+                type="text"
+                autoComplete="subject"
+                onChange={onChangeSubject}
+                placeholder="제목"
+                value={subject}
+                spellCheck="false"
+                required
+              />
+            </InputLi>
+            <InputLi>
+              <TextareaWrapper>
+                <ContentTextarea
+                  placeholder="내용"
+                  maxLength={1000}
+                  value={content}
+                  onChange={onChangeContent}
+                  spellCheck="false"
+                  required
+                />
+              </TextareaWrapper>
+            </InputLi>
+            <InputLi>
+              <UploadFile
+                type="file"
+                id="imgupload"
+                name="imgupload"
+                accept="image/jpeg,image/gif,image/png,image/bmp"
+                onChange={onChangeFile}
+              />
+            </InputLi>
+          </Inputs>
+          <SuccessMessage>{sMessage}</SuccessMessage>
+          <ErrorMessage>{fMessage}</ErrorMessage>
+          <InfoMessage>{iMessage}</InfoMessage>
 
-            <Button
-              style={{
-                top: `28.86rem`,
-                left: `0.17rem`,
-                position: `relative`,
-              }}
-            >
-              보내기
-            </Button>
-          </form>
-        </Description>
-      </RightBlock>
-    </Wrapper>
+          <Button
+            style={{
+              top: `28.86rem`,
+              left: `0.17rem`,
+              position: `relative`,
+            }}
+          >
+            보내기
+          </Button>
+        </form>
+      </Description>
+    </RightBlock>
   );
 };
 

@@ -11,28 +11,14 @@ import Button from './button/Button';
 import { MyInfo, ModifyInfo } from '../../App';
 import MemberModifyPassword from '../../containers/MemberModifyPasswordContainer';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.65rem;
-  width: 16.625rem;
+  width: 16.61rem;
   height: 10rem;
-  top: 0;
 `;
 const Description = styled.div`
   position: absolute;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
@@ -46,7 +32,7 @@ const Description = styled.div`
 const MemberModifyConfirmPw = styled.div`
   position: absolute;
   text-align: center;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
@@ -60,7 +46,7 @@ const MemberModifyConfirmPw = styled.div`
 const MemberModifyForm = styled.div`
   position: absolute;
   text-align: center;
-  top: -15.55rem;
+  top: -15.535rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
@@ -538,190 +524,188 @@ const MemberModify = ({
   const deleteMember = useConfirm('회원 탈퇴 하시겠습니까?', del, abort);
 
   return (
-    <Wrapper>
-      <RightBlock>
-        {!myInfo || myInfo?.providerType === 'LOCAL' ? (
-          <>
-            <MemberModifyConfirmPw ref={MemberModifyConfirmPwRef}>
-              <Confirmpwtit
-                src={process.env.PUBLIC_URL + '/images/confirmpwtit.png'}
-                alt="Member Confirm Password"
-              />
-              <form method="post" onSubmit={onPasswordConfirm}>
-                <DescriptionTop>
-                  <PwInput
-                    ref={cPwInput}
-                    maxLength={20}
-                    name="cpassword"
-                    type="password"
-                    autoComplete="cpassword"
-                    onChange={onConfirmUserPassword}
-                    placeholder="비밀번호"
-                    required
-                  />
+    <RightBlock>
+      {!myInfo || myInfo?.providerType === 'LOCAL' ? (
+        <>
+          <MemberModifyConfirmPw ref={MemberModifyConfirmPwRef}>
+            <Confirmpwtit
+              src={process.env.PUBLIC_URL + '/images/confirmpwtit.png'}
+              alt="Member Confirm Password"
+            />
+            <form method="post" onSubmit={onPasswordConfirm}>
+              <DescriptionTop>
+                <PwInput
+                  ref={cPwInput}
+                  maxLength={20}
+                  name="cpassword"
+                  type="password"
+                  autoComplete="cpassword"
+                  onChange={onConfirmUserPassword}
+                  placeholder="비밀번호"
+                  required
+                />
 
-                  <SuccessMessage></SuccessMessage>
-                  <CErrorMessage>{fMessage}</CErrorMessage>
-                  <InfoMessage>{Info}</InfoMessage>
-                </DescriptionTop>
+                <SuccessMessage></SuccessMessage>
+                <CErrorMessage>{fMessage}</CErrorMessage>
+                <InfoMessage>{Info}</InfoMessage>
+              </DescriptionTop>
+              <Button
+                style={{
+                  top: `14.6rem`,
+                  left: `0rem`,
+                  position: `relative`,
+                }}
+              >
+                확인
+              </Button>
+            </form>
+          </MemberModifyConfirmPw>
+          <MemberModifyForm ref={MemberModifyFormRef}>
+            <Confirmpwtit
+              src={process.env.PUBLIC_URL + '/images/modifytit.png'}
+              alt="Member Modify"
+            />
+            {isLoading && <NowLoading>로딩 중...</NowLoading>}
+            {!isLoading && myInfo && (
+              <>
+                <form method="post" onSubmit={onSubmit}>
+                  <DescriptionTop>
+                    <InputTitles>
+                      <UserIdTit>아이디</UserIdTit>
+                      <UserPwTit>비밀번호</UserPwTit>
+                      <UserEmailTit>이메일</UserEmailTit>
+                      <UserNameTit>이름</UserNameTit>
+                    </InputTitles>
+                    <IdInput
+                      maxLength={10}
+                      name="userId"
+                      value={userId}
+                      disabled
+                    />
+                    <MpwInput
+                      ref={mPwInput}
+                      maxLength={20}
+                      name="password"
+                      type="password"
+                      autoComplete="new-password"
+                      onChange={onChangeUserPassword}
+                      placeholder="비밀번호"
+                      required
+                    />
+
+                    <EmailInput
+                      ref={emailInput}
+                      maxLength={30}
+                      name="userEmail"
+                      type="text"
+                      autoComplete="userEmail"
+                      onChange={onChangeUserEmail}
+                      defaultValue={myInfo.userEmail}
+                      spellCheck="false"
+                    />
+                    <UserNameInput
+                      ref={nameInput}
+                      maxLength={30}
+                      name="userName"
+                      type="text"
+                      autoComplete="userName"
+                      onChange={(e: any) => {
+                        onChangeUserName(e);
+                      }}
+                      defaultValue={myInfo.userName}
+                      spellCheck="false"
+                      required
+                    />
+                    <SuccessMessage>{sMessage}</SuccessMessage>
+                    <ErrorMessage>{fMessage}</ErrorMessage>
+                    <InfoMessage>{Info}</InfoMessage>
+                  </DescriptionTop>
+                  {isOwn && (
+                    <>
+                      <Button
+                        onClick={(e: any) => {
+                          onDisplayMember(e, 2);
+                        }}
+                        style={{
+                          top: `24.9rem`,
+                          left: `-2.812rem`,
+                          position: `relative`,
+                        }}
+                      >
+                        비밀번호 변경
+                      </Button>
+                      <Button
+                        style={{
+                          width: `4.7rem`,
+                          top: `24.3rem`,
+                          left: `-2.05rem`,
+                          position: `relative`,
+                        }}
+                      >
+                        수정
+                      </Button>
+                    </>
+                  )}
+                </form>
                 <Button
+                  onClick={deleteMember}
                   style={{
-                    top: `14.6rem`,
-                    left: `0rem`,
+                    width: `4.7rem`,
+                    color: `red`,
+                    top: `21.77rem`,
+                    left: `5.57rem`,
                     position: `relative`,
                   }}
                 >
-                  확인
+                  탈퇴
                 </Button>
-              </form>
-            </MemberModifyConfirmPw>
-            <MemberModifyForm ref={MemberModifyFormRef}>
-              <Confirmpwtit
-                src={process.env.PUBLIC_URL + '/images/modifytit.png'}
-                alt="Member Modify"
-              />
-              {isLoading && <NowLoading>로딩 중...</NowLoading>}
-              {!isLoading && myInfo && (
-                <>
-                  <form method="post" onSubmit={onSubmit}>
-                    <DescriptionTop>
-                      <InputTitles>
-                        <UserIdTit>아이디</UserIdTit>
-                        <UserPwTit>비밀번호</UserPwTit>
-                        <UserEmailTit>이메일</UserEmailTit>
-                        <UserNameTit>이름</UserNameTit>
-                      </InputTitles>
-                      <IdInput
-                        maxLength={10}
-                        name="userId"
-                        value={userId}
-                        disabled
-                      />
-                      <MpwInput
-                        ref={mPwInput}
-                        maxLength={20}
-                        name="password"
-                        type="password"
-                        autoComplete="new-password"
-                        onChange={onChangeUserPassword}
-                        placeholder="비밀번호"
-                        required
-                      />
+              </>
+            )}
 
-                      <EmailInput
-                        ref={emailInput}
-                        maxLength={30}
-                        name="userEmail"
-                        type="text"
-                        autoComplete="userEmail"
-                        onChange={onChangeUserEmail}
-                        defaultValue={myInfo.userEmail}
-                        spellCheck="false"
-                      />
-                      <UserNameInput
-                        ref={nameInput}
-                        maxLength={30}
-                        name="userName"
-                        type="text"
-                        autoComplete="userName"
-                        onChange={(e: any) => {
-                          onChangeUserName(e);
-                        }}
-                        defaultValue={myInfo.userName}
-                        spellCheck="false"
-                        required
-                      />
-                      <SuccessMessage>{sMessage}</SuccessMessage>
-                      <ErrorMessage>{fMessage}</ErrorMessage>
-                      <InfoMessage>{Info}</InfoMessage>
-                    </DescriptionTop>
-                    {isOwn && (
-                      <>
-                        <Button
-                          onClick={(e: any) => {
-                            onDisplayMember(e, 2);
-                          }}
-                          style={{
-                            top: `24.9rem`,
-                            left: `-2.812rem`,
-                            position: `relative`,
-                          }}
-                        >
-                          비밀번호 변경
-                        </Button>
-                        <Button
-                          style={{
-                            width: `4.7rem`,
-                            top: `24.3rem`,
-                            left: `-2.05rem`,
-                            position: `relative`,
-                          }}
-                        >
-                          수정
-                        </Button>
-                      </>
-                    )}
-                  </form>
-                  <Button
-                    onClick={deleteMember}
-                    style={{
-                      width: `4.7rem`,
-                      color: `red`,
-                      top: `21.77rem`,
-                      left: `5.57rem`,
-                      position: `relative`,
-                    }}
-                  >
-                    탈퇴
-                  </Button>
-                </>
-              )}
-
-              <BackBtn
-                alt="뒤로가기"
-                title="뒤로가기"
-                ref={BackBtnRef}
-                id={`beforeBackBtn`}
-                onClick={() => goToBackward()}
-                onMouseOver={() => setBackBtnHover(true)}
-                onMouseOut={() => setBackBtnHover(false)}
-                onMouseDown={() => setBackBtnHover(false)}
-                onMouseUp={() => setBackBtnHover(true)}
-                src={
-                  backBtnHover
-                    ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-                    : process.env.PUBLIC_URL + '/images/board/back.png'
-                }
-              />
-            </MemberModifyForm>
-          </>
-        ) : (
-          <Description>
-            <Confirmpwtit
-              src={process.env.PUBLIC_URL + '/images/modifytit.png'}
-              alt="Member Confirm Password"
+            <BackBtn
+              alt="뒤로가기"
+              title="뒤로가기"
+              ref={BackBtnRef}
+              id={`beforeBackBtn`}
+              onClick={() => goToBackward()}
+              onMouseOver={() => setBackBtnHover(true)}
+              onMouseOut={() => setBackBtnHover(false)}
+              onMouseDown={() => setBackBtnHover(false)}
+              onMouseUp={() => setBackBtnHover(true)}
+              src={
+                backBtnHover
+                  ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+                  : process.env.PUBLIC_URL + '/images/board/back.png'
+              }
             />
-            <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
-            <Button
-              onClick={deleteMember}
-              style={{
-                width: `4.7rem`,
-                color: `red`,
-                top: `14.3rem`,
-                left: `0.12rem`,
-                position: `relative`,
-              }}
-            >
-              탈퇴
-            </Button>
-          </Description>
-        )}
+          </MemberModifyForm>
+        </>
+      ) : (
+        <Description>
+          <Confirmpwtit
+            src={process.env.PUBLIC_URL + '/images/modifytit.png'}
+            alt="Member Confirm Password"
+          />
+          <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
+          <Button
+            onClick={deleteMember}
+            style={{
+              width: `4.7rem`,
+              color: `red`,
+              top: `14.3rem`,
+              left: `0.12rem`,
+              position: `relative`,
+            }}
+          >
+            탈퇴
+          </Button>
+        </Description>
+      )}
 
-        <MemberModifyPasswordWrapper ref={MemberModifyPasswordRef}>
-          <MemberModifyPassword />
-        </MemberModifyPasswordWrapper>
-      </RightBlock>
-    </Wrapper>
+      <MemberModifyPasswordWrapper ref={MemberModifyPasswordRef}>
+        <MemberModifyPassword />
+      </MemberModifyPasswordWrapper>
+    </RightBlock>
   );
 };
 

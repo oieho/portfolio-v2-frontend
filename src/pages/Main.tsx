@@ -5,7 +5,9 @@ import Bracket from '../components/common/Bracket';
 import BoardListContainer from '../containers/BoardListContainer';
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import React, { useState, createContext } from 'react';
+import React, { useState, useContext, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -21,6 +23,11 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 0;
+
+  @media (max-height: 800px) {
+    height: 60rem;
+    margin-top: -4.2rem;
+  }
 `;
 
 export const MainContext = createContext({
@@ -138,6 +145,9 @@ export const MainContext = createContext({
   },
 });
 const Main = () => {
+  const { state, actions } = useContext(MainContext);
+  const navigate = useNavigate();
+
   const [zIdx, setZIdx] = useState(2);
   const [rightBlock, setRightBlock] = useState();
   const [selectedList, setSelectedList] = useState<number[]>([]);
@@ -229,22 +239,109 @@ const Main = () => {
     },
   };
 
-  const changeLogoEye = () => {
-    const logoEye = document.getElementById('logoEye');
-    logoEye!.classList.add('rotate');
+  const initSelectedList = () => {
+    const searchType = document.getElementById(
+      'searchFormType',
+    ) as HTMLSelectElement;
+    const searchInput = document.getElementById(
+      'searchInput',
+    ) as HTMLInputElement;
+
+    actions.setSearchGear(true);
     setTimeout(() => {
-      logoEye!.classList.remove('rotate');
+      actions.setToggleBackBtn(false);
+    }, 700);
+    actions.setOnGlobalSearch(false);
+    actions.setToggleSelected(false);
+    actions.setCompleteOrModify(false);
+    actions.setBoardModifiable(false);
+    actions.setSelectedList([]);
+    actions.setSelectedView(false);
+    actions.setHashSelected(false);
+    actions.setToolsSelected(false);
+
+    state.selectedList.forEach((selected) => {
+      const element = document.getElementById(`boardMore-${selected}`);
+      const element2 = document.getElementById(`board-${selected}`) as any;
+      if (element) {
+        element.style.backgroundImage = "url('/images/board/more.png')";
+      }
+
+      if (element2) {
+        element2.classList.remove('black');
+        element2.classList.remove('blackOnModify');
+        element2.classList.add('normal');
+      }
+    });
+
+    navigate(
+      `/boards?searchType=${searchType}&keyword='${searchInput?.value}'`,
+    );
+  };
+
+  const changeLogoEye = () => {
+    const logoEye = document?.getElementById('logoEye');
+    logoEye?.classList.add('rotate');
+    setTimeout(() => {
+      logoEye?.classList.remove('rotate');
     }, 1500);
   };
+
+  const LaptopAndTabletH: boolean = useMediaQuery({
+    query: '(min-width:1025px) and (max-width:1280px)',
+  });
+  const tabletH: boolean = useMediaQuery({
+    query: '(min-width:769px) and (max-width:1024px)',
+  });
+  const mobileHAndTabletV: boolean = useMediaQuery({
+    query: '(min-width:481px) and (max-width:768px)',
+  });
+  const mobileV: boolean = useMediaQuery({ query: '(max-width:480px)' });
   return (
     <MainContext.Provider value={value as any}>
       <Wrapper onClick={() => changeLogoEye()}>
-        <Left homeHv={true} portfolioHv={true} />
-        <Bracket />
-        <HeaderContainer />
-        <BoardListContainer />
-        <Outlet />
-        <RightBottom />
+        {LaptopAndTabletH ? (
+          <>
+            <HeaderContainer />
+            <BoardListContainer />
+            <Outlet />
+            <RightBottom />
+          </>
+        ) : tabletH ? (
+          <>
+            <Bracket />
+            <HeaderContainer />
+            <BoardListContainer />
+            <Outlet />
+            <RightBottom />
+          </>
+        ) : mobileHAndTabletV ? (
+          <>
+            <Bracket />
+            <HeaderContainer />
+            <BoardListContainer />
+            <Outlet />
+            <RightBottom />
+          </>
+        ) : mobileV ? (
+          <>
+            <Bracket />
+            <HeaderContainer />
+            <BoardListContainer />
+            <Outlet />
+            <RightBottom />
+          </>
+        ) : (
+          // Desktop
+          <>
+            <Left homeHv={true} portfolioHv={true} />
+            <Bracket />
+            <HeaderContainer />
+            <BoardListContainer />
+            <Outlet />
+            <RightBottom />
+          </>
+        )}
       </Wrapper>
     </MainContext.Provider>
   );
