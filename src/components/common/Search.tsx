@@ -9,10 +9,11 @@ const Line = styled.div`
     left: 3rem;
     width: 38%;
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
+  @media (min-width: 481px) and (max-width: 1024px) {
     left: 3rem;
     width: 34%;
   }
+
   position: relative;
   display: inline-block;
   top: 0.9rem;
@@ -55,8 +56,6 @@ const Button = styled.button`
     transition: 0.1s 0.65s ease-out;
   }
   @media (min-width: 1025px) and (max-width: 1280px) {
-    cursor: pointer;
-
     &.magnifierhover {
       left: 1.4%;
       transition: 0.1s ease-in;
@@ -69,11 +68,22 @@ const Button = styled.button`
   }
   @media (min-width: 769px) and (max-width: 1024px) {
     &.magnifierhover {
-      left: 1.4%;
+      left: 1.8%;
       transition: 0.1s ease-in;
     }
     &.magnifierNOThover {
-      left: 2.5%;
+      left: 2.9%;
+
+      transition: 0.1s 0.65s ease-out;
+    }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    &.magnifierhover {
+      left: 3.8%;
+      transition: 0.1s ease-in;
+    }
+    &.magnifierNOThover {
+      left: 4.9%;
 
       transition: 0.1s 0.65s ease-out;
     }
@@ -85,11 +95,12 @@ const SearchInput = styled.input`
     left: 3rem;
     width: 38%;
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
+  @media (min-width: 481px) and (max-width: 1024px) {
     position: absolute;
     left: 3rem;
     width: 34%;
   }
+
   position: relative;
   top: 0.1rem;
   left: -27.3rem;
@@ -133,10 +144,10 @@ const Search = () => {
   hotkeys('ctrl+/', function (event, handler) {
     // Prevent the default refresh event under WINDOWS system
     event.preventDefault();
-    inputRef.current.focus();
+    inputRef?.current?.focus();
   });
   useEffect(() => {
-    inputRef.current.focus();
+    inputRef?.current?.focus();
   }, [
     countQParam,
     dispatch,

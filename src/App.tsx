@@ -9,6 +9,7 @@ import MemberFindId from './containers/MemberFindIdContainer';
 import MemberFindPassword from './containers/MemberFindPasswordContainer';
 import MemberModify from './containers/MemberModifyContainer';
 import ContentDesc from './containers/ContentDescContainer';
+import ContentDescLessThan769 from './components/common/ContentDescLessThan769';
 import ContentBody from './containers/ContentBodyContainer';
 import ContentDescOnWriting from './containers/ContentDescOnWritingContainer';
 import ContentBodyOnWriting from './containers/ContentBodyOnWritingContainer';
@@ -29,6 +30,23 @@ const App = () => {
             element={
               <>
                 <ContentBody />
+                <ContentDesc />
+              </>
+            }
+          />
+          <Route
+            path="boards/viewContentBody/:wno"
+            element={
+              <>
+                <ContentBody />
+                <ContentDescLessThan769 />
+              </>
+            }
+          />
+          <Route
+            path="boards/viewDescAndComment/:wno"
+            element={
+              <>
                 <ContentDesc />
               </>
             }
@@ -153,6 +171,9 @@ export interface ToggleLogin {
 }
 export interface IfNotLoggedDisplayBlock {
   ifNotLoggedDisplayBlock: boolean;
+}
+export interface ToggleOuterDescWrapper {
+  toggleOuterDescWrapper: boolean;
 }
 export interface TimeToLive {
   timeToLive: number;

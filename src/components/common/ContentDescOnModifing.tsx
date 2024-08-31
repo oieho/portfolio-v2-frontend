@@ -46,7 +46,7 @@ const Description = styled.div`
   overflow: hidden;
 
   @media (min-width: 1025px) and (max-width: 1280px) {
-    top: -21.45rem;
+    top: -20.51rem;
     left: calc(100% - (304.99px - 38.5px));
   }
   @media (min-width: 769px) and (max-width: 1024px) {
@@ -116,15 +116,13 @@ const Title = styled.span`
 `;
 
 const Desc = styled.span`
-  width: 19.43rem;
-  position: relative;
+  position: absolute;
   top: 1.46rem;
   left: 0.72rem;
   z-index: 2;
   font-size: 0.72rem;
   font-weight: 400;
   color: #a5a5a5;
-  position: absolute;
 `;
 const TitleInput = styled.input`
   position: relative;

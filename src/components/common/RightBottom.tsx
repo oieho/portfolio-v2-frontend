@@ -29,6 +29,9 @@ const RightBlock = styled.div`
     left: -2.06rem;
     top: calc(-44.5% + 17px);
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Saying = styled.div`

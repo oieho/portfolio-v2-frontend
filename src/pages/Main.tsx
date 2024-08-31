@@ -8,6 +8,7 @@ import { Outlet } from 'react-router-dom';
 import React, { useState, useContext, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import RightLessThan481 from '../components/common/mobileHAndTabletVRight';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -37,6 +38,7 @@ export const MainContext = createContext({
     selectedList: [] as number[],
     writeSelectedIndex: -1 as number, // 글 등록 후 등록 된 글 Selected
     maxWno: 0 as number,
+    readIndex: 0,
     modifySelectedIndex: -1,
     removeSelectedIndex: -1,
     viewSelectedIndex: -1,
@@ -59,6 +61,7 @@ export const MainContext = createContext({
     boardThumbnail: '',
     allImgsAreLoaded: false,
     alignGear: false,
+    afterHitSetBtnCallContentDesc: false,
   },
   actions: {
     setZIdx: (zIdx: number) => ({
@@ -75,6 +78,9 @@ export const MainContext = createContext({
     }),
     setMaxWno: (maxWno: number) => ({
       maxWno,
+    }),
+    setReadIndex: (readIndex: number) => ({
+      readIndex,
     }),
     setModifySelectedIndex: (modifySelectedIndex: number) => ({
       modifySelectedIndex,
@@ -142,6 +148,11 @@ export const MainContext = createContext({
     setAlignGear: (alignGear: boolean) => ({
       alignGear,
     }),
+    setAfterHitSetBtnCallContentDesc: (
+      afterHitSetBtnCallContentDesc: boolean,
+    ) => ({
+      afterHitSetBtnCallContentDesc,
+    }),
   },
 });
 const Main = () => {
@@ -154,6 +165,7 @@ const Main = () => {
   const [writeSelectedIndex, setWriteSelectedIndex] = useState<number>();
   const [maxWno, setMaxWno] = useState<number>();
   const [selectedListOthers, setSelectedListOthers] = useState<number[]>([]);
+  const [readIndex, setReadIndex] = useState<number>();
   const [modifySelectedIndex, setModifySelectedIndex] = useState<number>();
   const [removeSelectedIndex, setRemoveSelectedIndex] = useState<number>();
   const [viewSelectedIndex, setViewSelectedIndex] = useState<number>();
@@ -178,6 +190,9 @@ const Main = () => {
   const [boardThumbnail, setBoardThumbnail] = useState<any>('');
   const [allImgsAreLoaded, setAllImgsAreLoaded] = useState<boolean>(false);
   const [alignGear, setAlignGear] = useState<boolean>(false);
+  const [afterHitSetBtnCallContentDesc, setAfterHitSetBtnCallContentDesc] =
+    useState<boolean>(false);
+
   const value = {
     state: {
       zIdx,
@@ -185,6 +200,7 @@ const Main = () => {
       selectedList,
       writeSelectedIndex,
       maxWno,
+      readIndex,
       modifySelectedIndex,
       removeSelectedIndex,
       viewSelectedIndex,
@@ -207,6 +223,7 @@ const Main = () => {
       boardThumbnail,
       allImgsAreLoaded,
       alignGear,
+      afterHitSetBtnCallContentDesc,
     },
     actions: {
       setZIdx,
@@ -214,6 +231,7 @@ const Main = () => {
       setSelectedList,
       setWriteSelectedIndex,
       setMaxWno,
+      setReadIndex,
       setModifySelectedIndex,
       setRemoveSelectedIndex,
       setViewSelectedIndex,
@@ -236,47 +254,8 @@ const Main = () => {
       setBoardThumbnail,
       setAllImgsAreLoaded,
       setAlignGear,
+      setAfterHitSetBtnCallContentDesc,
     },
-  };
-
-  const initSelectedList = () => {
-    const searchType = document.getElementById(
-      'searchFormType',
-    ) as HTMLSelectElement;
-    const searchInput = document.getElementById(
-      'searchInput',
-    ) as HTMLInputElement;
-
-    actions.setSearchGear(true);
-    setTimeout(() => {
-      actions.setToggleBackBtn(false);
-    }, 700);
-    actions.setOnGlobalSearch(false);
-    actions.setToggleSelected(false);
-    actions.setCompleteOrModify(false);
-    actions.setBoardModifiable(false);
-    actions.setSelectedList([]);
-    actions.setSelectedView(false);
-    actions.setHashSelected(false);
-    actions.setToolsSelected(false);
-
-    state.selectedList.forEach((selected) => {
-      const element = document.getElementById(`boardMore-${selected}`);
-      const element2 = document.getElementById(`board-${selected}`) as any;
-      if (element) {
-        element.style.backgroundImage = "url('/images/board/more.png')";
-      }
-
-      if (element2) {
-        element2.classList.remove('black');
-        element2.classList.remove('blackOnModify');
-        element2.classList.add('normal');
-      }
-    });
-
-    navigate(
-      `/boards?searchType=${searchType}&keyword='${searchInput?.value}'`,
-    );
   };
 
   const changeLogoEye = () => {
@@ -287,6 +266,7 @@ const Main = () => {
     }, 1500);
   };
 
+  //H : horizontal, V : vertical
   const LaptopAndTabletH: boolean = useMediaQuery({
     query: '(min-width:1025px) and (max-width:1280px)',
   });
@@ -309,7 +289,6 @@ const Main = () => {
           </>
         ) : tabletH ? (
           <>
-            <Bracket />
             <HeaderContainer />
             <BoardListContainer />
             <Outlet />
@@ -317,19 +296,15 @@ const Main = () => {
           </>
         ) : mobileHAndTabletV ? (
           <>
-            <Bracket />
             <HeaderContainer />
             <BoardListContainer />
             <Outlet />
-            <RightBottom />
+            <RightLessThan481 />
           </>
         ) : mobileV ? (
           <>
-            <Bracket />
             <HeaderContainer />
             <BoardListContainer />
-            <Outlet />
-            <RightBottom />
           </>
         ) : (
           // Desktop

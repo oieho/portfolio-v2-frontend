@@ -30,6 +30,14 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 481px) and (max-width: 768px) {
+    top: 50%;
+    transform: translateY(-50%);
+    padding-bottom: 40rem;
+    form {
+      position: relative;
+    }
+  }
 `;
 const Logintit = styled.img`
   position: relative;
@@ -181,6 +189,9 @@ const SuccessMessage = styled.div`
   position: absolute;
   color: #00b300;
   font-size: 0.875rem;
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 0.7rem;
+  }
 `;
 const ErrorMessage = styled.div`
   width: 242px;
@@ -189,6 +200,9 @@ const ErrorMessage = styled.div`
   position: absolute;
   color: red;
   font-size: 0.875rem;
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 0.7rem;
+  }
 `;
 const IdInfoMessage = styled.div`
   position: absolute;
@@ -448,7 +462,7 @@ const MemberLogin = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hideBackBtn]);
   return (
-    <RightBlock>
+    <RightBlock id="memberLogin">
       <Description ref={LoginRef}>
         <Logintit
           src={process.env.PUBLIC_URL + '/images/logintit.png'}

@@ -550,7 +550,7 @@ const MemberJoin = ({
   );
 
   return (
-    <RightBlock>
+    <RightBlock id="memberJoin">
       <Description>
         <Jointit
           src={process.env.PUBLIC_URL + '/images/jointit.png'}

@@ -12,13 +12,26 @@ import { MyInfo, IfNotLoggedDisplayBlock, Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
 import AddCommentBtn from './button/AddButton';
+import MiniBtn from './button/AddButton';
 import Cookies from 'js-cookie';
 
+const OuterWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+  cursor: pointer;
+`;
 const Wrapper = styled.div`
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   @media (min-width: 1025px) and (max-width: 1280px) {
     position: relative;
@@ -30,8 +43,10 @@ const Wrapper = styled.div`
     left: -1.4rem;
     width: 100%;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    position: absolute;
+  }
 `;
-
 const DescriptionAndComment = styled.div`
   position: absolute;
   background-color: #f5f5f5;
@@ -45,12 +60,36 @@ const DescriptionAndComment = styled.div`
   transition: height 0.45s 0.3s ease-out;
 
   @media (min-width: 1025px) and (max-width: 1280px) {
-    top: -21.45rem;
+    top: -20.51rem;
     left: calc(100% - (304.99px - 38.5px));
   }
   @media (min-width: 769px) and (max-width: 1024px) {
     top: -20.51rem;
     left: calc(100% - (315.99px - 38.5px));
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: 1.94rem;
+    height: 44.92rem;
+    border: 0.375rem solid #000000;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -2.75rem;
+    width: calc(100vw - 80px - 28.16px);
+    margin-left: 1.7rem;
+    padding: 1.75rem 0.8rem 0 0;
+  }
+`;
+const MiniBtnWrapper = styled.span`
+  display: none;
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: block;
+    position: absolute;
+    right: 2.48rem;
+    top: 0rem;
   }
 `;
 const Inputs = styled.ul`
@@ -1011,6 +1050,9 @@ const CoverBackBtn = styled.span`
   @media (min-width: 769px) and (max-width: 1024px) {
     right: -2.1rem;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ShowStarsBtn = styled.span`
@@ -1424,18 +1466,33 @@ const ContentDesc = ({
     state.zIdx,
   ]);
 
-  const addCommentForm = document.getElementById('addCommentForm');
-  const saying = document.getElementById('saying');
-  const starWrapper = document.getElementById('starWrapper');
+  const contentDesc = document.getElementById('contentDesc') as any;
+  const addCommentForm = document.getElementById('addCommentForm') as any;
+  const saying = document.getElementById('saying') as any;
+  const starWrapper = document.getElementById('starWrapper') as any;
 
   const showAndHideCommentForm = useCallback(
     (show: boolean) => {
       if (show === true) {
         setToggleAddCommentForm(false);
         actions.setToggleAddCommentForm(false);
-        saying!.style.transition = 'opacity 0.3s ease-in';
-        saying!.style.opacity = '0';
-        wrapperresizingA.current.style.height = '39.36rem';
+        if (window.matchMedia('(min-width: 769px)').matches) {
+          saying!.style.transition = 'opacity 0.3s ease-in';
+          saying!.style.opacity = '0';
+        }
+        if (
+          contentDesc &&
+          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+            .matches
+        ) {
+          wrapperresizingA.current.style.height = '39.36rem';
+        } else if (
+          contentDesc &&
+          window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+        ) {
+          wrapperresizingA.current.style.height = '44.92rem';
+        }
+
         addCommentForm!.style.transition = 'opacity 0.2s 0.6s';
         addCommentForm!.style.opacity = '1';
         if (starWrapper !== null) {
@@ -1448,22 +1505,33 @@ const ContentDesc = ({
       } else {
         setToggleAddCommentForm(true);
         actions.setToggleAddCommentForm(true);
-        addCommentForm!.style.opacity = '0';
-        addCommentForm!.style.transition = 'opacity 0.2s';
-        wrapperresizingA.current.style.height = '35.66rem';
+        if (window.matchMedia('(min-width: 481px)').matches) {
+          addCommentForm!.style.opacity = '0';
+          addCommentForm!.style.transition = 'opacity 0.2s';
+        }
+        if (
+          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+            .matches
+        ) {
+          wrapperresizingA.current.style.height = '35.66rem';
+        } else {
+          wrapperresizingA.current.style.height = '44.92rem';
+        }
         wrapperresizingA.current.style.transition = 'height 0.45s 0.1s ease-in';
         if (addbtnRef === null) {
           addbtnRef!.current.style.display = 'block';
         }
-        saying!.style.opacity = '1';
-        saying!.style.transition = 'opacity 0.2s 1.15s ease-out';
+        if (window.matchMedia('(min-width: 769px)').matches) {
+          saying!.style.opacity = '1';
+          saying!.style.transition = 'opacity 0.2s 1.15s ease-out';
+        }
         if (starWrapper !== null) {
           selectStarBtnRef.current.style.opacity = '0';
           selectStarBtnRef.current.style.left = '0';
         }
       }
     },
-    [actions, saying, addCommentForm, starWrapper],
+    [actions, contentDesc, addCommentForm, starWrapper, saying],
   );
 
   const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -1949,296 +2017,695 @@ const ContentDesc = ({
       setLastReply(result + 1);
     });
   };
+  const hideContent = () => {
+    const contentDesc = document.getElementById('contentDesc');
+    const outerDescWrapper = document.getElementById('outerDescWrapper') as any;
+    if (contentDesc && outerDescWrapper) {
+      contentDesc!.style.display = 'none';
+
+      outerDescWrapper.style.zIndex--;
+      outerDescWrapper.style.display = 'none';
+    }
+  };
+
   return (
-    <Wrapper>
-      <DescriptionAndComment id="addComment" ref={wrapperresizingA}>
-        <Inputs>
-          <InputLi>
-            <TitleTit>TITLE</TitleTit>
-            <TitleDesc>{board.title}</TitleDesc>
-            <RegDateTit>REG. DATE</RegDateTit>
-            <RegDateDesc>{boardRegDateDays}</RegDateDesc>
-            <SubjectInput
-              maxLength={30}
-              name="title"
-              type="text"
-              autoComplete="title"
-              readOnly
-              disabled
-            />
-          </InputLi>
-          <InputLi>
-            <DescWrapper ref={resizingA}>
-              <DescTit>DESCRIPTION</DescTit>
-              <DescTextarea
-                ref={descTextareaRef}
-                value={board.description}
+    <>
+      {window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+        .matches ? (
+        <OuterWrapper
+          id="outerDescWrapper"
+          onClick={() => hideContent()}
+          title="설명/댓글 폼 닫기"
+        />
+      ) : (
+        <></>
+      )}
+      <Wrapper id="contentDesc">
+        <DescriptionAndComment id="addComment" ref={wrapperresizingA}>
+          <Inputs>
+            <InputLi>
+              <TitleTit>TITLE</TitleTit>
+              <TitleDesc>{board.title}</TitleDesc>
+              <RegDateTit>REG. DATE</RegDateTit>
+              <RegDateDesc>{boardRegDateDays}</RegDateDesc>
+              <SubjectInput
+                maxLength={30}
+                name="title"
+                type="text"
+                autoComplete="title"
                 readOnly
                 disabled
               />
-            </DescWrapper>
-            <CommentWrapper ref={resizingB}>
-              <ResizeBar
-                ref={DraggerRef}
-                onMouseDown={handleMouseDown}
-                onMouseEnter={() => {
-                  if (!dragging) {
-                    DraggerRef.current!.classList.add('active');
-                  }
-                }}
-                onMouseLeave={() => {
-                  if (!dragging) {
-                    DraggerRef.current!.classList.remove('active');
-                  }
-                }}
-              />
-              <CommentScrollArea
-                onScroll={ifScrollingShowBtn}
-                id="scrollArea"
-                ref={commentRef}
-              >
-                {comment.length ? (
-                  comment.map((commentItem: any, index: number) => {
-                    const year = parseInt(commentItem.regDate[0]);
-                    const month =
-                      parseInt(commentItem.regDate[1]) < 10
-                        ? commentItem.regDate[1].toString().padStart(2, '0')
-                        : commentItem.regDate[1];
-                    const day =
-                      parseInt(commentItem.regDate[2]) < 10
-                        ? commentItem.regDate[2].toString().padStart(2, '0')
-                        : commentItem.regDate[2];
-                    const hours =
-                      parseInt(commentItem.regDate[3]) < 10
-                        ? commentItem.regDate[3].toString().padStart(2, '0')
-                        : commentItem.regDate[3];
-                    var minutes =
-                      parseInt(commentItem.regDate[4]) < 10
-                        ? commentItem.regDate[4].toString().padStart(2, '0')
-                        : commentItem.regDate[4];
-                    var seconds =
-                      parseInt(commentItem.regDate[5]) < 10
-                        ? commentItem.regDate[5].toString().padStart(2, '0')
-                        : commentItem.regDate[5];
-                    if (typeof commentItem.regDate[5] === 'undefined') {
-                      seconds = '00';
-                    } else if (typeof commentItem.regDate[4] === 'undefined') {
-                      minutes = '00';
+            </InputLi>
+            <InputLi>
+              <DescWrapper ref={resizingA}>
+                <DescTit>DESCRIPTION</DescTit>
+                <DescTextarea
+                  ref={descTextareaRef}
+                  value={board.description}
+                  readOnly
+                  disabled
+                />
+              </DescWrapper>
+              <CommentWrapper ref={resizingB}>
+                <ResizeBar
+                  ref={DraggerRef}
+                  onMouseDown={handleMouseDown}
+                  onMouseEnter={() => {
+                    if (!dragging) {
+                      DraggerRef.current!.classList.add('active');
                     }
-                    const regdate =
-                      year +
-                      '-' +
-                      month +
-                      '-' +
-                      day +
-                      ' ' +
-                      hours +
-                      ':' +
-                      minutes +
-                      ':' +
-                      seconds;
-                    return (
-                      <div key={index}>
-                        {index % 2 === 0 ? (
-                          <>
-                            {commentItem.depth === 0 ? (
-                              <>
-                                {reply === true &&
-                                commentItem.uid === selectedCommentUid ? (
-                                  <>
-                                    <CommentDesc className="depthFalseLeft">
-                                      <CommentBtns>
-                                        <span
-                                          title="완료"
-                                          onClick={() => {
-                                            onSubmitOnReply(
-                                              commentItem.uid,
-                                              commentItem.depth,
-                                              commentItem.rdepth,
-                                            );
-                                          }}
-                                        >
-                                          <hr />
-                                        </span>
-                                        <span
-                                          title="공감온도"
-                                          onClick={showStarsOnReply}
-                                        >
-                                          <hr />
-                                        </span>
-                                        {commentItem.userNo ===
-                                          myInfo?.userNo && (
-                                          <>
-                                            <span
-                                              style={{ bottom: '0.09rem' }}
-                                              onClick={() => {
-                                                setStarOnReply(-3);
-                                                setModifyCommentVal('');
-                                                setSelectedCommentUid(
-                                                  commentItem.uid,
-                                                );
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setReply(false);
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
+                  }}
+                  onMouseLeave={() => {
+                    if (!dragging) {
+                      DraggerRef.current!.classList.remove('active');
+                    }
+                  }}
+                />
+                <CommentScrollArea
+                  onScroll={ifScrollingShowBtn}
+                  id="scrollArea"
+                  ref={commentRef}
+                >
+                  {comment.length ? (
+                    comment.map((commentItem: any, index: number) => {
+                      const year = parseInt(commentItem.regDate[0]);
+                      const month =
+                        parseInt(commentItem.regDate[1]) < 10
+                          ? commentItem.regDate[1].toString().padStart(2, '0')
+                          : commentItem.regDate[1];
+                      const day =
+                        parseInt(commentItem.regDate[2]) < 10
+                          ? commentItem.regDate[2].toString().padStart(2, '0')
+                          : commentItem.regDate[2];
+                      const hours =
+                        parseInt(commentItem.regDate[3]) < 10
+                          ? commentItem.regDate[3].toString().padStart(2, '0')
+                          : commentItem.regDate[3];
+                      var minutes =
+                        parseInt(commentItem.regDate[4]) < 10
+                          ? commentItem.regDate[4].toString().padStart(2, '0')
+                          : commentItem.regDate[4];
+                      var seconds =
+                        parseInt(commentItem.regDate[5]) < 10
+                          ? commentItem.regDate[5].toString().padStart(2, '0')
+                          : commentItem.regDate[5];
+                      if (typeof commentItem.regDate[5] === 'undefined') {
+                        seconds = '00';
+                      } else if (
+                        typeof commentItem.regDate[4] === 'undefined'
+                      ) {
+                        minutes = '00';
+                      }
+                      const regdate =
+                        year +
+                        '-' +
+                        month +
+                        '-' +
+                        day +
+                        ' ' +
+                        hours +
+                        ':' +
+                        minutes +
+                        ':' +
+                        seconds;
+                      return (
+                        <div key={index}>
+                          {index % 2 === 0 ? (
+                            <>
+                              {commentItem.depth === 0 ? (
+                                <>
+                                  {reply === true &&
+                                  commentItem.uid === selectedCommentUid ? (
+                                    <>
+                                      <CommentDesc className="depthFalseLeft">
+                                        <CommentBtns>
+                                          <span
+                                            title="완료"
+                                            onClick={() => {
+                                              onSubmitOnReply(
                                                 commentItem.uid,
-                                                commentItem.rnum,
+                                                commentItem.depth,
                                                 commentItem.rdepth,
+                                              );
+                                            }}
+                                          >
+                                            <hr />
+                                          </span>
+                                          <span
+                                            title="공감온도"
+                                            onClick={showStarsOnReply}
+                                          >
+                                            <hr />
+                                          </span>
+                                          {commentItem.userNo ===
+                                            myInfo?.userNo && (
+                                            <>
+                                              <span
+                                                style={{ bottom: '0.09rem' }}
+                                                onClick={() => {
+                                                  setStarOnReply(-3);
+                                                  setModifyCommentVal('');
+                                                  setSelectedCommentUid(
+                                                    commentItem.uid,
+                                                  );
+                                                  setModify(true);
+                                                  setStarOnModify(-3);
+                                                  setReply(false);
+                                                }}
+                                                title="수정"
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </>
+                                          )}
+                                        </CommentBtns>
+                                        <CommentDescUl>
+                                          <li>{commentItem.userName}</li>
+                                          <li>{commentItem.text}</li>
+                                          <li>
+                                            <ReplyCommentTextareaWrapper>
+                                              <StarWrapperOnModify
+                                                ref={starWrapperOnReply}
+                                              >
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      -2,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="매우 나쁨"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      -1,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="나쁨"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      0,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="보통"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      1,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="좋음"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      2,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="매우좋음"
+                                                />
+                                              </StarWrapperOnModify>
+                                              <ReplyCommentTextarea
+                                                ref={replyTextareaRef}
+                                                maxLength={150}
+                                                onChange={(e: any) => {
+                                                  onChangeReplyComment(e);
+                                                }}
+                                                onKeyPress={(e: any) =>
+                                                  controlTextArea(e)
+                                                }
+                                                value={replyCommentVal}
+                                              />
+                                            </ReplyCommentTextareaWrapper>
+                                          </li>
+                                          <li>
+                                            {regdate}
+                                            {commentItem.face === -2 && (
+                                              <VeryBad
+                                                style={{ top: `5rem` }}
+                                                className="veryBad"
+                                              />
+                                            )}
+                                            {commentItem.face === -1 && (
+                                              <Bad
+                                                style={{ top: `5rem` }}
+                                                className="bad"
+                                              />
+                                            )}
+                                            {commentItem.face === 0 && (
+                                              <Normal
+                                                style={{ top: `5rem` }}
+                                                className="normal"
+                                              />
+                                            )}
+                                            {commentItem.face === 1 && (
+                                              <Good
+                                                style={{ top: `5rem` }}
+                                                className="good"
+                                              />
+                                            )}
+                                            {commentItem.face === 2 && (
+                                              <VeryGood
+                                                style={{ top: `5rem` }}
+                                                className="veryGood"
+                                              />
+                                            )}
+                                          </li>
+                                        </CommentDescUl>
+                                      </CommentDesc>
+                                    </>
+                                  ) : (
+                                    <>
+                                      {(modify === true &&
+                                        index === selectedCommentUid &&
+                                        commentItem.userNo ===
+                                          myInfo?.userNo) ||
+                                      (modify === true &&
+                                        index === selectedCommentUid &&
+                                        myInfo?.roleType === 'ADMIN') ? (
+                                        <>
+                                          <CommentDesc className="depthFalseLeft">
+                                            <CommentBtns>
+                                              <span
+                                                onClick={() => {
+                                                  setStarOnModify(-3);
+                                                  setReplyCommentVal('');
+                                                  setSelectedCommentUid(
+                                                    commentItem.uid,
+                                                  );
+                                                  setReply(true);
+                                                  setModify(false);
+                                                  getMaxUidPerOneRdepth(
+                                                    commentItem.wno,
+                                                    commentItem.rdepth,
+                                                  );
+                                                  setStarOnReply(-3);
+                                                }}
+                                                title="답글"
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="공감온도"
+                                                onClick={showStarsOnModify}
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="완료"
+                                                onClick={() => {
+                                                  onSubmitOnModify(
+                                                    commentItem.uid,
+                                                  );
+                                                }}
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </CommentBtns>
+                                            <CommentDescUl>
+                                              <li>{commentItem.userName}</li>
+                                              <li>
+                                                <ModifyCommentTextareaWrapper id="controlScrollCapturing">
+                                                  <StarWrapperOnModify
+                                                    ref={starWrapperOnModify}
+                                                  >
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          -2,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="매우 나쁨"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          -1,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="나쁨"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          0,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="보통"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          1,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="좋음"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          2,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="매우좋음"
+                                                    />
+                                                  </StarWrapperOnModify>
+                                                  <ModifyCommentTextarea
+                                                    ref={modifyTextareaRef}
+                                                    maxLength={150}
+                                                    onChange={(e: any) => {
+                                                      onChangeModifyComment(e);
+                                                    }}
+                                                    onKeyPress={(e: any) =>
+                                                      controlTextArea(e)
+                                                    }
+                                                    value={modifyCommentVal}
+                                                  />
+                                                </ModifyCommentTextareaWrapper>
+                                              </li>
+                                              <li>
+                                                {regdate}
+                                                {commentItem.face === -2 && (
+                                                  <VeryBad className="veryBad" />
+                                                )}
+                                                {commentItem.face === -1 && (
+                                                  <Bad className="bad" />
+                                                )}
+                                                {commentItem.face === 0 && (
+                                                  <Normal className="normal" />
+                                                )}
+                                                {commentItem.face === 1 && (
+                                                  <Good className="good" />
+                                                )}
+                                                {commentItem.face === 2 && (
+                                                  <VeryGood className="veryGood" />
+                                                )}
+                                              </li>
+                                            </CommentDescUl>
+                                          </CommentDesc>
+                                        </>
+                                      ) : (modifyCompleted === true &&
+                                          modifyCompletedAdmin === false &&
+                                          reply === false &&
+                                          index === selectedCommentUid &&
+                                          commentItem.userNo ===
+                                            myInfo?.userNo) ||
+                                        (modifyCompletedAdmin === true &&
+                                          modifyCompleted === false &&
+                                          reply === false &&
+                                          index === selectedCommentUid) ? (
+                                        <CommentDescOnModifyCompleted className="depthFalseLeft">
+                                          <CommentBtns>
+                                            {commentItem.userNo ===
+                                              myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN' ? (
+                                              <>
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setReply(true);
+                                                    setModify(false);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  onClick={() => {
+                                                    setModifyCommentVal('');
+
+                                                    setModify(true);
+                                                    setReply(false);
+                                                    setStarOnModify(-3);
+                                                  }}
+                                                  title="수정"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  title="삭제"
+                                                  onClick={deleteComment(
+                                                    commentItem.cno,
+                                                    commentItem.wno,
+                                                    commentItem.uid,
+                                                    commentItem.rnum,
+                                                    commentItem.rdepth,
+                                                  )}
+                                                >
+                                                  <hr />
+                                                </span>
+                                              </>
+                                            ) : (
+                                              <></>
+                                            )}
+                                          </CommentBtns>
+                                          <CommentDescUl>
+                                            <li>{commentItem.userName}</li>
+                                            <li>{commentItem.text}</li>
+                                            <li>
+                                              {regdate}
+                                              {commentItem.face === -2 && (
+                                                <VeryBad className="veryBad" />
                                               )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>{commentItem.userName}</li>
-                                        <li>{commentItem.text}</li>
-                                        <li>
-                                          <ReplyCommentTextareaWrapper>
-                                            <StarWrapperOnModify
-                                              ref={starWrapperOnReply}
-                                            >
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    -2,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="매우 나쁨"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    -1,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="나쁨"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    0,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="보통"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    1,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="좋음"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    2,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="매우좋음"
-                                              />
-                                            </StarWrapperOnModify>
-                                            <ReplyCommentTextarea
-                                              ref={replyTextareaRef}
-                                              maxLength={150}
-                                              onChange={(e: any) => {
-                                                onChangeReplyComment(e);
-                                              }}
-                                              onKeyPress={(e: any) =>
-                                                controlTextArea(e)
-                                              }
-                                              value={replyCommentVal}
-                                            />
-                                          </ReplyCommentTextareaWrapper>
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad
-                                              style={{ top: `5rem` }}
-                                              className="veryBad"
-                                            />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad
-                                              style={{ top: `5rem` }}
-                                              className="bad"
-                                            />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal
-                                              style={{ top: `5rem` }}
-                                              className="normal"
-                                            />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good
-                                              style={{ top: `5rem` }}
-                                              className="good"
-                                            />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood
-                                              style={{ top: `5rem` }}
-                                              className="veryGood"
-                                            />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDesc>
-                                  </>
-                                ) : (
+                                              {commentItem.face === -1 && (
+                                                <Bad className="bad" />
+                                              )}
+                                              {commentItem.face === 0 && (
+                                                <Normal className="normal" />
+                                              )}
+                                              {commentItem.face === 1 && (
+                                                <Good className="good" />
+                                              )}
+                                              {commentItem.face === 2 && (
+                                                <VeryGood className="veryGood" />
+                                              )}
+                                            </li>
+                                          </CommentDescUl>
+                                        </CommentDescOnModifyCompleted>
+                                      ) : (
+                                        <CommentDesc className="depthFalseLeft">
+                                          <CommentBtns>
+                                            {commentItem.userNo ===
+                                              myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN' ? (
+                                              <>
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setReply(true);
+                                                    setModify(false);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  onClick={() => {
+                                                    setModifyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      index,
+                                                    );
+                                                    setModify(true);
+                                                    setReply(false);
+                                                    setStarOnModify(-3);
+                                                  }}
+                                                  title="수정"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  title="삭제"
+                                                  onClick={deleteComment(
+                                                    commentItem.cno,
+                                                    commentItem.wno,
+                                                    commentItem.uid,
+                                                    commentItem.rnum,
+                                                    commentItem.rdepth,
+                                                  )}
+                                                >
+                                                  <hr />
+                                                </span>
+                                              </>
+                                            ) : (
+                                              myInfo?.roleType === 'USER' && (
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setReply(true);
+                                                    setModify(false);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                              )
+                                            )}
+                                          </CommentBtns>
+                                          <CommentDescUl>
+                                            <li>
+                                              {commentItem.userName === null
+                                                ? '탈퇴한 회원'
+                                                : commentItem.userName}
+                                            </li>
+                                            <li>{commentItem.text}</li>
+                                            <li>
+                                              {regdate}
+                                              {commentItem.face === -2 && (
+                                                <VeryBad className="veryBad" />
+                                              )}
+                                              {commentItem.face === -1 && (
+                                                <Bad className="bad" />
+                                              )}
+                                              {commentItem.face === 0 && (
+                                                <Normal className="normal" />
+                                              )}
+                                              {commentItem.face === 1 && (
+                                                <Good className="good" />
+                                              )}
+                                              {commentItem.face === 2 && (
+                                                <VeryGood className="veryGood" />
+                                              )}
+                                            </li>
+                                          </CommentDescUl>
+                                        </CommentDesc>
+                                      )}
+                                    </>
+                                  )}
+                                </>
+                              ) : (
+                                commentItem.depth === 1 && (
                                   <>
                                     {(modify === true &&
                                       index === selectedCommentUid &&
@@ -2247,27 +2714,9 @@ const ContentDesc = ({
                                       index === selectedCommentUid &&
                                       myInfo?.roleType === 'ADMIN') ? (
                                       <>
-                                        <CommentDesc className="depthFalseLeft">
+                                        <CommentDesc className="depthTrueLeft">
+                                          <CommentDepthToLeft />
                                           <CommentBtns>
-                                            <span
-                                              onClick={() => {
-                                                setStarOnModify(-3);
-                                                setReplyCommentVal('');
-                                                setSelectedCommentUid(
-                                                  commentItem.uid,
-                                                );
-                                                setReply(true);
-                                                setModify(false);
-                                                getMaxUidPerOneRdepth(
-                                                  commentItem.wno,
-                                                  commentItem.rdepth,
-                                                );
-                                                setStarOnReply(-3);
-                                              }}
-                                              title="답글"
-                                            >
-                                              <hr />
-                                            </span>
                                             <span
                                               title="공감온도"
                                               onClick={showStarsOnModify}
@@ -2300,7 +2749,10 @@ const ContentDesc = ({
                                           <CommentDescUl>
                                             <li>{commentItem.userName}</li>
                                             <li>
-                                              <ModifyCommentTextareaWrapper id="controlScrollCapturing">
+                                              <ModifyCommentTextareaWrapper
+                                                style={{ width: `8.99rem` }}
+                                                id="controlScrollCapturing"
+                                              >
                                                 <StarWrapperOnModify
                                                   ref={starWrapperOnModify}
                                                 >
@@ -2395,25 +2847,26 @@ const ContentDesc = ({
                                                     controlTextArea(e)
                                                   }
                                                   value={modifyCommentVal}
+                                                  style={{ width: `8.76rem` }}
                                                 />
                                               </ModifyCommentTextareaWrapper>
                                             </li>
                                             <li>
                                               {regdate}
                                               {commentItem.face === -2 && (
-                                                <VeryBad className="veryBad" />
+                                                <VeryBad className="veryBadDepthToLeft" />
                                               )}
                                               {commentItem.face === -1 && (
-                                                <Bad className="bad" />
+                                                <Bad className="badDepthToLeft" />
                                               )}
                                               {commentItem.face === 0 && (
-                                                <Normal className="normal" />
+                                                <Normal className="normalDepthToLeft" />
                                               )}
                                               {commentItem.face === 1 && (
-                                                <Good className="good" />
+                                                <Good className="goodDepthToLeft" />
                                               )}
                                               {commentItem.face === 2 && (
-                                                <VeryGood className="veryGood" />
+                                                <VeryGood className="veryGoodDepthToLeft" />
                                               )}
                                             </li>
                                           </CommentDescUl>
@@ -2429,7 +2882,8 @@ const ContentDesc = ({
                                         modifyCompleted === false &&
                                         reply === false &&
                                         index === selectedCommentUid) ? (
-                                      <CommentDescOnModifyCompleted className="depthFalseLeft">
+                                      <CommentDescOnModifyCompleted className="depthTrueLeft">
+                                        <CommentDepthToLeft />
                                         <CommentBtns>
                                           {commentItem.userNo ===
                                             myInfo?.userNo ||
@@ -2437,29 +2891,11 @@ const ContentDesc = ({
                                             <>
                                               <span
                                                 onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setReply(true);
-                                                  setModify(false);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
-                                                }}
-                                                title="답글"
-                                              >
-                                                <hr />
-                                              </span>
-                                              <span
-                                                onClick={() => {
                                                   setModifyCommentVal('');
 
                                                   setModify(true);
-                                                  setReply(false);
                                                   setStarOnModify(-3);
+                                                  setReply(false);
                                                 }}
                                                 title="수정"
                                               >
@@ -2484,59 +2920,50 @@ const ContentDesc = ({
                                         </CommentBtns>
                                         <CommentDescUl>
                                           <li>{commentItem.userName}</li>
-                                          <li>{commentItem.text}</li>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
+                                          </li>
                                           <li>
                                             {regdate}
                                             {commentItem.face === -2 && (
-                                              <VeryBad className="veryBad" />
+                                              <VeryBad className="veryBadDepthToLeft" />
                                             )}
                                             {commentItem.face === -1 && (
-                                              <Bad className="bad" />
+                                              <Bad className="badDepthToLeft" />
                                             )}
                                             {commentItem.face === 0 && (
-                                              <Normal className="normal" />
+                                              <Normal className="normalDepthToLeft" />
                                             )}
                                             {commentItem.face === 1 && (
-                                              <Good className="good" />
+                                              <Good className="goodDepthToLeft" />
                                             )}
                                             {commentItem.face === 2 && (
-                                              <VeryGood className="veryGood" />
+                                              <VeryGood className="veryGoodDepthToLeft" />
                                             )}
                                           </li>
                                         </CommentDescUl>
                                       </CommentDescOnModifyCompleted>
-                                    ) : (
-                                      <CommentDesc className="depthFalseLeft">
+                                    ) : (replyCompleted === true &&
+                                        replyCompletedAdmin === false &&
+                                        modify === false &&
+                                        lastReply === commentItem.uid) ||
+                                      (replyCompletedAdmin === true &&
+                                        replyCompleted === false &&
+                                        modify === false &&
+                                        lastReply === commentItem.uid) ? (
+                                      <CommentDescOnReplyCompleted className="depthTrueLeft">
+                                        <CommentDepthToLeft />
                                         <CommentBtns>
-                                          {commentItem.userNo ===
+                                          {(commentItem.userNo ===
                                             myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN' ? (
+                                            myInfo?.roleType === 'ADMIN') && (
                                             <>
                                               <span
                                                 onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setReply(true);
-                                                  setModify(false);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
-                                                }}
-                                                title="답글"
-                                              >
-                                                <hr />
-                                              </span>
-                                              <span
-                                                onClick={() => {
-                                                  setModifyCommentVal('');
                                                   setSelectedCommentUid(index);
                                                   setModify(true);
-                                                  setReply(false);
                                                   setStarOnModify(-3);
+                                                  setModifyCommentVal('');
                                                 }}
                                                 title="수정"
                                               >
@@ -2555,27 +2982,6 @@ const ContentDesc = ({
                                                 <hr />
                                               </span>
                                             </>
-                                          ) : (
-                                            myInfo?.roleType === 'USER' && (
-                                              <span
-                                                onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setReply(true);
-                                                  setModify(false);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
-                                                }}
-                                                title="답글"
-                                              >
-                                                <hr />
-                                              </span>
-                                            )
                                           )}
                                         </CommentBtns>
                                         <CommentDescUl>
@@ -2584,175 +2990,71 @@ const ContentDesc = ({
                                               ? '탈퇴한 회원'
                                               : commentItem.userName}
                                           </li>
-                                          <li>{commentItem.text}</li>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
+                                          </li>
                                           <li>
                                             {regdate}
                                             {commentItem.face === -2 && (
-                                              <VeryBad className="veryBad" />
+                                              <VeryBad className="veryBadDepthToLeft" />
                                             )}
                                             {commentItem.face === -1 && (
-                                              <Bad className="bad" />
+                                              <Bad className="badDepthToLeft" />
                                             )}
                                             {commentItem.face === 0 && (
-                                              <Normal className="normal" />
+                                              <Normal className="normalDepthToLeft" />
                                             )}
                                             {commentItem.face === 1 && (
-                                              <Good className="good" />
+                                              <Good className="goodDepthToLeft" />
                                             )}
                                             {commentItem.face === 2 && (
-                                              <VeryGood className="veryGood" />
+                                              <VeryGood className="veryGoodDepthToLeft" />
                                             )}
                                           </li>
                                         </CommentDescUl>
-                                      </CommentDesc>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            ) : (
-                              commentItem.depth === 1 && (
-                                <>
-                                  {(modify === true &&
-                                    index === selectedCommentUid &&
-                                    commentItem.userNo === myInfo?.userNo) ||
-                                  (modify === true &&
-                                    index === selectedCommentUid &&
-                                    myInfo?.roleType === 'ADMIN') ? (
-                                    <>
+                                      </CommentDescOnReplyCompleted>
+                                    ) : (
                                       <CommentDesc className="depthTrueLeft">
                                         <CommentDepthToLeft />
                                         <CommentBtns>
-                                          <span
-                                            title="공감온도"
-                                            onClick={showStarsOnModify}
-                                          >
-                                            <hr />
-                                          </span>
-                                          <span
-                                            title="완료"
-                                            onClick={() => {
-                                              onSubmitOnModify(commentItem.uid);
-                                            }}
-                                          >
-                                            <hr />
-                                          </span>
-                                          <span
-                                            title="삭제"
-                                            onClick={deleteComment(
-                                              commentItem.cno,
-                                              commentItem.wno,
-                                              commentItem.uid,
-                                              commentItem.rnum,
-                                              commentItem.rdepth,
-                                            )}
-                                          >
-                                            <hr />
-                                          </span>
+                                          {(commentItem.userNo ===
+                                            myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN') && (
+                                            <>
+                                              <span
+                                                onClick={() => {
+                                                  setSelectedCommentUid(index);
+                                                  setModify(true);
+                                                  setStarOnModify(-3);
+                                                  setModifyCommentVal('');
+                                                }}
+                                                title="수정"
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </>
+                                          )}
                                         </CommentBtns>
                                         <CommentDescUl>
-                                          <li>{commentItem.userName}</li>
                                           <li>
-                                            <ModifyCommentTextareaWrapper
-                                              style={{ width: `8.99rem` }}
-                                              id="controlScrollCapturing"
-                                            >
-                                              <StarWrapperOnModify
-                                                ref={starWrapperOnModify}
-                                              >
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      -2,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="매우 나쁨"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      -1,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="나쁨"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      0,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="보통"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      1,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="좋음"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      2,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="매우좋음"
-                                                />
-                                              </StarWrapperOnModify>
-                                              <ModifyCommentTextarea
-                                                ref={modifyTextareaRef}
-                                                maxLength={150}
-                                                onChange={(e: any) => {
-                                                  onChangeModifyComment(e);
-                                                }}
-                                                onKeyPress={(e: any) =>
-                                                  controlTextArea(e)
-                                                }
-                                                value={modifyCommentVal}
-                                                style={{ width: `8.76rem` }}
-                                              />
-                                            </ModifyCommentTextareaWrapper>
+                                            {commentItem.userName === null
+                                              ? '탈퇴한 회원'
+                                              : commentItem.userName}
+                                          </li>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
                                           </li>
                                           <li>
                                             {regdate}
@@ -2774,417 +3076,587 @@ const ContentDesc = ({
                                           </li>
                                         </CommentDescUl>
                                       </CommentDesc>
+                                    )}
+                                  </>
+                                )
+                              )}
+                            </>
+                          ) : (
+                            //오른쪽 정렬 시작
+                            <>
+                              {commentItem.depth === 0 ? (
+                                <>
+                                  {reply === true &&
+                                  commentItem.uid === selectedCommentUid ? (
+                                    <>
+                                      <CommentDesc2 className="depthFalseRight">
+                                        <CommentBtns>
+                                          <span
+                                            title="완료"
+                                            onClick={() => {
+                                              onSubmitOnReply(
+                                                commentItem.uid,
+                                                commentItem.depth,
+                                                commentItem.rdepth,
+                                              );
+                                            }}
+                                          >
+                                            <hr />
+                                          </span>
+                                          <span
+                                            title="공감온도"
+                                            onClick={showStarsOnReply}
+                                          >
+                                            <hr />
+                                          </span>
+                                          {(commentItem.userNo ===
+                                            myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN') && (
+                                            <>
+                                              <span
+                                                style={{ bottom: '0.09rem' }}
+                                                onClick={() => {
+                                                  setStarOnReply(-3);
+                                                  setModifyCommentVal('');
+                                                  setSelectedCommentUid(
+                                                    commentItem.uid,
+                                                  );
+                                                  setModify(true);
+                                                  setReply(false);
+                                                  setStarOnModify(-3);
+                                                }}
+                                                title="수정"
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </>
+                                          )}
+                                        </CommentBtns>
+                                        <CommentDescUl>
+                                          <li>{commentItem.userName}</li>
+                                          <li>{commentItem.text}</li>
+                                          <li>
+                                            <ReplyCommentTextareaWrapper>
+                                              <StarWrapperOnModify
+                                                ref={starWrapperOnReply}
+                                              >
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      -2,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="매우 나쁨"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      -1,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="나쁨"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      0,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="보통"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      1,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="좋음"
+                                                />
+                                                <hr
+                                                  className="starOnReply"
+                                                  onClick={() =>
+                                                    selectStarOnReply(
+                                                      2,
+                                                      commentItem.text,
+                                                    )
+                                                  }
+                                                  onMouseOver={() =>
+                                                    viewStarsOnReply()
+                                                  }
+                                                  onMouseOut={() =>
+                                                    viewOutStarsOnReply()
+                                                  }
+                                                  title="매우좋음"
+                                                />
+                                              </StarWrapperOnModify>
+                                              <ReplyCommentTextarea
+                                                ref={replyTextareaRef}
+                                                maxLength={150}
+                                                onChange={(e: any) => {
+                                                  onChangeReplyComment(e);
+                                                }}
+                                                onKeyPress={(e: any) =>
+                                                  controlTextArea(e)
+                                                }
+                                                value={replyCommentVal}
+                                              />
+                                            </ReplyCommentTextareaWrapper>
+                                          </li>
+                                          <li>
+                                            {regdate}
+                                            {commentItem.face === -2 && (
+                                              <VeryBad
+                                                style={{ top: `5rem` }}
+                                                className="veryBad2"
+                                              />
+                                            )}
+                                            {commentItem.face === -1 && (
+                                              <Bad
+                                                style={{ top: `5rem` }}
+                                                className="bad2"
+                                              />
+                                            )}
+                                            {commentItem.face === 0 && (
+                                              <Normal
+                                                style={{ top: `5rem` }}
+                                                className="normal2"
+                                              />
+                                            )}
+                                            {commentItem.face === 1 && (
+                                              <Good
+                                                style={{ top: `5rem` }}
+                                                className="good2"
+                                              />
+                                            )}
+                                            {commentItem.face === 2 && (
+                                              <VeryGood
+                                                style={{ top: `5rem` }}
+                                                className="veryGood2"
+                                              />
+                                            )}
+                                          </li>
+                                        </CommentDescUl>
+                                      </CommentDesc2>
                                     </>
-                                  ) : (modifyCompleted === true &&
-                                      modifyCompletedAdmin === false &&
-                                      reply === false &&
-                                      index === selectedCommentUid &&
-                                      commentItem.userNo === myInfo?.userNo) ||
-                                    (modifyCompletedAdmin === true &&
-                                      modifyCompleted === false &&
-                                      reply === false &&
-                                      index === selectedCommentUid) ? (
-                                    <CommentDescOnModifyCompleted className="depthTrueLeft">
-                                      <CommentDepthToLeft />
-                                      <CommentBtns>
-                                        {commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                        myInfo?.roleType === 'ADMIN' ? (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setModifyCommentVal('');
-
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setReply(false);
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>{commentItem.userName}</li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToLeft" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToLeft" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDescOnModifyCompleted>
-                                  ) : (replyCompleted === true &&
-                                      replyCompletedAdmin === false &&
-                                      modify === false &&
-                                      lastReply === commentItem.uid) ||
-                                    (replyCompletedAdmin === true &&
-                                      replyCompleted === false &&
-                                      modify === false &&
-                                      lastReply === commentItem.uid) ? (
-                                    <CommentDescOnReplyCompleted className="depthTrueLeft">
-                                      <CommentDepthToLeft />
-                                      <CommentBtns>
-                                        {(commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN') && (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setSelectedCommentUid(index);
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setModifyCommentVal('');
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>
-                                          {commentItem.userName === null
-                                            ? '탈퇴한 회원'
-                                            : commentItem.userName}
-                                        </li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToLeft" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToLeft" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDescOnReplyCompleted>
                                   ) : (
-                                    <CommentDesc className="depthTrueLeft">
-                                      <CommentDepthToLeft />
-                                      <CommentBtns>
-                                        {(commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN') && (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setSelectedCommentUid(index);
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setModifyCommentVal('');
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
+                                    <>
+                                      {(modify === true &&
+                                        index === selectedCommentUid &&
+                                        commentItem.userNo ===
+                                          myInfo?.userNo) ||
+                                      (modify === true &&
+                                        index === selectedCommentUid &&
+                                        myInfo?.roleType === 'ADMIN') ? (
+                                        <>
+                                          <CommentDesc2 className="depthFalseRight">
+                                            <CommentBtns>
+                                              <span
+                                                onClick={() => {
+                                                  setStarOnModify(-3);
+                                                  setReplyCommentVal('');
+                                                  setSelectedCommentUid(
+                                                    commentItem.uid,
+                                                  );
+                                                  setReply(true);
+                                                  setModify(false);
+                                                  getMaxUidPerOneRdepth(
+                                                    commentItem.wno,
+                                                    commentItem.rdepth,
+                                                  );
+                                                  setStarOnReply(-3);
+                                                }}
+                                                title="답글"
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="공감온도"
+                                                onClick={showStarsOnModify}
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="완료"
+                                                onClick={() => {
+                                                  onSubmitOnModify(
+                                                    commentItem.uid,
+                                                  );
+                                                }}
+                                              >
+                                                <hr />
+                                              </span>
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </CommentBtns>
+                                            <CommentDescUl>
+                                              <li>{commentItem.userName}</li>
+                                              <li>
+                                                <ModifyCommentTextareaWrapper id="controlScrollCapturing">
+                                                  <StarWrapperOnModify
+                                                    ref={starWrapperOnModify}
+                                                  >
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          -2,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="매우 나쁨"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          -1,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="나쁨"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          0,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="보통"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          1,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="좋음"
+                                                    />
+                                                    <hr
+                                                      className="starOnModify"
+                                                      onClick={() =>
+                                                        selectStarOnModify(
+                                                          2,
+                                                          commentItem.text,
+                                                        )
+                                                      }
+                                                      onMouseOver={() =>
+                                                        viewStarsOnModify()
+                                                      }
+                                                      onMouseOut={() =>
+                                                        viewOutStarsOnModify()
+                                                      }
+                                                      title="매우좋음"
+                                                    />
+                                                  </StarWrapperOnModify>
+                                                  <ModifyCommentTextarea
+                                                    ref={modifyTextareaRef}
+                                                    maxLength={150}
+                                                    onChange={(e: any) => {
+                                                      onChangeModifyComment(e);
+                                                    }}
+                                                    onKeyPress={(e: any) =>
+                                                      controlTextArea(e)
+                                                    }
+                                                    value={modifyCommentVal}
+                                                  />
+                                                </ModifyCommentTextareaWrapper>
+                                              </li>
+                                              <li>
+                                                {regdate}
+                                                {commentItem.face === -2 && (
+                                                  <VeryBad className="veryBad2" />
+                                                )}
+                                                {commentItem.face === -1 && (
+                                                  <Bad className="bad2" />
+                                                )}
+                                                {commentItem.face === 0 && (
+                                                  <Normal className="normal2" />
+                                                )}
+                                                {commentItem.face === 1 && (
+                                                  <Good className="good2" />
+                                                )}
+                                                {commentItem.face === 2 && (
+                                                  <VeryGood className="veryGood2" />
+                                                )}
+                                              </li>
+                                            </CommentDescUl>
+                                          </CommentDesc2>
+                                        </>
+                                      ) : (modifyCompleted === true &&
+                                          modifyCompletedAdmin === false &&
+                                          reply === false &&
+                                          index === selectedCommentUid &&
+                                          commentItem.userNo ===
+                                            myInfo?.userNo) ||
+                                        (modifyCompletedAdmin === true &&
+                                          modifyCompleted === false &&
+                                          reply === false &&
+                                          index === selectedCommentUid) ? (
+                                        <CommentDescOnModifyCompletedRight className="depthFalseRight">
+                                          <CommentBtns>
+                                            {commentItem.userNo ===
+                                              myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN' ? (
+                                              <>
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setReply(true);
+                                                    setModify(false);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  onClick={() => {
+                                                    setModifyCommentVal('');
+                                                    setModify(true);
+                                                    setReply(false);
+                                                    setStarOnModify(-3);
+                                                  }}
+                                                  title="수정"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  title="삭제"
+                                                  onClick={deleteComment(
+                                                    commentItem.cno,
+                                                    commentItem.wno,
+                                                    commentItem.uid,
+                                                    commentItem.rnum,
+                                                    commentItem.rdepth,
+                                                  )}
+                                                >
+                                                  <hr />
+                                                </span>
+                                              </>
+                                            ) : (
+                                              <></>
+                                            )}
+                                          </CommentBtns>
+                                          <CommentDescUl>
+                                            <li>{commentItem.userName}</li>
+                                            <li>{commentItem.text}</li>
+                                            <li>
+                                              {regdate}
+                                              {commentItem.face === -2 && (
+                                                <VeryBad className="veryBad2" />
                                               )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>
-                                          {commentItem.userName === null
-                                            ? '탈퇴한 회원'
-                                            : commentItem.userName}
-                                        </li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToLeft" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToLeft" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToLeft" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDesc>
+                                              {commentItem.face === -1 && (
+                                                <Bad className="bad2" />
+                                              )}
+                                              {commentItem.face === 0 && (
+                                                <Normal className="normal2" />
+                                              )}
+                                              {commentItem.face === 1 && (
+                                                <Good className="good2" />
+                                              )}
+                                              {commentItem.face === 2 && (
+                                                <VeryGood className="veryGood2" />
+                                              )}
+                                            </li>
+                                          </CommentDescUl>
+                                        </CommentDescOnModifyCompletedRight>
+                                      ) : (
+                                        <CommentDesc2 className="depthFalseRight">
+                                          <CommentBtns>
+                                            {commentItem.userNo ===
+                                              myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN' ? (
+                                              <>
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setReply(true);
+                                                    setModify(false);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  onClick={() => {
+                                                    setModifyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      index,
+                                                    );
+                                                    setModify(true);
+                                                    setReply(false);
+                                                    setStarOnModify(-3);
+                                                  }}
+                                                  title="수정"
+                                                >
+                                                  <hr />
+                                                </span>
+                                                <span
+                                                  title="삭제"
+                                                  onClick={deleteComment(
+                                                    commentItem.cno,
+                                                    commentItem.wno,
+                                                    commentItem.uid,
+                                                    commentItem.rnum,
+                                                    commentItem.rdepth,
+                                                  )}
+                                                >
+                                                  <hr />
+                                                </span>
+                                              </>
+                                            ) : (
+                                              myInfo?.roleType === 'USER' && (
+                                                <span
+                                                  onClick={() => {
+                                                    setReplyCommentVal('');
+                                                    setSelectedCommentUid(
+                                                      commentItem.uid,
+                                                    );
+                                                    setModify(false);
+                                                    setReply(true);
+                                                    getMaxUidPerOneRdepth(
+                                                      commentItem.wno,
+                                                      commentItem.rdepth,
+                                                    );
+                                                    setStarOnReply(-3);
+                                                  }}
+                                                  title="답글"
+                                                >
+                                                  <hr />
+                                                </span>
+                                              )
+                                            )}
+                                          </CommentBtns>
+                                          <CommentDescUl>
+                                            <li>
+                                              {commentItem.userName === null
+                                                ? '탈퇴한 회원'
+                                                : commentItem.userName}
+                                            </li>
+                                            <li>{commentItem.text}</li>
+                                            <li>
+                                              {regdate}
+                                              {commentItem.face === -2 && (
+                                                <VeryBad className="veryBad2" />
+                                              )}
+                                              {commentItem.face === -1 && (
+                                                <Bad className="bad2" />
+                                              )}
+                                              {commentItem.face === 0 && (
+                                                <Normal className="normal2" />
+                                              )}
+                                              {commentItem.face === 1 && (
+                                                <Good className="good2" />
+                                              )}
+                                              {commentItem.face === 2 && (
+                                                <VeryGood className="veryGood2" />
+                                              )}
+                                            </li>
+                                          </CommentDescUl>
+                                        </CommentDesc2>
+                                      )}
+                                    </>
                                   )}
                                 </>
-                              )
-                            )}
-                          </>
-                        ) : (
-                          //오른쪽 정렬 시작
-                          <>
-                            {commentItem.depth === 0 ? (
-                              <>
-                                {reply === true &&
-                                commentItem.uid === selectedCommentUid ? (
-                                  <>
-                                    <CommentDesc2 className="depthFalseRight">
-                                      <CommentBtns>
-                                        <span
-                                          title="완료"
-                                          onClick={() => {
-                                            onSubmitOnReply(
-                                              commentItem.uid,
-                                              commentItem.depth,
-                                              commentItem.rdepth,
-                                            );
-                                          }}
-                                        >
-                                          <hr />
-                                        </span>
-                                        <span
-                                          title="공감온도"
-                                          onClick={showStarsOnReply}
-                                        >
-                                          <hr />
-                                        </span>
-                                        {(commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN') && (
-                                          <>
-                                            <span
-                                              style={{ bottom: '0.09rem' }}
-                                              onClick={() => {
-                                                setStarOnReply(-3);
-                                                setModifyCommentVal('');
-                                                setSelectedCommentUid(
-                                                  commentItem.uid,
-                                                );
-                                                setModify(true);
-                                                setReply(false);
-                                                setStarOnModify(-3);
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>{commentItem.userName}</li>
-                                        <li>{commentItem.text}</li>
-                                        <li>
-                                          <ReplyCommentTextareaWrapper>
-                                            <StarWrapperOnModify
-                                              ref={starWrapperOnReply}
-                                            >
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    -2,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="매우 나쁨"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    -1,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="나쁨"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    0,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="보통"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    1,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="좋음"
-                                              />
-                                              <hr
-                                                className="starOnReply"
-                                                onClick={() =>
-                                                  selectStarOnReply(
-                                                    2,
-                                                    commentItem.text,
-                                                  )
-                                                }
-                                                onMouseOver={() =>
-                                                  viewStarsOnReply()
-                                                }
-                                                onMouseOut={() =>
-                                                  viewOutStarsOnReply()
-                                                }
-                                                title="매우좋음"
-                                              />
-                                            </StarWrapperOnModify>
-                                            <ReplyCommentTextarea
-                                              ref={replyTextareaRef}
-                                              maxLength={150}
-                                              onChange={(e: any) => {
-                                                onChangeReplyComment(e);
-                                              }}
-                                              onKeyPress={(e: any) =>
-                                                controlTextArea(e)
-                                              }
-                                              value={replyCommentVal}
-                                            />
-                                          </ReplyCommentTextareaWrapper>
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad
-                                              style={{ top: `5rem` }}
-                                              className="veryBad2"
-                                            />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad
-                                              style={{ top: `5rem` }}
-                                              className="bad2"
-                                            />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal
-                                              style={{ top: `5rem` }}
-                                              className="normal2"
-                                            />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good
-                                              style={{ top: `5rem` }}
-                                              className="good2"
-                                            />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood
-                                              style={{ top: `5rem` }}
-                                              className="veryGood2"
-                                            />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDesc2>
-                                  </>
-                                ) : (
+                              ) : (
+                                commentItem.depth === 1 && (
                                   <>
                                     {(modify === true &&
                                       index === selectedCommentUid &&
@@ -3193,27 +3665,9 @@ const ContentDesc = ({
                                       index === selectedCommentUid &&
                                       myInfo?.roleType === 'ADMIN') ? (
                                       <>
-                                        <CommentDesc2 className="depthFalseRight">
+                                        <CommentDesc2 className="depthTrueRight">
+                                          <CommentDepthToRight />
                                           <CommentBtns>
-                                            <span
-                                              onClick={() => {
-                                                setStarOnModify(-3);
-                                                setReplyCommentVal('');
-                                                setSelectedCommentUid(
-                                                  commentItem.uid,
-                                                );
-                                                setReply(true);
-                                                setModify(false);
-                                                getMaxUidPerOneRdepth(
-                                                  commentItem.wno,
-                                                  commentItem.rdepth,
-                                                );
-                                                setStarOnReply(-3);
-                                              }}
-                                              title="답글"
-                                            >
-                                              <hr />
-                                            </span>
                                             <span
                                               title="공감온도"
                                               onClick={showStarsOnModify}
@@ -3246,7 +3700,10 @@ const ContentDesc = ({
                                           <CommentDescUl>
                                             <li>{commentItem.userName}</li>
                                             <li>
-                                              <ModifyCommentTextareaWrapper id="controlScrollCapturing">
+                                              <ModifyCommentTextareaWrapper
+                                                style={{ width: `8.99rem` }}
+                                                id="controlScrollCapturing"
+                                              >
                                                 <StarWrapperOnModify
                                                   ref={starWrapperOnModify}
                                                 >
@@ -3341,25 +3798,26 @@ const ContentDesc = ({
                                                     controlTextArea(e)
                                                   }
                                                   value={modifyCommentVal}
+                                                  style={{ width: `8.76rem` }}
                                                 />
                                               </ModifyCommentTextareaWrapper>
                                             </li>
                                             <li>
                                               {regdate}
                                               {commentItem.face === -2 && (
-                                                <VeryBad className="veryBad2" />
+                                                <VeryBad className="veryBadDepthToRight" />
                                               )}
                                               {commentItem.face === -1 && (
-                                                <Bad className="bad2" />
+                                                <Bad className="badDepthToRight" />
                                               )}
                                               {commentItem.face === 0 && (
-                                                <Normal className="normal2" />
+                                                <Normal className="normalDepthToRight" />
                                               )}
                                               {commentItem.face === 1 && (
-                                                <Good className="good2" />
+                                                <Good className="goodDepthToRight" />
                                               )}
                                               {commentItem.face === 2 && (
-                                                <VeryGood className="veryGood2" />
+                                                <VeryGood className="veryGoodDepthToRight" />
                                               )}
                                             </li>
                                           </CommentDescUl>
@@ -3375,7 +3833,8 @@ const ContentDesc = ({
                                         modifyCompleted === false &&
                                         reply === false &&
                                         index === selectedCommentUid) ? (
-                                      <CommentDescOnModifyCompletedRight className="depthFalseRight">
+                                      <CommentDescOnModifyCompletedRight className="depthTrueRight">
+                                        <CommentDepthToRight />
                                         <CommentBtns>
                                           {commentItem.userNo ===
                                             myInfo?.userNo ||
@@ -3383,25 +3842,8 @@ const ContentDesc = ({
                                             <>
                                               <span
                                                 onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setReply(true);
-                                                  setModify(false);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
-                                                }}
-                                                title="답글"
-                                              >
-                                                <hr />
-                                              </span>
-                                              <span
-                                                onClick={() => {
                                                   setModifyCommentVal('');
+
                                                   setModify(true);
                                                   setReply(false);
                                                   setStarOnModify(-3);
@@ -3429,59 +3871,50 @@ const ContentDesc = ({
                                         </CommentBtns>
                                         <CommentDescUl>
                                           <li>{commentItem.userName}</li>
-                                          <li>{commentItem.text}</li>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
+                                          </li>
                                           <li>
                                             {regdate}
                                             {commentItem.face === -2 && (
-                                              <VeryBad className="veryBad2" />
+                                              <VeryBad className="veryBadDepthToRight" />
                                             )}
                                             {commentItem.face === -1 && (
-                                              <Bad className="bad2" />
+                                              <Bad className="badDepthToRight" />
                                             )}
                                             {commentItem.face === 0 && (
-                                              <Normal className="normal2" />
+                                              <Normal className="normalDepthToRight" />
                                             )}
                                             {commentItem.face === 1 && (
-                                              <Good className="good2" />
+                                              <Good className="goodDepthToRight" />
                                             )}
                                             {commentItem.face === 2 && (
-                                              <VeryGood className="veryGood2" />
+                                              <VeryGood className="veryGoodDepthToRight" />
                                             )}
                                           </li>
                                         </CommentDescUl>
                                       </CommentDescOnModifyCompletedRight>
-                                    ) : (
-                                      <CommentDesc2 className="depthFalseRight">
+                                    ) : (replyCompleted === true &&
+                                        replyCompletedAdmin === false &&
+                                        modify === false &&
+                                        lastReply === commentItem.uid) ||
+                                      (replyCompletedAdmin === true &&
+                                        replyCompleted === false &&
+                                        modify === false &&
+                                        lastReply === commentItem.uid) ? (
+                                      <CommentDescOnReplyCompletedRight className="depthTrueRight">
+                                        <CommentDepthToRight />
                                         <CommentBtns>
-                                          {commentItem.userNo ===
+                                          {(commentItem.userNo ===
                                             myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN' ? (
+                                            myInfo?.roleType === 'ADMIN') && (
                                             <>
                                               <span
                                                 onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setReply(true);
-                                                  setModify(false);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
-                                                }}
-                                                title="답글"
-                                              >
-                                                <hr />
-                                              </span>
-                                              <span
-                                                onClick={() => {
-                                                  setModifyCommentVal('');
                                                   setSelectedCommentUid(index);
                                                   setModify(true);
-                                                  setReply(false);
                                                   setStarOnModify(-3);
+                                                  setModifyCommentVal('');
                                                 }}
                                                 title="수정"
                                               >
@@ -3500,27 +3933,65 @@ const ContentDesc = ({
                                                 <hr />
                                               </span>
                                             </>
-                                          ) : (
-                                            myInfo?.roleType === 'USER' && (
+                                          )}
+                                        </CommentBtns>
+                                        <CommentDescUl>
+                                          <li>{commentItem.userName}</li>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
+                                          </li>
+                                          <li>
+                                            {regdate}
+                                            {commentItem.face === -2 && (
+                                              <VeryBad className="veryBadDepthToRight" />
+                                            )}
+                                            {commentItem.face === -1 && (
+                                              <Bad className="badDepthToRight" />
+                                            )}
+                                            {commentItem.face === 0 && (
+                                              <Normal className="normalDepthToRight" />
+                                            )}
+                                            {commentItem.face === 1 && (
+                                              <Good className="goodDepthToRight" />
+                                            )}
+                                            {commentItem.face === 2 && (
+                                              <VeryGood className="veryGoodDepthToRight" />
+                                            )}
+                                          </li>
+                                        </CommentDescUl>
+                                      </CommentDescOnReplyCompletedRight>
+                                    ) : (
+                                      <CommentDesc2 className="depthTrueRight">
+                                        <CommentDepthToRight />
+                                        <CommentBtns>
+                                          {(commentItem.userNo ===
+                                            myInfo?.userNo ||
+                                            myInfo?.roleType === 'ADMIN') && (
+                                            <>
                                               <span
                                                 onClick={() => {
-                                                  setReplyCommentVal('');
-                                                  setSelectedCommentUid(
-                                                    commentItem.uid,
-                                                  );
-                                                  setModify(false);
-                                                  setReply(true);
-                                                  getMaxUidPerOneRdepth(
-                                                    commentItem.wno,
-                                                    commentItem.rdepth,
-                                                  );
-                                                  setStarOnReply(-3);
+                                                  setSelectedCommentUid(index);
+                                                  setModify(true);
+                                                  setStarOnModify(-3);
+                                                  setModifyCommentVal('');
                                                 }}
-                                                title="답글"
+                                                title="수정"
                                               >
                                                 <hr />
                                               </span>
-                                            )
+                                              <span
+                                                title="삭제"
+                                                onClick={deleteComment(
+                                                  commentItem.cno,
+                                                  commentItem.wno,
+                                                  commentItem.uid,
+                                                  commentItem.rnum,
+                                                  commentItem.rdepth,
+                                                )}
+                                              >
+                                                <hr />
+                                              </span>
+                                            </>
                                           )}
                                         </CommentBtns>
                                         <CommentDescUl>
@@ -3529,175 +4000,8 @@ const ContentDesc = ({
                                               ? '탈퇴한 회원'
                                               : commentItem.userName}
                                           </li>
-                                          <li>{commentItem.text}</li>
-                                          <li>
-                                            {regdate}
-                                            {commentItem.face === -2 && (
-                                              <VeryBad className="veryBad2" />
-                                            )}
-                                            {commentItem.face === -1 && (
-                                              <Bad className="bad2" />
-                                            )}
-                                            {commentItem.face === 0 && (
-                                              <Normal className="normal2" />
-                                            )}
-                                            {commentItem.face === 1 && (
-                                              <Good className="good2" />
-                                            )}
-                                            {commentItem.face === 2 && (
-                                              <VeryGood className="veryGood2" />
-                                            )}
-                                          </li>
-                                        </CommentDescUl>
-                                      </CommentDesc2>
-                                    )}
-                                  </>
-                                )}
-                              </>
-                            ) : (
-                              commentItem.depth === 1 && (
-                                <>
-                                  {(modify === true &&
-                                    index === selectedCommentUid &&
-                                    commentItem.userNo === myInfo?.userNo) ||
-                                  (modify === true &&
-                                    index === selectedCommentUid &&
-                                    myInfo?.roleType === 'ADMIN') ? (
-                                    <>
-                                      <CommentDesc2 className="depthTrueRight">
-                                        <CommentDepthToRight />
-                                        <CommentBtns>
-                                          <span
-                                            title="공감온도"
-                                            onClick={showStarsOnModify}
-                                          >
-                                            <hr />
-                                          </span>
-                                          <span
-                                            title="완료"
-                                            onClick={() => {
-                                              onSubmitOnModify(commentItem.uid);
-                                            }}
-                                          >
-                                            <hr />
-                                          </span>
-                                          <span
-                                            title="삭제"
-                                            onClick={deleteComment(
-                                              commentItem.cno,
-                                              commentItem.wno,
-                                              commentItem.uid,
-                                              commentItem.rnum,
-                                              commentItem.rdepth,
-                                            )}
-                                          >
-                                            <hr />
-                                          </span>
-                                        </CommentBtns>
-                                        <CommentDescUl>
-                                          <li>{commentItem.userName}</li>
-                                          <li>
-                                            <ModifyCommentTextareaWrapper
-                                              style={{ width: `8.99rem` }}
-                                              id="controlScrollCapturing"
-                                            >
-                                              <StarWrapperOnModify
-                                                ref={starWrapperOnModify}
-                                              >
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      -2,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="매우 나쁨"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      -1,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="나쁨"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      0,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="보통"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      1,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="좋음"
-                                                />
-                                                <hr
-                                                  className="starOnModify"
-                                                  onClick={() =>
-                                                    selectStarOnModify(
-                                                      2,
-                                                      commentItem.text,
-                                                    )
-                                                  }
-                                                  onMouseOver={() =>
-                                                    viewStarsOnModify()
-                                                  }
-                                                  onMouseOut={() =>
-                                                    viewOutStarsOnModify()
-                                                  }
-                                                  title="매우좋음"
-                                                />
-                                              </StarWrapperOnModify>
-                                              <ModifyCommentTextarea
-                                                ref={modifyTextareaRef}
-                                                maxLength={150}
-                                                onChange={(e: any) => {
-                                                  onChangeModifyComment(e);
-                                                }}
-                                                onKeyPress={(e: any) =>
-                                                  controlTextArea(e)
-                                                }
-                                                value={modifyCommentVal}
-                                                style={{ width: `8.76rem` }}
-                                              />
-                                            </ModifyCommentTextareaWrapper>
+                                          <li style={{ width: `8.65rem` }}>
+                                            {commentItem.text}
                                           </li>
                                           <li>
                                             {regdate}
@@ -3719,350 +4023,185 @@ const ContentDesc = ({
                                           </li>
                                         </CommentDescUl>
                                       </CommentDesc2>
-                                    </>
-                                  ) : (modifyCompleted === true &&
-                                      modifyCompletedAdmin === false &&
-                                      reply === false &&
-                                      index === selectedCommentUid &&
-                                      commentItem.userNo === myInfo?.userNo) ||
-                                    (modifyCompletedAdmin === true &&
-                                      modifyCompleted === false &&
-                                      reply === false &&
-                                      index === selectedCommentUid) ? (
-                                    <CommentDescOnModifyCompletedRight className="depthTrueRight">
-                                      <CommentDepthToRight />
-                                      <CommentBtns>
-                                        {commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                        myInfo?.roleType === 'ADMIN' ? (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setModifyCommentVal('');
-
-                                                setModify(true);
-                                                setReply(false);
-                                                setStarOnModify(-3);
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>{commentItem.userName}</li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToRight" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToRight" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToRight" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToRight" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToRight" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDescOnModifyCompletedRight>
-                                  ) : (replyCompleted === true &&
-                                      replyCompletedAdmin === false &&
-                                      modify === false &&
-                                      lastReply === commentItem.uid) ||
-                                    (replyCompletedAdmin === true &&
-                                      replyCompleted === false &&
-                                      modify === false &&
-                                      lastReply === commentItem.uid) ? (
-                                    <CommentDescOnReplyCompletedRight className="depthTrueRight">
-                                      <CommentDepthToRight />
-                                      <CommentBtns>
-                                        {(commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN') && (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setSelectedCommentUid(index);
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setModifyCommentVal('');
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>{commentItem.userName}</li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToRight" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToRight" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToRight" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToRight" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToRight" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDescOnReplyCompletedRight>
-                                  ) : (
-                                    <CommentDesc2 className="depthTrueRight">
-                                      <CommentDepthToRight />
-                                      <CommentBtns>
-                                        {(commentItem.userNo ===
-                                          myInfo?.userNo ||
-                                          myInfo?.roleType === 'ADMIN') && (
-                                          <>
-                                            <span
-                                              onClick={() => {
-                                                setSelectedCommentUid(index);
-                                                setModify(true);
-                                                setStarOnModify(-3);
-                                                setModifyCommentVal('');
-                                              }}
-                                              title="수정"
-                                            >
-                                              <hr />
-                                            </span>
-                                            <span
-                                              title="삭제"
-                                              onClick={deleteComment(
-                                                commentItem.cno,
-                                                commentItem.wno,
-                                                commentItem.uid,
-                                                commentItem.rnum,
-                                                commentItem.rdepth,
-                                              )}
-                                            >
-                                              <hr />
-                                            </span>
-                                          </>
-                                        )}
-                                      </CommentBtns>
-                                      <CommentDescUl>
-                                        <li>
-                                          {commentItem.userName === null
-                                            ? '탈퇴한 회원'
-                                            : commentItem.userName}
-                                        </li>
-                                        <li style={{ width: `8.65rem` }}>
-                                          {commentItem.text}
-                                        </li>
-                                        <li>
-                                          {regdate}
-                                          {commentItem.face === -2 && (
-                                            <VeryBad className="veryBadDepthToRight" />
-                                          )}
-                                          {commentItem.face === -1 && (
-                                            <Bad className="badDepthToRight" />
-                                          )}
-                                          {commentItem.face === 0 && (
-                                            <Normal className="normalDepthToRight" />
-                                          )}
-                                          {commentItem.face === 1 && (
-                                            <Good className="goodDepthToRight" />
-                                          )}
-                                          {commentItem.face === 2 && (
-                                            <VeryGood className="veryGoodDepthToRight" />
-                                          )}
-                                        </li>
-                                      </CommentDescUl>
-                                    </CommentDesc2>
-                                  )}
-                                </>
-                              )
-                            )}
-                          </>
-                        )}
-                      </div>
-                    );
-                  })
-                ) : (
-                  <NoComment>Comment is empty.</NoComment>
-                )}
-                {toggleAddCommentForm === true ? (
-                  <AddCommentBtn
-                    ref={addbtnRef}
-                    onClick={() => {
-                      showAndHideCommentForm(true);
-                    }}
-                  >
-                    <span>+</span>
-                  </AddCommentBtn>
-                ) : (
-                  <AddCommentBtn
-                    ref={addbtnRef}
-                    onClick={() => {
-                      showAndHideCommentForm(false);
-                    }}
-                  >
-                    <span style={{ left: '0.33rem', bottom: '-0.02rem' }}>
-                      -
-                    </span>
-                  </AddCommentBtn>
-                )}
-                {myInfo?.roleType !== 'USER' && myInfo?.roleType !== 'ADMIN' ? (
-                  <></>
-                ) : (
-                  <ShowStarsBtn ref={selectStarBtnRef} onClick={showStars}>
-                    <hr />
-                  </ShowStarsBtn>
-                )}
-                <ScrollUpBtn ref={scrollUpBtnRef} onClick={scrollToTop}>
-                  <hr />
-                </ScrollUpBtn>
-              </CommentScrollArea>
-              <AddCommentFormWrapper>
-                <AddCommentForm id="addCommentForm">
+                                    )}
+                                  </>
+                                )
+                              )}
+                            </>
+                          )}
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <NoComment>Comment is empty.</NoComment>
+                  )}
+                  {toggleAddCommentForm === true ? (
+                    <AddCommentBtn
+                      ref={addbtnRef}
+                      onClick={() => {
+                        showAndHideCommentForm(true);
+                      }}
+                    >
+                      <span>+</span>
+                    </AddCommentBtn>
+                  ) : (
+                    <AddCommentBtn
+                      ref={addbtnRef}
+                      onClick={() => {
+                        showAndHideCommentForm(false);
+                      }}
+                    >
+                      <span style={{ left: '0.33rem', bottom: '-0.02rem' }}>
+                        -
+                      </span>
+                    </AddCommentBtn>
+                  )}
                   {myInfo?.roleType !== 'USER' &&
                   myInfo?.roleType !== 'ADMIN' ? (
                     <></>
                   ) : (
-                    <StarWrapper id="starWrapper">
-                      <hr
-                        className="star"
-                        onClick={() => selectStar(-2)}
-                        onMouseOver={() => viewStars()}
-                        onMouseOut={() => viewOutStars()}
-                        title="매우 나쁨"
-                      />
-                      <hr
-                        className="star"
-                        onClick={() => selectStar(-1)}
-                        onMouseOver={() => viewStars()}
-                        onMouseOut={() => viewOutStars()}
-                        title="나쁨"
-                      />
-                      <hr
-                        className="star"
-                        onClick={() => selectStar(0)}
-                        onMouseOver={() => viewStars()}
-                        onMouseOut={() => viewOutStars()}
-                        title="보통"
-                      />
-                      <hr
-                        className="star"
-                        onClick={() => selectStar(1)}
-                        onMouseOver={() => viewStars()}
-                        onMouseOut={() => viewOutStars()}
-                        title="좋음"
-                      />
-                      <hr
-                        className="star"
-                        onClick={() => selectStar(2)}
-                        onMouseOver={() => viewStars()}
-                        onMouseOut={() => viewOutStars()}
-                        title="매우좋음"
-                      />
-                    </StarWrapper>
+                    <ShowStarsBtn ref={selectStarBtnRef} onClick={showStars}>
+                      <hr />
+                    </ShowStarsBtn>
                   )}
-                  {!isAuthorized &&
-                  myInfo?.roleType !== 'USER' &&
-                  myInfo?.roleType !== 'ADMIN' ? (
-                    <form method="post" onSubmit={onSubmit}>
-                      <AddCommentTextarea
-                        placeholder="댓글 등록은 회원만 이용 가능합니다."
-                        ref={textareaRef}
-                        maxLength={150}
-                        value={commentVal}
-                        onChange={onChangeContent}
-                        disabled
-                        readOnly
-                      />
-                      <Button
-                        style={{
-                          width: `3.65rem`,
-                          height: `3.28rem`,
-                          left: `11.77rem`,
-                          bottom: `2.77rem`,
-                          paddingTop: `0.01rem`,
-                          position: `relative`,
-                        }}
-                      >
-                        댓글 등록
-                      </Button>
-                    </form>
-                  ) : (
-                    <form method="post" onSubmit={onSubmit}>
-                      <AddCommentTextarea
-                        ref={textareaRef}
-                        maxLength={150}
-                        onChange={onChangeContent}
-                        onKeyPress={(e: any) => controlTextArea(e)}
-                      />
-                      <Button
-                        style={{
-                          width: `3.66rem`,
-                          height: `3.28rem`,
-                          left: `11.76rem`,
-                          bottom: `2.77rem`,
-                          paddingTop: `0.01rem`,
-                          position: `relative`,
-                        }}
-                      >
-                        댓글 등록
-                      </Button>
-                    </form>
-                  )}
-                </AddCommentForm>
-              </AddCommentFormWrapper>
-            </CommentWrapper>
-          </InputLi>
-        </Inputs>
-        <CoverBackBtn />
-      </DescriptionAndComment>
-    </Wrapper>
+                  <ScrollUpBtn ref={scrollUpBtnRef} onClick={scrollToTop}>
+                    <hr />
+                  </ScrollUpBtn>
+                </CommentScrollArea>
+                <AddCommentFormWrapper>
+                  <AddCommentForm id="addCommentForm">
+                    {myInfo?.roleType !== 'USER' &&
+                    myInfo?.roleType !== 'ADMIN' ? (
+                      <></>
+                    ) : (
+                      <StarWrapper id="starWrapper">
+                        <hr
+                          className="star"
+                          onClick={() => selectStar(-2)}
+                          onMouseOver={() => viewStars()}
+                          onMouseOut={() => viewOutStars()}
+                          title="매우 나쁨"
+                        />
+                        <hr
+                          className="star"
+                          onClick={() => selectStar(-1)}
+                          onMouseOver={() => viewStars()}
+                          onMouseOut={() => viewOutStars()}
+                          title="나쁨"
+                        />
+                        <hr
+                          className="star"
+                          onClick={() => selectStar(0)}
+                          onMouseOver={() => viewStars()}
+                          onMouseOut={() => viewOutStars()}
+                          title="보통"
+                        />
+                        <hr
+                          className="star"
+                          onClick={() => selectStar(1)}
+                          onMouseOver={() => viewStars()}
+                          onMouseOut={() => viewOutStars()}
+                          title="좋음"
+                        />
+                        <hr
+                          className="star"
+                          onClick={() => selectStar(2)}
+                          onMouseOver={() => viewStars()}
+                          onMouseOut={() => viewOutStars()}
+                          title="매우좋음"
+                        />
+                      </StarWrapper>
+                    )}
+                    {!isAuthorized &&
+                    myInfo?.roleType !== 'USER' &&
+                    myInfo?.roleType !== 'ADMIN' ? (
+                      <form method="post" onSubmit={onSubmit}>
+                        <AddCommentTextarea
+                          placeholder="댓글 등록은 회원만 이용 가능합니다."
+                          ref={textareaRef}
+                          maxLength={150}
+                          value={commentVal}
+                          onChange={onChangeContent}
+                          disabled
+                          readOnly
+                        />
+                        <Button
+                          style={{
+                            width: `3.65rem`,
+                            height: `3.28rem`,
+                            left: `11.77rem`,
+                            bottom: `2.77rem`,
+                            paddingTop: `0.01rem`,
+                            position: `relative`,
+                          }}
+                        >
+                          댓글 등록
+                        </Button>
+                      </form>
+                    ) : (
+                      <form method="post" onSubmit={onSubmit}>
+                        <AddCommentTextarea
+                          ref={textareaRef}
+                          maxLength={150}
+                          onChange={onChangeContent}
+                          onKeyPress={(e: any) => controlTextArea(e)}
+                        />
+                        <Button
+                          style={{
+                            width: `3.66rem`,
+                            height: `3.28rem`,
+                            left: `11.76rem`,
+                            bottom: `2.77rem`,
+                            paddingTop: `0.01rem`,
+                            position: `relative`,
+                          }}
+                        >
+                          댓글 등록
+                        </Button>
+                      </form>
+                    )}
+                  </AddCommentForm>
+                </AddCommentFormWrapper>
+              </CommentWrapper>
+            </InputLi>
+          </Inputs>
+          <CoverBackBtn />
+          <MiniBtnWrapper>
+            <MiniBtn
+              style={{
+                backgroundColor: '#ff0b0b',
+                top: '0.4rem',
+                zIndex: '3',
+              }}
+              onClick={() => {
+                hideContent();
+              }}
+            >
+              <span
+                title="닫기"
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#ffffff';
+                  e.currentTarget.style.fontWeight = '600';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.fontWeight = '400';
+                }}
+                style={{
+                  fontSize: '1.2rem',
+                  fontWeight: '400',
+                  color: '#ffffff',
+                  left: '0.27rem',
+                  top: '-0.252rem',
+                  transform: 'rotate(45deg)',
+                }}
+              >
+                +
+              </span>
+            </MiniBtn>
+          </MiniBtnWrapper>
+        </DescriptionAndComment>
+      </Wrapper>
+    </>
   );
 };
 

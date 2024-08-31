@@ -290,7 +290,7 @@ const MailSender = ({ myInfo, sendAnEmail }: Props) => {
     [sender, email, subject, content, file, sendAnEmail],
   );
   return (
-    <RightBlock>
+    <RightBlock id="sendAnEmail">
       <Description>
         <MailSendertit
           src={process.env.PUBLIC_URL + '/images/sendmailtit.png'}

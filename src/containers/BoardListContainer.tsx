@@ -12,8 +12,9 @@ interface Props {
 const BoardListContainer = ({ isAuthorized }: Props) => {
   const dispatch = useDispatch();
 
-  const { myInfo, boards } = useSelector((state: any) => ({
+  const { myInfo, boards, loading } = useSelector((state: any) => ({
     myInfo: state.auth.myInfo,
+    loading: state.reduxThunk.loading,
     boards: state.reduxThunk.data,
   }));
   const onSelectedList = (selected: BoardListPayload) => {
@@ -22,6 +23,7 @@ const BoardListContainer = ({ isAuthorized }: Props) => {
   return (
     <BoardList
       boards={boards}
+      loading={loading}
       onSelectedList={onSelectedList}
       myInfo={myInfo}
       isAuthorized={isAuthorized}

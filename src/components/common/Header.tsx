@@ -20,7 +20,18 @@ import MailSender from '../../containers/MailSenderContainer';
 import { MainContext } from '../../pages/Main';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
-
+import MiniBtn from './button/AddButton';
+const OuterWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  cursor: pointer;
+`;
 const Wrapper = styled.div`
   position: absolute;
   width: 100%;
@@ -29,10 +40,12 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @media (min-width: 481px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 const Gnb = styled.span`
   display: none;
@@ -41,7 +54,7 @@ const Gnb = styled.span`
   width: 1.9rem;
   height: 1.9rem;
 
-  @media (min-width: 769px) and (max-width: 1280px) {
+  @media (min-width: 481px) and (max-width: 1280px) {
     display: none;
     position: absolute;
     width: 9rem;
@@ -99,12 +112,15 @@ const HeaderBlock = styled.div`
     display: none;
   }
 
-  .innerright {
+  .innerRight {
     position: absolute;
     display: inline-block;
     top: 0.23rem;
     right: 0.53rem;
     height: 100%;
+    @media (min-width: 481px) and (max-width: 768px) {
+      top: -0.853rem;
+    }
   }
   .right1 {
     position: relative;
@@ -130,14 +146,17 @@ const HeaderBlock = styled.div`
           width: 2.7rem;
           position: relative;
           font-weight: 600;
+          @media (min-width: 481px) and (max-width: 768px) {
+            left: 2.6rem;
+          }
         }
       }
-      @media (min-width: 769px) and (max-width: 1024px) {
-        display: none;
+      @media (min-width: 481px) and (max-width: 768px) {
+        top: 47.38rem;
+        left: 16.65rem;
+        line-height: 168.1%;
+        font-size: 0.54rem;
       }
-    }
-    @media (min-width: 1025px) and (max-width: 1280px) {
-      right: -0.45rem;
     }
   }
   .right2 {
@@ -147,6 +166,9 @@ const HeaderBlock = styled.div`
     padding: 0.5rem 0.5rem 0.5rem 0.46rem;
     width: 19.6rem;
     height: 100%;
+    @media (min-width: 481px) and (max-width: 768px) {
+      width: 71.2%;
+    }
   }
   @media (min-width: 1024px) and (max-width: 1280px) {
     position: relative;
@@ -210,6 +232,43 @@ const HeaderBlock = styled.div`
       }
     }
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    position: relative;
+    top: -22.9rem;
+    left: 0.1rem;
+    width: calc(50% + 47.5vw - 2rem);
+    z-index: 3;
+    .hamburgerBtn {
+      display: block;
+      background-color: black;
+      color: white;
+      border-radius: 0.25rem;
+      transform: scale(1.8);
+      padding: 0.2rem;
+      position: absolute;
+      margin: 1rem;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      z-index: 3;
+      &:hover,
+      &.expanded {
+        transform: scale(1.7);
+        outline: black 2px solid;
+        background-color: #e5e5e5;
+        color: black;
+        text-decoration: underline;
+      }
+      &:active {
+        transform: scale(1.92);
+        font-weight: bold;
+      }
+    }
+  }
+`;
+
+const DisplayNoneOnMobileHAndTabletV = styled.span`
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const User = styled.span`
@@ -218,6 +277,9 @@ const User = styled.span`
   position: relative;
   margin-left: 1.06rem;
   top: 0.15rem;
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 10.175rem;
+  }
 `;
 
 const MailTo = styled.img`
@@ -313,12 +375,28 @@ const MemberWrapper = styled.div`
     top: calc(692% - 3.938rem);
     left: calc(100% - (305.99px - 39px));
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 0rem;
+  }
 `;
 const MemberLoginWrapper = styled.span`
   display: block;
   position: absolute;
   left: 0;
   top: 0;
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -2.1rem;
+    top: -14.52rem;
+    width: calc(100vw - 77px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
 const MemberJoinWrapper = styled.span`
   position: absolute;
@@ -355,6 +433,10 @@ const BackBtn = styled.img`
   @media (min-width: 1025px) and (max-width: 1280px) {
     right: -1.545rem;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: none;
+    right: 0rem;
+  }
 `;
 const CoverBackBtn = styled.span`
   display: none;
@@ -366,6 +448,19 @@ const CoverBackBtn = styled.span`
   right: -1.51rem;
   top: 8.175rem;
   z-index: 3;
+  @media (min-width: 481px) and (max-width: 768px) {
+    right: 0rem;
+  }
+`;
+const MiniBtnWrapper = styled.span`
+  display: none;
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    display: block;
+    position: absolute;
+    right: 2.48rem;
+    top: 0rem;
+  }
 `;
 type Props = {
   readonly myInfo: MyInfo | null;
@@ -425,7 +520,12 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     if (state.toggleBackBtn === true) {
       setTimeout(() => {
         if (BackBtnRef?.current) {
-          BackBtnRef.current.style.display = 'block';
+          if (
+            !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+              .matches
+          ) {
+            BackBtnRef.current.style.display = 'block';
+          }
         }
         if (CoverBackBtnRef?.current) {
           CoverBackBtnRef.current.style.display = 'none';
@@ -485,6 +585,23 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
         }, 40);
       }
     }, 1500);
+
+    // 브라우저가 481~768 해상도일 때 검색창 텍스트 변경
+    const mediaQuery = window.matchMedia(
+      '(min-width: 481px) and (max-width: 768px)',
+    );
+    const handleMediaQueryChange = (e: any) => {
+      const inputElement = document.getElementById(
+        'globalSearchInput',
+      ) as HTMLInputElement;
+      if (e.matches) {
+        inputElement.placeholder = '(CTRL + /)';
+      } else {
+        inputElement.placeholder = '검색어를 입력하세요. (CTRL + /)';
+      }
+    };
+
+    handleMediaQueryChange(mediaQuery);
   }, [countInfos, counterRef, myInfo, state.toggleBackBtn, tcounterRef]);
 
   const onAlertAdmin = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -583,198 +700,250 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
       setGnbExpanded(true);
     }
   };
-
+  const hideContent = () => {
+    const outerWrapper = document.getElementById('outerWrapper') as any;
+    const outerLoginWrapper = document.getElementById(
+      'outerLoginWrapper',
+    ) as any;
+    const contentDesc = document.getElementById('contentDesc');
+    const memberLogin = document.getElementById('memberLogin') as any;
+    const memberJoin = document.getElementById('memberJoin');
+    if (memberLogin && outerWrapper) {
+      memberLogin!.style.display = 'none';
+      outerWrapper.style.zIndex--;
+      outerWrapper.style.display = 'none';
+    }
+  };
   return (
-    <Wrapper>
-      <HeaderBlock ref={headerBlockRef}>
-        <Gnb className={gnbExpanded ? 'expanded' : ''}>
-          <ul>
-            <li
-              onClick={(e: any) => {
-                toggleGNB();
-                initSelectedList();
-              }}
-            >
-              홈
-            </li>
-            <li
-              onClick={() => {
-                toggleGNB();
-                alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
-              }}
-            >
-              이력서
-            </li>
-            <li
-              onClick={() => {
-                toggleGNB();
-                alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
-              }}
-            >
-              IT 블로그
-            </li>
-          </ul>
-        </Gnb>
-        <GiHamburgerMenu
-          onClick={toggleGNB}
-          className={`hamburgerBtn ${gnbExpanded ? 'expanded' : ''}`}
-          title="Global Navigation"
-        />
-        <Search />
-        <div className="innerright">
-          <div className="right1">
+    <>
+      <Wrapper>
+        <HeaderBlock ref={headerBlockRef}>
+          <Gnb className={gnbExpanded ? 'expanded' : ''}>
             <ul>
-              <li>TODAY</li>
-              <li className="count" ref={counterRef}>
-                {counter}
-              </li>
-            </ul>
-            <ul>
-              <li>TOTAL</li>
-              <li className="count" ref={tcounterRef}>
-                {tcounter}
-              </li>
-            </ul>
-          </div>
-          {isAuthorized && myInfo ? (
-            <div className="right2">
-              <LogAreaBtn
-                src={
-                  loginHover
-                    ? process.env.PUBLIC_URL + '/images/logoutbtnOv.png'
-                    : process.env.PUBLIC_URL + '/images/logoutbtn.png'
-                }
-                onClick={onLogout}
-                onMouseOver={() => setLoginHover(true)}
-                onMouseOut={() => setLoginHover(false)}
-                alt="to Login"
-              />
-              <LogAreaBtn
+              <li
                 onClick={(e: any) => {
-                  onDisplayMember(e, 2);
+                  toggleGNB();
+                  initSelectedList();
                 }}
-                src={
-                  joinHover
-                    ? process.env.PUBLIC_URL + '/images/modifybtnOv.png'
-                    : process.env.PUBLIC_URL + '/images/modifybtn.png'
-                }
-                onMouseOver={() => setJoinHover(true)}
-                onMouseOut={() => setJoinHover(false)}
-                alt="to Join"
+              >
+                홈
+              </li>
+              <li
+                onClick={() => {
+                  toggleGNB();
+                  alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+                }}
+              >
+                이력서
+              </li>
+              <li
+                onClick={() => {
+                  toggleGNB();
+                  alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+                }}
+              >
+                IT 블로그
+              </li>
+            </ul>
+          </Gnb>
+          <GiHamburgerMenu
+            onClick={toggleGNB}
+            className={`hamburgerBtn ${gnbExpanded ? 'expanded' : ''}`}
+            title="Global Navigation"
+          />
+          <Search />
+          <div className="innerRight">
+            <div className="right1">
+              <ul>
+                <li>TODAY</li>
+                <li className="count" ref={counterRef}>
+                  {counter}
+                </li>
+              </ul>
+              <ul>
+                <li>TOTAL</li>
+                <li className="count" ref={tcounterRef}>
+                  {tcounter}
+                </li>
+              </ul>
+            </div>
+            {isAuthorized && myInfo ? (
+              <span className="right2">
+                <DisplayNoneOnMobileHAndTabletV className="toDisplayNoneOnMobileHAndTabletV">
+                  <LogAreaBtn
+                    src={
+                      loginHover
+                        ? process.env.PUBLIC_URL + '/images/logoutbtnOv.png'
+                        : process.env.PUBLIC_URL + '/images/logoutbtn.png'
+                    }
+                    onClick={onLogout}
+                    onMouseOver={() => setLoginHover(true)}
+                    onMouseOut={() => setLoginHover(false)}
+                    alt="to Login"
+                  />
+                  <LogAreaBtn
+                    onClick={(e: any) => {
+                      onDisplayMember(e, 2);
+                    }}
+                    src={
+                      joinHover
+                        ? process.env.PUBLIC_URL + '/images/modifybtnOv.png'
+                        : process.env.PUBLIC_URL + '/images/modifybtn.png'
+                    }
+                    onMouseOver={() => setJoinHover(true)}
+                    onMouseOut={() => setJoinHover(false)}
+                    alt="to Join"
+                  />
+                </DisplayNoneOnMobileHAndTabletV>
+                <User>
+                  <Name
+                    onClick={(e: any) => {
+                      onDisplayMember(e, 4);
+                    }}
+                  >
+                    {userName}
+                  </Name>
+                  <Logged>&nbsp;&nbsp;LOGGED</Logged>
+                </User>
+              </span>
+            ) : (
+              <span className="right2">
+                <DisplayNoneOnMobileHAndTabletV>
+                  <LogAreaBtn
+                    onClick={(e: any) => {
+                      onDisplayMember(e, 0);
+                    }}
+                    src={
+                      loginHover
+                        ? process.env.PUBLIC_URL + '/images/loginbtnOv.png'
+                        : process.env.PUBLIC_URL + '/images/loginbtn.png'
+                    }
+                    onMouseOver={() => setLoginHover(true)}
+                    onMouseOut={() => setLoginHover(false)}
+                    alt="to Login"
+                  />
+
+                  <LogAreaBtn
+                    onClick={(e: any) => {
+                      onDisplayMember(e, 1);
+                    }}
+                    src={
+                      joinHover
+                        ? process.env.PUBLIC_URL + '/images/joinbtnOv.png'
+                        : process.env.PUBLIC_URL + '/images/joinbtn.png'
+                    }
+                    onMouseOver={() => setJoinHover(true)}
+                    onMouseOut={() => setJoinHover(false)}
+                    alt="to Join"
+                  />
+                </DisplayNoneOnMobileHAndTabletV>
+                <User>
+                  <NotLogged>
+                    &nbsp;&nbsp;&nbsp;&nbsp;NOT LOGGED&nbsp;&nbsp;&nbsp;
+                  </NotLogged>
+                </User>
+              </span>
+            )}
+            <MailTo
+              onClick={(e: any) => {
+                onDisplayMember(e, 5);
+              }}
+              src={
+                mailToHover
+                  ? process.env.PUBLIC_URL + '/images/mailiconOv.png'
+                  : process.env.PUBLIC_URL + '/images/mailicon.png'
+              }
+              onMouseOver={() => setMailToHover(true)}
+              onMouseOut={() => setMailToHover(false)}
+              alt="mail to oieho"
+            />
+            <Link to="https://github.com/oieho" target="_blank">
+              <Github
+                src={process.env.PUBLIC_URL + '/images/githubicon.png'}
+                alt="github"
               />
-              <User>
-                <Name
-                  onClick={(e: any) => {
-                    onDisplayMember(e, 4);
+            </Link>
+            <Admin
+              src={process.env.PUBLIC_URL + '/images/adminicon.png'}
+              alt="admin"
+              onClick={
+                onAlertAdmin as unknown as
+                  | React.MouseEventHandler<HTMLImageElement>
+                  | undefined
+              }
+            />
+          </div>
+
+          <BackBtn
+            alt="뒤로가기"
+            title="뒤로가기"
+            ref={BackBtnRef}
+            onClick={() => goToBackward()}
+            onMouseOver={() => setBackBtnHover(true)}
+            onMouseOut={() => setBackBtnHover(false)}
+            onMouseDown={() => setBackBtnHover(false)}
+            onMouseUp={() => setBackBtnHover(true)}
+            src={
+              backBtnHover
+                ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+                : process.env.PUBLIC_URL + '/images/board/back.png'
+            }
+          />
+          <CoverBackBtn ref={CoverBackBtnRef} />
+
+          <MemberWrapper ref={MemberWrapperRef}>
+            <MemberLoginWrapper id="memberLogin" ref={MemberLoginRef}>
+              <MemberLogin />
+              <MiniBtnWrapper>
+                <MiniBtn
+                  style={{
+                    backgroundColor: '#ff0b0b',
+                    top: '0.4rem',
+                    zIndex: '3',
+                  }}
+                  onClick={() => {
+                    hideContent();
                   }}
                 >
-                  {userName}
-                </Name>
-                <Logged>&nbsp;&nbsp;LOGGED</Logged>
-              </User>
-            </div>
-          ) : (
-            <div className="right2">
-              <LogAreaBtn
-                onClick={(e: any) => {
-                  onDisplayMember(e, 0);
-                }}
-                src={
-                  loginHover
-                    ? process.env.PUBLIC_URL + '/images/loginbtnOv.png'
-                    : process.env.PUBLIC_URL + '/images/loginbtn.png'
-                }
-                onMouseOver={() => setLoginHover(true)}
-                onMouseOut={() => setLoginHover(false)}
-                alt="to Login"
-              />
-
-              <LogAreaBtn
-                onClick={(e: any) => {
-                  onDisplayMember(e, 1);
-                }}
-                src={
-                  joinHover
-                    ? process.env.PUBLIC_URL + '/images/joinbtnOv.png'
-                    : process.env.PUBLIC_URL + '/images/joinbtn.png'
-                }
-                onMouseOver={() => setJoinHover(true)}
-                onMouseOut={() => setJoinHover(false)}
-                alt="to Join"
-              />
-
-              <User>
-                <NotLogged>
-                  &nbsp;&nbsp;&nbsp;&nbsp;NOT LOGGED&nbsp;&nbsp;&nbsp;
-                </NotLogged>
-              </User>
-            </div>
-          )}
-          <MailTo
-            onClick={(e: any) => {
-              onDisplayMember(e, 5);
-            }}
-            src={
-              mailToHover
-                ? process.env.PUBLIC_URL + '/images/mailiconOv.png'
-                : process.env.PUBLIC_URL + '/images/mailicon.png'
-            }
-            onMouseOver={() => setMailToHover(true)}
-            onMouseOut={() => setMailToHover(false)}
-            alt="mail to oieho"
-          />
-          <Link to="https://github.com/oieho" target="_blank">
-            <Github
-              src={process.env.PUBLIC_URL + '/images/githubicon.png'}
-              alt="github"
-            />
-          </Link>
-          <Admin
-            src={process.env.PUBLIC_URL + '/images/adminicon.png'}
-            alt="admin"
-            onClick={
-              onAlertAdmin as unknown as
-                | React.MouseEventHandler<HTMLImageElement>
-                | undefined
-            }
-          />
-        </div>
-
-        <BackBtn
-          alt="뒤로가기"
-          title="뒤로가기"
-          ref={BackBtnRef}
-          onClick={() => goToBackward()}
-          onMouseOver={() => setBackBtnHover(true)}
-          onMouseOut={() => setBackBtnHover(false)}
-          onMouseDown={() => setBackBtnHover(false)}
-          onMouseUp={() => setBackBtnHover(true)}
-          src={
-            backBtnHover
-              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-              : process.env.PUBLIC_URL + '/images/board/back.png'
-          }
-        />
-        <CoverBackBtn ref={CoverBackBtnRef} />
-        <MemberWrapper ref={MemberWrapperRef}>
-          <MemberLoginWrapper ref={MemberLoginRef}>
-            <MemberLogin />
-          </MemberLoginWrapper>
-          <MemberJoinWrapper ref={MemberJoinRef}>
-            <MemberJoin />
-          </MemberJoinWrapper>
-          <MemberModifyWrapper ref={MemberModifyRef}>
-            <MemberModify />
-          </MemberModifyWrapper>
-          <MemberInfoWrapper ref={MemberInfoRef}>
-            <MemberInfo />
-          </MemberInfoWrapper>
-          <MailSenderWrapper ref={MailSenderRef}>
-            <MailSender />
-          </MailSenderWrapper>
-        </MemberWrapper>
-      </HeaderBlock>
-    </Wrapper>
+                  <span
+                    title="닫기"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = '#ffffff';
+                      e.currentTarget.style.fontWeight = '600';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.fontWeight = '400';
+                    }}
+                    style={{
+                      fontSize: '1.2rem',
+                      fontWeight: '400',
+                      color: '#ffffff',
+                      left: '0.27rem',
+                      top: '-0.252rem',
+                      transform: 'rotate(45deg)',
+                    }}
+                  >
+                    +
+                  </span>
+                </MiniBtn>
+              </MiniBtnWrapper>
+            </MemberLoginWrapper>
+            <MemberJoinWrapper ref={MemberJoinRef}>
+              <MemberJoin />
+            </MemberJoinWrapper>
+            <MemberModifyWrapper ref={MemberModifyRef}>
+              <MemberModify />
+            </MemberModifyWrapper>
+            <MemberInfoWrapper ref={MemberInfoRef}>
+              <MemberInfo />
+            </MemberInfoWrapper>
+            <MailSenderWrapper ref={MailSenderRef}>
+              <MailSender />
+            </MailSenderWrapper>
+          </MemberWrapper>
+        </HeaderBlock>
+      </Wrapper>
+    </>
   );
 };
 

@@ -110,7 +110,7 @@ const SunEditorWrapper = styled.div`
   width: 52.17rem;
   left: -0.05rem;
   @media (min-width: 769px) and (max-width: 1280px) {
-    width: 100%;
+    width: 100.2%;
   }
 `;
 interface Props {

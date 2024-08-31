@@ -15,7 +15,6 @@ import axios from 'axios';
 import store from '../../modules/mobxStore';
 import { observer } from 'mobx-react';
 import { Helmet } from 'react-helmet-async';
-
 const Wrapper = styled.div`
   position: absolute;
   left: 0;
@@ -65,12 +64,19 @@ const ContentWrapper = styled.div`
     width: calc(100% - 303.99px - 28.16px);
     margin-left: 1.7rem;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    position: relative;
+    top: 1.94rem;
+    left: -2.75rem;
+    width: calc(100% - 80px - 28.16px);
+    margin-left: 1.7rem;
+  }
 `;
 const MiniBtnWrapper = styled.span`
   position: relative;
   width: 100%;
   height: 100%;
-  @media (min-width: 769px) and (max-width: 1280px) {
+  @media (min-width: 481px) and (max-width: 1280px) {
     left: calc(100% - 836px);
   }
 `;
@@ -105,7 +111,7 @@ const Content = styled.div`
   ::-webkit-scrollbar-thumb:active {
     background: #000;
   }
-  @media (min-width: 769px) and (max-width: 1280px) {
+  @media (min-width: 481px) and (max-width: 1280px) {
     width: 100%;
   }
 `;
@@ -166,6 +172,7 @@ interface Props {
 }
 const ContentBody: React.FC<Props> = observer(({ board }) => {
   const { actions, state } = useContext(MainContext);
+
   const { deliveryCountedWnos } = store;
   const [loading, setLoading] = useState(true);
 
@@ -185,7 +192,6 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
               board.wno,
             ];
             deliveryCountedWnos.setCountedWnos(alreadyCountedWnos);
-            console.log(alreadyCountedWnos);
           })
           .catch((error) => {
             console.error('Failed to update count:', error);
@@ -233,7 +239,6 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
   useLayoutEffect(() => {
     setPageTitle(`${board.title}`);
   }, [board.title]);
-
   const fetchBoardsBySorting = async (sortParams: any) => {
     try {
       const response = await axios.get('/boards/prevnextImgs', {
@@ -256,6 +261,28 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
       setLoading(false);
     }
   };
+  // const fetchBoardsBySorting = async (sortParams: any) => {
+  //   try {
+  //     const response = await axios.get('/boards/prevnextImgs', {
+  //       params: {
+  //         searchType: sortParams.searchTypeQParam,
+  //         keyword: sortParams.keywordQParam,
+  //         title: sortParams.titleQParam,
+  //         count: sortParams.countQParam,
+  //         regDate: sortParams.regDateQParam,
+  //         selected: [wno ? wno : sortParams.selectedQParam],
+  //         toolOrHashTag: sortParams.toolOrHashTagQParam,
+  //         isModified: sortParams.isModifiedQParam,
+  //       },
+  //     });
+  //     setBoards(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching boards:', error);
+  //     return [];
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const navigateToPrevBoard = async (currentWno: number, sortParams: any) => {
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 400));
@@ -425,6 +452,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
   const hideContent = () => {
     setTimeout(() => {
       actions.setToggleBackBtn(false);
+      actions.setReadIndex(-1);
     }, 700);
 
     const selectedQParam = searchParams.get('selected');
@@ -435,12 +463,18 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
     const keywordQParam = searchParams.get('keyword');
 
     if (contentRef.current) {
-      contentRef.current.style.display = 'none';
+      contentRef!.current.style.display = 'none';
     }
 
-    const saying = document.getElementById('saying');
-    saying!.style.opacity = '1';
-    saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
+    if (
+      !window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+    ) {
+      const saying = document.getElementById('saying');
+      if (saying) {
+        saying.style.opacity = '1';
+        saying.style.transition = 'opacity 0.2s 0.75s ease-out';
+      }
+    }
 
     navigate(
       `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
@@ -453,8 +487,12 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
         <title>OIEHO - [{pageTitle}]</title>
       </Helmet>
       <Wrapper>
-        <OuterWrapper onClick={() => hideContent()} title="보기 폼 닫기" />
-        <ContentWrapper>
+        <OuterWrapper
+          id="contentBodyOuterWrapper"
+          onClick={() => hideContent()}
+          title="보기 폼 닫기"
+        />
+        <ContentWrapper id="contentBody">
           <MiniBtnWrapper>
             <MiniBtn
               style={{

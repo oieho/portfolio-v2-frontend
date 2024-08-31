@@ -44,7 +44,6 @@ const BoardListBlock = styled.div`
   height: 44.9rem;
   z-index: 1; // 중요 z-index로 순서 제어
   @media (min-width: 1025px) and (max-width: 1280px) {
-    position: relative;
     top: 1.94rem;
     left: -9.8rem;
     margin-left: 2.1rem;
@@ -52,10 +51,15 @@ const BoardListBlock = styled.div`
     z-index: 2;
   }
   @media (min-width: 769px) and (max-width: 1024px) {
-    position: relative;
     top: 1.94rem;
     left: -9.6rem;
     width: calc(100% - 318.99px - 28.16px);
+    margin-left: 1.7rem;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    top: 1.94rem;
+    left: -2.75rem;
+    width: calc(100% - 80px - 28.16px);
     margin-left: 1.7rem;
   }
 `;
@@ -68,8 +72,10 @@ const BoardTitle = styled.img`
   height: 1.813rem;
   cursor: pointer;
   @media (min-width: 769px) and (max-width: 1024px) {
-    position: relative;
     left: 1.7rem;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 1.2rem;
   }
 `;
 const SearchArea = styled.span`
@@ -82,6 +88,9 @@ const SearchArea = styled.span`
   @media (min-width: 769px) and (max-width: 1024px) {
     position: relative;
     left: 1.2rem;
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: 0.7rem;
   }
 `;
 const Sorting = styled.span`
@@ -170,6 +179,10 @@ const BoardTableHeader = styled.table`
     width: calc(93.5%);
     margin-left: 0.3rem;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: calc(93.5%);
+    margin-left: 0.3rem;
+  }
 `;
 const BoardTableBody = styled.table`
   position: absolute;
@@ -217,11 +230,14 @@ const TitleTit = styled.span`
     font-weight: bold;
   }
 `;
+const MobileHAndTabletVRegDateTit = styled.span`
+  display: none;
+  margin-left: 0.73rem;
+`;
 const TitleTd = styled.td`
   position: relative;
   width: 100%;
   cursor: default;
-
   &.tHeadTd1 {
     width: 28.586rem;
     padding-left: 0.5rem;
@@ -233,12 +249,16 @@ const TitleTd = styled.td`
       left: -0.57rem;
       width: calc(22.6%);
     }
+    @media (min-width: 481px) and (max-width: 768px) {
+      left: -0.95rem;
+      width: 21rem;
+    }
   }
   &.tHeadTd2 {
     position: relative;
     width: 6.129rem;
-    left: 0.51rem;
     text-align: center;
+    left: 0.68rem;
     &:hover {
       font-weight: bold;
     }
@@ -250,9 +270,13 @@ const TitleTd = styled.td`
       width: calc(13.2%);
     }
     @media (min-width: 769px) and (max-width: 1024px) {
-      display: none;
-      left: 0;
-      width: calc(6.1%);
+      right: -0.92rem;
+      width: calc(5%);
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      position: relative;
+      left: -0.3rem;
+      right: calc(0.1% + 1rem);
     }
   }
   &.tHeadTd3 {
@@ -265,12 +289,13 @@ const TitleTd = styled.td`
       width: calc(8.95%);
     }
     @media (min-width: 769px) and (max-width: 1024px) {
-      &::before {
-        content: 'Count / ';
-        position: relative;
-      }
       right: 0.32rem;
       width: calc(5%);
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      position: relative;
+      right: calc(1.1% + 1.075rem);
+      width: 10%;
     }
   }
   &.tHeadTd4 {
@@ -288,12 +313,15 @@ const TitleTd = styled.td`
       right: 0rem;
     }
     @media (min-width: 769px) and (max-width: 1024px) {
-      left: 0;
+      left: -0.45rem;
       width: calc(7.95%);
     }
+    @media (min-width: 481px) and (max-width: 768px) {
+      display: none;
+    }
   }
-  @media (min-width: 769px) and (max-width: 1024px) {
-    top: -0.46rem;
+  @media (min-width: 481px) and (max-width: 1024px) {
+    font-size: 0.72rem;
   }
 `;
 const Select = styled.span`
@@ -332,15 +360,25 @@ const StyledList = styled(List)`
     position: relative;
     left: -0.5rem;
   }
+  @media (min-width: 481px) and (max-width: 768px) {
+    left: -0.9rem;
+  }
 `;
 
 interface Props {
   boards: Board[] | any;
+  loading: boolean;
   readonly onSelectedList: (selectedList: any) => void;
   readonly myInfo: MyInfo | null;
   readonly isAuthorized: boolean;
 }
-const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
+const BoardList = ({
+  boards,
+  loading,
+  onSelectedList,
+  myInfo,
+  isAuthorized,
+}: Props) => {
   const { state, actions } = useContext(MainContext);
   const selectedList = state.selectedList;
   const dispatch = useAppDispatch();
@@ -361,7 +399,6 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
   const [countTit, setCountTit] = useState('');
   const [regDateTit, setRegDateTit] = useState('');
   const [searchType, setSearchType] = useState('');
-  const [rowHeight, setRowHeight] = useState(82.01);
 
   const searchInput = document.getElementById(
     'searchInput',
@@ -483,6 +520,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
         dispatch(fetchSelectedList(selected) as any);
       }
     }
+
     applyMore();
 
     const sortArr = ['Titles', 'Count', 'Reg. Date'];
@@ -490,12 +528,25 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     setCountTit(sortArr[1]);
     setRegDateTit(sortArr[2]);
 
+    const whenMobileHAndTabletVDisplayRegDateTit = () => {
+      const regDateTit = document.getElementById(
+        'MobileHAndTabletVRegDateTit',
+      ) as HTMLElement | any;
+      if (
+        window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+      ) {
+        regDateTit!.style.display = 'inline';
+      } else {
+        regDateTit!.style.display = 'none';
+      }
+    };
+    whenMobileHAndTabletVDisplayRegDateTit();
+
     let index = 0;
     const interval = setInterval(() => {
       setLoadingText(`Now Loading${'.'.repeat((index % 5) + 1)}`);
       index += 1;
     }, 350);
-
     return () => clearInterval(interval);
   }, [
     actions,
@@ -506,6 +557,7 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
     keywordQParam,
     navigate,
     regDateQParam,
+    regDateTit,
     searchFormType,
     searchInput,
     searchType,
@@ -899,103 +951,107 @@ const BoardList = ({ boards, onSelectedList, myInfo, isAuthorized }: Props) => {
             </SearchArea>
           </form>
         </h2>
-        {boards && (
-          <>
-            <BoardTableHeader
-              style={{ borderCollapse: 'collapse', borderSpacing: '0' }}
-            >
-              <thead>
-                <BoardTableTitles>
-                  <TitleTd className="tHeadTd1">
-                    Total <TotalWorks>{boards.length}</TotalWorks>&nbsp;
-                    <span onClick={titleLink}>
-                      <TitleTit>
-                        {titleQParam === 'desc'
-                          ? titleTit + ' ↓'
-                          : titleQParam === 'asc'
-                          ? titleTit + ' ↑'
-                          : titleTit}
-                      </TitleTit>
-                    </span>
-                  </TitleTd>
-                  <TitleTd className="tHeadTd2">
-                    <span onClick={countLink}>
-                      {countQParam === 'desc'
-                        ? countTit + ' ↓'
-                        : countQParam === 'asc'
-                        ? countTit + ' ↑'
-                        : countTit}
-                    </span>
-                  </TitleTd>
-                  <TitleTd className="tHeadTd3">
-                    <Select
-                      onClick={() => {
-                        if (state.toggleSelected === false) {
-                          setTimeout(() => onSelect(), 800);
-                        } else {
-                          setTimeout(() => onSelect(), 0);
-                        }
-                      }}
-                    >
-                      {state.toggleSelected ? 'Selected' : 'Select'}
-                    </Select>
-                  </TitleTd>
-                  <TitleTd className="tHeadTd4">
-                    <span onClick={regDateLink}>
-                      {regDateQParam === 'desc'
-                        ? regDateTit + ' ↓'
-                        : regDateQParam === 'asc'
-                        ? regDateTit + ' ↑'
-                        : regDateTit}
-                    </span>
-                  </TitleTd>
-                </BoardTableTitles>
-              </thead>
-            </BoardTableHeader>
-            {!boards.length ? (
-              <BoardTableExceptionBody>
-                <tbody>
-                  <tr>
-                    <EmptyTd colSpan={4}>List is empty.</EmptyTd>
-                  </tr>
-                </tbody>
-              </BoardTableExceptionBody>
-            ) : !!boards.length ? (
-              <BoardTableBody>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div style={{ width: '98.8%', height: '599px' }}>
-                        <AutoSizer>
-                          {({ height, width }: any) => (
-                            <StyledList
-                              className={'StyledList'}
-                              width={width} // AutoSizer로부터 받은 width
-                              height={height} // AutoSizer로부터 받은 height
-                              rowHeight={82.01}
-                              rowCount={boards.length}
-                              overscanIndicesGetter={overscanIndicesGetter}
-                              rowRenderer={rowRenderer}
-                              style={{ outline: 'none' }}
-                            />
-                          )}
-                        </AutoSizer>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </BoardTableBody>
-            ) : (
-              <BoardTableExceptionBody>
-                <tbody>
-                  <tr>
+        <>
+          <BoardTableHeader
+            style={{ borderCollapse: 'collapse', borderSpacing: '0' }}
+          >
+            <thead>
+              <BoardTableTitles>
+                <TitleTd className="tHeadTd1">
+                  Total <TotalWorks>{boards.length}</TotalWorks>&nbsp;
+                  <span onClick={titleLink}>
+                    <TitleTit>
+                      {titleQParam === 'desc'
+                        ? titleTit + ' ↓'
+                        : titleQParam === 'asc'
+                        ? titleTit + ' ↑'
+                        : titleTit}
+                    </TitleTit>
+                  </span>
+                  <MobileHAndTabletVRegDateTit
+                    id="MobileHAndTabletVRegDateTit"
+                    onClick={regDateLink}
+                  >
+                    {regDateQParam === 'desc'
+                      ? regDateTit + ' ↓'
+                      : regDateQParam === 'asc'
+                      ? regDateTit + ' ↑'
+                      : regDateTit}
+                  </MobileHAndTabletVRegDateTit>
+                </TitleTd>
+                <TitleTd className="tHeadTd2">
+                  <span onClick={countLink}>
+                    {countQParam === 'desc'
+                      ? countTit + ' ↓'
+                      : countQParam === 'asc'
+                      ? countTit + ' ↑'
+                      : countTit}
+                  </span>
+                </TitleTd>
+                <TitleTd className="tHeadTd3">
+                  <Select
+                    onClick={() => {
+                      if (state.toggleSelected === false) {
+                        setTimeout(() => onSelect(), 800);
+                      } else {
+                        setTimeout(() => onSelect(), 0);
+                      }
+                    }}
+                  >
+                    {state.toggleSelected ? 'Selected' : 'Select'}
+                  </Select>
+                </TitleTd>
+                <TitleTd className="tHeadTd4">
+                  <span onClick={regDateLink}>
+                    {regDateQParam === 'desc'
+                      ? regDateTit + ' ↓'
+                      : regDateQParam === 'asc'
+                      ? regDateTit + ' ↑'
+                      : regDateTit}
+                  </span>
+                </TitleTd>
+              </BoardTableTitles>
+            </thead>
+          </BoardTableHeader>
+          {!boards.length ? (
+            <BoardTableExceptionBody>
+              <tbody>
+                <tr>
+                  {loading ? (
                     <EmptyTd colSpan={4}>{loadingText}</EmptyTd>
-                  </tr>
-                </tbody>
-              </BoardTableExceptionBody>
-            )}
-          </>
-        )}
+                  ) : (
+                    <EmptyTd colSpan={4}>List is empty.</EmptyTd>
+                  )}
+                </tr>
+              </tbody>
+            </BoardTableExceptionBody>
+          ) : (
+            <BoardTableBody>
+              <tbody>
+                <tr>
+                  <td>
+                    <div style={{ width: '98.8%', height: '599px' }}>
+                      <AutoSizer>
+                        {({ height, width }: any) => (
+                          <StyledList
+                            className={'StyledList'}
+                            width={width} // AutoSizer로부터 받은 width
+                            height={height} // AutoSizer로부터 받은 height
+                            rowHeight={82.01}
+                            rowCount={boards.length}
+                            overscanIndicesGetter={overscanIndicesGetter}
+                            rowRenderer={rowRenderer}
+                            style={{ outline: 'none' }}
+                          />
+                        )}
+                      </AutoSizer>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </BoardTableBody>
+          )}
+        </>
       </BoardListBlock>
     </Wrapper>
   );
