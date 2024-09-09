@@ -178,6 +178,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
 
   useEffect(() => {
     fetchBoardsBySorting(sortParams);
+
     if (board && board.wno) {
       if (
         !deliveryCountedWnos.countedWnos.includes(board.wno) &&
@@ -248,7 +249,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
           title: sortParams.titleQParam,
           count: sortParams.countQParam,
           regDate: sortParams.regDateQParam,
-          selected: null ? state.maxWno : sortParams.selectedQParam,
+          selected: null ? wno : sortParams.selectedQParam,
           toolOrHashTag: sortParams.toolOrHashTagQParam,
           isModified: sortParams.isModifiedQParam,
         },
@@ -312,15 +313,22 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
         );
         if (exists) {
           actions.setViewSelectedIndex(prevWno);
-          if (state.selectedView === true) {
-            navigate(
-              `/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-            );
-          } else {
-            navigate(
-              `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-            );
-          }
+          navigate(
+            `/boards/${
+              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+                .matches
+                ? 'viewContentBody'
+                : 'view'
+            }/${prevWno}?${
+              state.selectedView === true
+                ? `selected=${state.selectedList}&`
+                : ''
+            }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
+
           setLoading(false);
           return;
         } else {
@@ -337,15 +345,22 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
         );
         if (exists) {
           actions.setViewSelectedIndex(prevWno);
-          if (state.selectedView === true) {
-            navigate(
-              `/boards/view/${prevWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-            );
-          } else {
-            navigate(
-              `/boards/view/${prevWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-            );
-          }
+          navigate(
+            `/boards/${
+              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+                .matches
+                ? 'viewContentBody'
+                : 'view'
+            }/${prevWno}?${
+              state.selectedView === true
+                ? `selected=${state.selectedList}&`
+                : ''
+            }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
+
           setLoading(false);
           return;
         } else {
@@ -388,21 +403,21 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
         console.log(nextWno);
         if (exists) {
           actions.setViewSelectedIndex(nextWno);
-          if (state.selectedView === true) {
-            navigate(
-              `/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-              {
-                state: { searchType: null, keyword: null },
-              },
-            );
-          } else {
-            navigate(
-              `/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-              {
-                state: { searchType: null, keyword: null },
-              },
-            );
-          }
+          navigate(
+            `/boards/${
+              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+                .matches
+                ? 'viewContentBody'
+                : 'view'
+            }/${nextWno}?${
+              state.selectedView === true
+                ? `selected=${state.selectedList}&`
+                : ''
+            }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
           setLoading(false);
           return;
         } else {
@@ -419,21 +434,21 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
         );
         if (exists) {
           actions.setViewSelectedIndex(nextWno);
-          if (state.selectedView === true) {
-            navigate(
-              `/boards/view/${nextWno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-              {
-                state: { searchType: null, keyword: null },
-              },
-            );
-          } else {
-            navigate(
-              `/boards/view/${nextWno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
-              {
-                state: { searchType: null, keyword: null },
-              },
-            );
-          }
+          navigate(
+            `/boards/${
+              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+                .matches
+                ? 'viewContentBody'
+                : 'view'
+            }/${nextWno}?${
+              state.selectedView === true
+                ? `selected=${state.selectedList}&`
+                : ''
+            }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
           setLoading(false);
           return;
         } else {
@@ -452,10 +467,8 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
   const hideContent = () => {
     setTimeout(() => {
       actions.setToggleBackBtn(false);
-      actions.setReadIndex(-1);
     }, 700);
 
-    const selectedQParam = searchParams.get('selected');
     const titleQParam = searchParams.get('title');
     const countQParam = searchParams.get('count');
     const regDateQParam = searchParams.get('regDate');
@@ -477,7 +490,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
     }
 
     navigate(
-      `/boards?selected=${selectedQParam}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
+      `/boards?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}`,
     );
   };
 

@@ -23,7 +23,7 @@ const SET_MY_INFO = 'auth/SET_MY_INFO';
 const CHECK_MY_INFO = 'auth/CHECK_MY_INFO';
 const SET_TIME_TO_LIVE = 'auth/TIME_TO_LIVE';
 const IF_NOT_LOGGED_DISPLAY_BLOCK = 'auth/IF_NOT_LOGGED_DISPLAY_BLOCK';
-const TOGGLE_OUTER_DESC_WRAPPER = 'auth/TOGGLE_OUTER_DESC_WRAPPER';
+
 export const setAccessToken = createAction(
   SET_ACCESS_TOKEN,
   (accessToken: string) => accessToken,

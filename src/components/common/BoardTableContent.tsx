@@ -12,7 +12,7 @@ import { useAppDispatch } from '../../index';
 import { fetchList } from '../../modules/reduxThunk';
 import * as api from '../../lib/api/board';
 import { MainContext } from '../../pages/Main';
-import { put } from 'redux-saga/effects';
+
 const TableTr = styled.tr`
   position: relative;
   display: inline-block;
@@ -642,7 +642,6 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     if (state.viewSelectedIndexGear === true) {
       setSelectedIndex(-1);
     }
-
     const setToolsAlignOnResolution = () => {
       const toolDescendants = document.querySelectorAll(
         '[id^="toolsDescendant"]',
@@ -850,7 +849,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     setToolsAlignOnResolution();
   }, [
     boards.workBoard?.wno,
-    boards.workBoard.regDate,
+    boards.workBoard?.regDate,
     index,
     state.selectedList,
     boards.workBoard?.hashTag,
@@ -862,9 +861,8 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     state.hideEditorGear,
     state.boardRemovable,
     state.viewSelectedIndexGear,
-    boards.workBoard.title,
+    boards.workBoard?.title,
     boards,
-    showMoreToolsWithIcons,
   ]);
   useLayoutEffect(() => {
     const toHiddenToolsOnList = () => {
@@ -878,7 +876,6 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
       setShowMoreToolsWithIcons(true);
     };
     toHiddenToolsOnList();
-
     const displayThumbnail = async (wno: string) => {
       try {
         const response = await fetch(`/display/${wno}`);
@@ -895,11 +892,12 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
     };
 
     displayThumbnail(boards.workBoard?.wno);
-  }, [boards.workBoard?.title, boards.workBoard?.wno, state.boardThumbnail]);
+  }, [boards.workBoard?.wno, state.boardThumbnail]);
   const showArticle = useCallback(
     (index: number) => {
       actions.setReadIndex(index);
       actions.setAfterHitSetBtnCallContentDesc(true);
+      actions.setAfterHideSetContentDesc(false);
       actions.setViewSelectedIndexGear(false);
       actions.setToggleBackBtn(true);
       actions.setWriteSelectedIndex(-1);
@@ -972,49 +970,24 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
           ];
           actions.setSelectedList(newSelectedList);
         }
-        if (
-          window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
-        ) {
-          if (state.selectedView === true) {
-            setTimeout(() => {
-              navigate(
-                `boards/viewContentBody/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 560);
-          } else {
-            setTimeout(() => {
-              navigate(
-                `boards/viewContentBody/${boards.workBoard?.wno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 560);
-          }
-        } else {
-          if (state.selectedView === true) {
-            setTimeout(() => {
-              navigate(
-                `boards/view/${boards.workBoard?.wno}?selected=${state.selectedList}&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 560);
-          } else {
-            setTimeout(() => {
-              navigate(
-                `boards/view/${boards.workBoard?.wno}?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-                {
-                  state: { searchType: null, keyword: null },
-                },
-              );
-            }, 560);
-          }
-        }
+        const navigateTo = window.matchMedia(
+          '(min-width: 481px) and (max-width: 768px)',
+        ).matches
+          ? `boards/viewContentBody/${boards.workBoard?.wno}`
+          : `boards/view/${boards.workBoard?.wno}`;
+        setTimeout(() => {
+          navigate(
+            `${navigateTo}?${
+              state.selectedView === true
+                ? `selected=${state.selectedList}&`
+                : ''
+            }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
+            {
+              state: { searchType: null, keyword: null },
+            },
+          );
+        }, 560);
+
         setSelectedIndex(index);
         actions.setRemoveSelectedIndex(-1);
         actions.setWriteSelectedIndex(-1);
@@ -1332,9 +1305,12 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
       setShowMoreToolsWithIcons(true);
     }
   };
-
   return (
-    <table className="BoardTableContent-virtualized table-class" style={style}>
+    <table
+      id="scrollArea"
+      className="BoardTableContent-virtualized table-class"
+      style={style}
+    >
       <tbody>
         <TableTr
           onClick={(e: any) => {

@@ -1,3 +1,4 @@
+// ★중요 : useEffect 의존성 배열에서 globalSearchInput?.value, 제거해야 검색어 입력시 실시간 검색어 반영 안됌
 import styled from 'styled-components';
 import React, {
   useCallback,
@@ -515,7 +516,7 @@ const BoardList = ({
       } else if (state.toolsSelected === true) {
         dispatch(fetchTools(selected) as any);
       } else if (state.selectedView === false) {
-        dispatch(fetchList(selected as any));
+        dispatch(fetchList(selected as any)); // ★중요 의존성 배열에서 globalSearchInput?.value, 제거해야 검색어 입력시 변경 반영 안됌
       } else if (state.selectedView === true) {
         dispatch(fetchSelectedList(selected) as any);
       }
@@ -553,7 +554,6 @@ const BoardList = ({
     applyMore,
     countQParam,
     dispatch,
-    globalSearchInput?.value,
     keywordQParam,
     navigate,
     regDateQParam,
@@ -571,6 +571,7 @@ const BoardList = ({
     state.toolsSelected,
     titleQParam,
   ]);
+  // ★중요 : useEffect 의존성 배열에서 globalSearchInput?.value, 제거해야 검색어 입력시 실시간 검색어 반영 안됌
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const rmTrBlack = useCallback(() => {
@@ -992,7 +993,7 @@ const BoardList = ({
                   <Select
                     onClick={() => {
                       if (state.toggleSelected === false) {
-                        setTimeout(() => onSelect(), 800);
+                        setTimeout(() => onSelect(), 850);
                       } else {
                         setTimeout(() => onSelect(), 0);
                       }

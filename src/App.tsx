@@ -9,7 +9,7 @@ import MemberFindId from './containers/MemberFindIdContainer';
 import MemberFindPassword from './containers/MemberFindPasswordContainer';
 import MemberModify from './containers/MemberModifyContainer';
 import ContentDesc from './containers/ContentDescContainer';
-import ContentDescLessThan769 from './components/common/ContentDescLessThan769';
+import ContentDescLessThan769 from './containers/ContentDescLessThan769Container';
 import ContentBody from './containers/ContentBodyContainer';
 import ContentDescOnWriting from './containers/ContentDescOnWritingContainer';
 import ContentBodyOnWriting from './containers/ContentBodyOnWritingContainer';
@@ -44,9 +44,10 @@ const App = () => {
             }
           />
           <Route
-            path="boards/viewDescAndComment/:wno"
+            path="boards/viewContentDesc/:wno"
             element={
               <>
+                <ContentBody />
                 <ContentDesc />
               </>
             }

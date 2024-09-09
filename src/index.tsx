@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import rootReducer, { rootSaga } from './modules';
-import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
@@ -19,9 +18,7 @@ const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     // adding the saga middleware here
-    getDefaultMiddleware({ serializableCheck: false })
-      .concat(sagaMiddleware)
-      .concat(thunk),
+    getDefaultMiddleware({ serializableCheck: false }).concat(sagaMiddleware),
 });
 const useAppDispatch = () => store.dispatch;
 
@@ -64,4 +61,3 @@ root.render(
 reportWebVitals();
 
 export { useAppDispatch };
-export type AppDispatch = typeof store.dispatch;

@@ -8,6 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { useDispatch } from 'react-redux';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MyInfo, IfNotLoggedDisplayBlock, Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
@@ -1283,6 +1284,8 @@ const ContentDesc = ({
 }: Props) => {
   const { state, actions } = useContext(MainContext);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [boardRegDateDays, setBoardRegDateDays] = useState() as any;
   const [star, setStar] = useState<number>(-3);
   const [starOnModify, setStarOnModify] = useState<number>(-3);
@@ -2017,15 +2020,39 @@ const ContentDesc = ({
       setLastReply(result + 1);
     });
   };
+
+  const [searchParams] = useSearchParams();
+  const titleQParam = searchParams.get('title');
+  const countQParam = searchParams.get('count');
+  const regDateQParam = searchParams.get('regDate');
+  const searchTypeQParam = searchParams.get('searchType');
+  const keywordQParam = searchParams.get('keyword');
+  const toolOrHashTagQParam = searchParams.get('toolOrHashTag');
+
   const hideContent = () => {
     const contentDesc = document.getElementById('contentDesc');
-    const outerDescWrapper = document.getElementById('outerDescWrapper') as any;
+    const outerDescWrapper = document.getElementById('outerDescWrapper');
     if (contentDesc && outerDescWrapper) {
       contentDesc!.style.display = 'none';
-
-      outerDescWrapper.style.zIndex--;
       outerDescWrapper.style.display = 'none';
+      actions.setToggleShowDesc(true);
+      actions.setAfterHideSetContentDesc(true);
     }
+    // const navigateTo = window.matchMedia(
+    //   '(min-width: 481px) and (max-width: 768px)',
+    // ).matches
+    //   ? `boards/viewContentBody/${board.workBoard?.wno}`
+    //   : `/boards?`;
+    // setTimeout(() => {
+    //   navigate(
+    //     `${navigateTo}?${
+    //       state.selectedView === true ? `selected=${state.selectedList}&` : ''
+    //     }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
+    //     {
+    //       state: { searchType: null, keyword: null },
+    //     },
+    //   );
+    // }, 560);
   };
 
   return (

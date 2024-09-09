@@ -118,11 +118,11 @@ const RotateLi2 = styled.span<{ rotate: boolean }>`
   width: 100%;
   margin: 13rem 0;
   /* 호버 상태에서의 스타일 */
-
   &:hover img {
     opacity: 0;
     animation: slideAndFade 2.1s linear infinite;
   }
+
   img {
     @keyframes slideAndFade {
       0% {
@@ -169,23 +169,13 @@ const RightLessThan481 = () => {
   const navigate = useNavigate();
 
   const [toggleLoginDesc, setToggleLoginDesc] = useState(true);
-  const [toggleContentDesc, setToggleContentDesc] = useState(true);
   const [toggleShowDesc, setToggleShowDesc] = useState(false);
-  const [ifClosed, setIfClosed] = useState(true);
   const [searchParams] = useSearchParams();
 
   const callContentDesc = (type: string) => {
-    console.log(state.readIndex);
     const memberLogin = document.getElementById('memberLogin') as any;
     const memberJoin = document.getElementById('memberJoin');
     const contentDesc = document.getElementById('contentDesc') as any;
-    const contentBody = document.getElementById('contentBody') as any;
-    const contentBodyOuterWrapper = document.getElementById(
-      'contentBody',
-    ) as any;
-
-    const outerDescWrapper = document.getElementById('outerDescWrapper') as any;
-    const outerWrapper = document.getElementById('outerWrapper') as any;
 
     const titleQParam = searchParams.get('title');
     const countQParam = searchParams.get('count');
@@ -194,52 +184,86 @@ const RightLessThan481 = () => {
     const keywordQParam = searchParams.get('keyword');
     const toolOrHashTagQParam = searchParams.get('toolOrHashTag');
 
-    if (!toggleShowDesc) {
-      if (ifClosed) {
-        setIfClosed(false);
+    const baseQueryURL = `&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`;
 
-        actions.setAfterHitSetBtnCallContentDesc(true);
-        navigate(
-          `boards/viewDescAndComment/${
-            state.readIndex + 1
-          }?&title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-          {
-            state: { searchType: null, keyword: null },
-          },
-        );
-        return;
-      }
+    const viewContentDescURL = `boards/viewContentDesc/${
+      state.readIndex + 1
+    }?${baseQueryURL}`;
+    const viewContentBodyURL = `boards/viewContentBody/${
+      state.readIndex + 1
+    }?${baseQueryURL}`;
+    const boardsURL = `boards?selected=${state.selectedList}${baseQueryURL}`;
 
-      setToggleShowDesc(true);
-      if (outerDescWrapper && contentBodyOuterWrapper) {
-        contentBodyOuterWrapper.style.zIndex--;
-
-        outerDescWrapper.style.display = 'block';
-        outerDescWrapper.style.zIndex++;
-      }
-    } else {
-      if (!ifClosed) {
-        contentDesc.style.display = 'block';
-        contentDesc.style.zIndex++;
-        return;
+    if (state.afterHideSetContentDesc) {
+      if (toggleShowDesc === false) {
+        setToggleShowDesc(true);
       } else {
-        contentDesc.style.display = 'none';
-        contentDesc.style.zIndex--;
-        return;
+        setToggleShowDesc(false);
       }
-      // setToggleShowDesc(false);
-      // if (contentDesc && outerDescWrapper) {
-      //   outerDescWrapper.style.zIndex++;
-      //   outerDescWrapper.style.display = 'block';
 
-      //   if (ifClosed) {
-      //     contentDesc.style.display = 'none';
-      //     contentDesc.style.zIndex++;
-      //   }
-      // } else if (toggleContentDesc === false && contentDesc) {
-      //   contentDesc.style.display = 'none';
-      // }
+      if (state.toggleShowDescCount % 2 === 0) {
+        actions.setToggleShowDescCount((state.toggleShowDescCount += 1));
+        navigate(viewContentDescURL, {
+          state: { searchType: null, keyword: null },
+        });
+        actions.setToggleShowDesc(false);
+      } else if (state.toggleShowDescCount % 2 === 1) {
+        actions.setToggleShowDescCount((state.toggleShowDescCount += 1));
+        navigate(boardsURL);
+        actions.setToggleShowDesc(true);
+      }
+      console.log(state.toggleShowDescCount);
+    } else if (!state.afterHideSetContentDesc) {
+      if (state.toggleShowDescCount % 2 === 1) {
+        actions.setToggleShowDescCount((state.toggleShowDescCount += 1));
+        navigate(viewContentBodyURL, {
+          state: { searchType: null, keyword: null },
+        });
+        actions.setToggleShowDesc(false);
+      } else if (state.toggleShowDescCount % 2 === 0) {
+        actions.setToggleShowDescCount((state.toggleShowDescCount += 1));
+        navigate(viewContentDescURL, {
+          state: { searchType: null, keyword: null },
+        });
+        actions.setToggleShowDesc(true);
+      }
     }
+
+    // } else {
+    //   if (!contentDescIfClosed) {
+    //     if (contentDesc && contentBody) {
+    //       contentBody.style.display = 'none';
+    //       contentDesc.style.display = 'block';
+    //       contentDesc.style.zIndex++;
+    //       contentBody.style.zIndex = -999;
+
+    //       setContentDescIfClosed(true);
+    //       return;
+    //     }
+    //   } else {
+    //     if (contentDesc && contentBody) {
+    //       contentBody.style.display = 'block';
+    //       contentDesc.style.display = 'none';
+    //       contentDesc.style.zIndex--;
+    //       contentBody.style.zIndex = -999;
+    //       setContentDescIfClosed(false);
+    //       return;
+    //     }
+    //   }
+    //   setToggleShowDesc(false);
+    // }
+    // setToggleShowDesc(false);
+    // if (contentDesc && outerDescWrapper) {
+    //   outerDescWrapper.style.zIndex++;
+    //   outerDescWrapper.style.display = 'block';
+
+    //   if (ifClosed) {
+    //     contentDesc.style.display = 'none';
+    //     contentDesc.style.zIndex++;
+    //   }
+    // } else if (toggleContentDesc === false && contentDesc) {
+    //   contentDesc.style.display = 'none';
+    // }
 
     // if (type === 'memberLogin') {
     //   if (toggleLoginDesc === true && memberLogin && outerWrapper) {
@@ -300,13 +324,10 @@ const RightLessThan481 = () => {
             </CircleBtn>
           </li>
           <RotateLi2
-            rotate={toggleShowDesc}
+            rotate={state.toggleShowDesc}
+            title="설명/댓글 뷰 보기"
             onClick={() => {
-              if (!toggleShowDesc) {
-                callContentDesc('readIndex');
-              } else {
-                callContentDesc('contentDesc');
-              }
+              callContentDesc('contentDesc');
             }}
           >
             {state.afterHitSetBtnCallContentDesc ? (

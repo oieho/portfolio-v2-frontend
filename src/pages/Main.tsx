@@ -62,6 +62,9 @@ export const MainContext = createContext({
     allImgsAreLoaded: false,
     alignGear: false,
     afterHitSetBtnCallContentDesc: false,
+    toggleShowDesc: false,
+    toggleShowDescCount: 0,
+    afterHideSetContentDesc: false,
   },
   actions: {
     setZIdx: (zIdx: number) => ({
@@ -153,6 +156,15 @@ export const MainContext = createContext({
     ) => ({
       afterHitSetBtnCallContentDesc,
     }),
+    setToggleShowDesc: (toggleShowDesc: boolean) => ({
+      toggleShowDesc,
+    }),
+    setToggleShowDescCount: (toggleShowDescCount: number) => ({
+      toggleShowDescCount,
+    }),
+    setAfterHideSetContentDesc: (afterHideSetContentDesc: boolean) => ({
+      afterHideSetContentDesc,
+    }),
   },
 });
 const Main = () => {
@@ -192,6 +204,10 @@ const Main = () => {
   const [alignGear, setAlignGear] = useState<boolean>(false);
   const [afterHitSetBtnCallContentDesc, setAfterHitSetBtnCallContentDesc] =
     useState<boolean>(false);
+  const [toggleShowDesc, setToggleShowDesc] = useState<boolean>(false);
+  const [toggleShowDescCount, setToggleShowDescCount] = useState<any>(0);
+  const [afterHideSetContentDesc, setAfterHideSetContentDesc] =
+    useState<boolean>(false);
 
   const value = {
     state: {
@@ -224,6 +240,9 @@ const Main = () => {
       allImgsAreLoaded,
       alignGear,
       afterHitSetBtnCallContentDesc,
+      toggleShowDesc,
+      toggleShowDescCount,
+      afterHideSetContentDesc,
     },
     actions: {
       setZIdx,
@@ -255,6 +274,9 @@ const Main = () => {
       setAllImgsAreLoaded,
       setAlignGear,
       setAfterHitSetBtnCallContentDesc,
+      setToggleShowDesc,
+      setToggleShowDescCount,
+      setAfterHideSetContentDesc,
     },
   };
 
