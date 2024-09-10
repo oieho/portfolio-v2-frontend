@@ -55,7 +55,8 @@ const Content = styled.div`
   z-index: 2;
   box-sizing: border-box;
   background: #ffffff;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -88,6 +89,13 @@ const Content = styled.div`
     width: calc(100% - 303.99px - 28.16px);
     margin-left: 1.7rem;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: 1.94rem;
+    left: -2.75rem;
+    width: calc(100% - 80px - 28.16px);
+    margin-left: 1.7rem;
+  }
 `;
 const ToolBar = styled.div`
   width: 52.8rem;
@@ -99,7 +107,7 @@ const MiniBtnWrapper = styled.span`
   position: relative;
   width: 100%;
   height: 100%;
-  @media (min-width: 769px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     left: calc(100% - 836px);
   }
 `;
@@ -109,8 +117,8 @@ const SunEditorWrapper = styled.div`
   top: -0.12rem;
   width: 52.17rem;
   left: -0.05rem;
-  @media (min-width: 769px) and (max-width: 1280px) {
-    width: 100.2%;
+  @media (min-width: 1px) and (max-width: 1280px) {
+    width: 100%;
   }
 `;
 interface Props {
@@ -136,10 +144,17 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
     const regDateQParam = searchParams.get('regDate');
     const searchTypeQParam = searchParams.get('searchType');
     const keywordQParam = searchParams.get('keyword');
-    contentRef.current.style.display = 'none';
-    const saying = document.getElementById('saying');
-    saying!.style.opacity = '1';
-    saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
+    if (contentRef.current) {
+      contentRef!.current.style.display = 'none';
+    }
+
+    if (!window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches) {
+      const saying = document.getElementById('saying');
+      if (saying) {
+        saying.style.opacity = '1';
+        saying.style.transition = 'opacity 0.2s 0.75s ease-out';
+      }
+    }
     deliveryImgInfoOnWriting.setImgInfoOnWriting([]);
 
     navigate(
@@ -237,7 +252,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
             style={{
               backgroundColor: '#ff0b0b',
               top: '0.4rem',
-              left: '50.6rem',
+              left: '50rem',
               zIndex: '1',
             }}
             onClick={() => {
@@ -339,7 +354,7 @@ const ContentBodyOnWriting: React.FC<Props> = observer(({ uploadToServer }) => {
                 'Verdana',
               ],
               width: '100%',
-              height: '37.7rem',
+              height: 'auto',
               mode: 'classic',
 
               resizeEnable: false,

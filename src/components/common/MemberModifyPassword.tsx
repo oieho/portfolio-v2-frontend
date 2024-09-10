@@ -11,20 +11,8 @@ import React, {
 import Button from './button/Button';
 import { MyInfo, ModifyInfo } from '../../App';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
   position: relative;
-  background: #f5f5f5;
   left: 30.65rem;
   width: 16.61rem;
   height: 10rem;
@@ -43,12 +31,28 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    height: 44.92rem;
+    border: 0.375rem solid #000000;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    top: -0.349rem;
+    left: -0.31rem;
+    width: calc(100vw - 76.5px - 28.16px);
+    padding: 1.75rem 0.8rem 0 0;
+  }
 `;
 const DescriptionTop = styled.div`
   position: absolute;
   width: 100%;
   left: 0;
   top: 1.25rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const Confirmpwtit = styled.img`
   position: relative;
@@ -61,6 +65,14 @@ const Inputs = styled.ul`
   padding: 0;
   top: 9.5rem;
   left: 0.55rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: 11rem;
+    left: calc(0% - 19.6rem + 11.75rem);
+  }
 `;
 const InputLi = styled.li`
   height: 3.33rem;
@@ -123,15 +135,21 @@ const SuccessMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 1.28rem;
+  }
 `;
 
 const ErrorMessage = styled.div`
   width: 266px;
   margin-top: 122px;
-  position: absolute;
+  position: relative;
   color: red;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 1.28rem;
+  }
 `;
 
 const InfoMessage = styled.div`
@@ -142,6 +160,9 @@ const InfoMessage = styled.div`
   text-align: center;
   font-size: 0.855rem;
   transition: all 0.8s ease-out;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 10.3rem;
+  }
 `;
 
 interface Props {
@@ -282,68 +303,66 @@ const MemberModifyPassword = ({
   );
 
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description>
-          <Confirmpwtit
-            src={process.env.PUBLIC_URL + '/images/modifypwtit.png'}
-            alt="Member Modify Password"
-          />
-          {myInfo && (
-            <form method="post" onSubmit={onChangePassword}>
-              <DescriptionTop>
-                <Inputs>
-                  <InputLi>
-                    <NowPwInput
-                      ref={nowRef}
-                      maxLength={20}
-                      name="cpassword"
-                      type="password"
-                      autoComplete="cpassword"
-                      onChange={onNowPassword}
-                      placeholder="현재 비밀번호"
-                      required
-                    />
-                  </InputLi>
-                  <InputLi>
-                    <NewPwInput
-                      ref={newRef}
-                      maxLength={20}
-                      name="cpassword"
-                      type="password"
-                      autoComplete="cpassword"
-                      onChange={onNewPassword}
-                      placeholder="새 비밀번호"
-                      required
-                    />
-                  </InputLi>
-                  <InputLi>
-                    <NewPwConfirmInput
-                      ref={newcRef}
-                      maxLength={20}
-                      name="cpassword"
-                      type="password"
-                      autoComplete="cpassword"
-                      onChange={onConfirmNewPassword}
-                      placeholder="새 비밀번호 확인"
-                      required
-                    />
-                  </InputLi>
-                </Inputs>
-                <SuccessMessage>{sMessage}</SuccessMessage>
-                <ErrorMessage>{fMessage}</ErrorMessage>
-                <InfoMessage ref={Warning}>{Info}</InfoMessage>
-              </DescriptionTop>
-              <Button
-                style={{ top: `19.9rem`, left: `0rem`, position: `relative` }}
-              >
-                확인
-              </Button>
-            </form>
-          )}
-        </Description>
-      </RightBlock>
-    </Wrapper>
+    <RightBlock>
+      <Description>
+        <Confirmpwtit
+          src={process.env.PUBLIC_URL + '/images/modifypwtit.png'}
+          alt="Member Modify Password"
+        />
+        {myInfo && (
+          <form method="post" onSubmit={onChangePassword}>
+            <DescriptionTop>
+              <Inputs>
+                <InputLi>
+                  <NowPwInput
+                    ref={nowRef}
+                    maxLength={20}
+                    name="cpassword"
+                    type="password"
+                    autoComplete="cpassword"
+                    onChange={onNowPassword}
+                    placeholder="현재 비밀번호"
+                    required
+                  />
+                </InputLi>
+                <InputLi>
+                  <NewPwInput
+                    ref={newRef}
+                    maxLength={20}
+                    name="cpassword"
+                    type="password"
+                    autoComplete="cpassword"
+                    onChange={onNewPassword}
+                    placeholder="새 비밀번호"
+                    required
+                  />
+                </InputLi>
+                <InputLi>
+                  <NewPwConfirmInput
+                    ref={newcRef}
+                    maxLength={20}
+                    name="cpassword"
+                    type="password"
+                    autoComplete="cpassword"
+                    onChange={onConfirmNewPassword}
+                    placeholder="새 비밀번호 확인"
+                    required
+                  />
+                </InputLi>
+              </Inputs>
+              <SuccessMessage>{sMessage}</SuccessMessage>
+              <ErrorMessage>{fMessage}</ErrorMessage>
+              <InfoMessage ref={Warning}>{Info}</InfoMessage>
+            </DescriptionTop>
+            <Button
+              style={{ top: `19.9rem`, left: `0rem`, position: `relative` }}
+            >
+              확인
+            </Button>
+          </form>
+        )}
+      </Description>
+    </RightBlock>
   );
 };
 

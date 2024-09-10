@@ -19,6 +19,9 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 0;
+  }
 `;
 const MailSendertit = styled.img`
   position: relative;
@@ -31,6 +34,16 @@ const Inputs = styled.ul`
   padding: 0;
   top: 8.52rem;
   left: 0.55rem;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: -7.7rem;
+    top: 10rem;
+    width: 100%;
+  }
 `;
 const InputLi = styled.li`
   height: 3.33rem;
@@ -69,6 +82,9 @@ const EmailInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: 13.82rem;
+  }
 `;
 const SubjectInput = styled.input`
   position: absolute;
@@ -102,6 +118,9 @@ const TextareaWrapper = styled.div`
   &:focus-within {
     font-weight: bold;
     border: solid 0.11rem #000000;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: 7.73rem;
   }
 `;
 const ContentTextarea = styled.textarea`
@@ -152,6 +171,7 @@ const UploadFile = styled.input`
 `;
 const SuccessMessage = styled.div`
   width: 266px;
+  top: 2.65rem;
   left: 0rem;
   margin-top: 83px;
   text-align: center;
@@ -159,9 +179,14 @@ const SuccessMessage = styled.div`
   color: #00b300;
   font-size: 0.875rem;
   z-index: 99;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: -15.7rem;
+  }
 `;
 const ErrorMessage = styled.div`
   width: 266px;
+  top: 2.65rem;
   left: 0rem;
   margin-top: 83px;
   text-align: center;
@@ -169,9 +194,14 @@ const ErrorMessage = styled.div`
   color: red;
   z-index: 99;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: -20.9rem;
+  }
 `;
 const InfoMessage = styled.div`
   width: 266px;
+  top: 2.65rem;
   left: 0rem;
   margin-top: 83px;
   text-align: center;
@@ -179,6 +209,22 @@ const InfoMessage = styled.div`
   color: #000000;
   z-index: 99;
   font-size: 0.855rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: -24.8rem;
+    height: 0%;
+  }
+`;
+
+const StyledButton = styled(Button)`
+  position: relative;
+  top: 28.86rem;
+  left: 0.17rem;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 17.4rem; /* 원하는 위치로 조정 */
+    left: 5.8rem; /* 원하는 위치로 조정 */
+  }
 `;
 
 type Props = {
@@ -383,20 +429,11 @@ const MailSender = ({ myInfo, sendAnEmail }: Props) => {
               />
             </InputLi>
           </Inputs>
-          <SuccessMessage>{sMessage}</SuccessMessage>
-          <ErrorMessage>{fMessage}</ErrorMessage>
-          <InfoMessage>{iMessage}</InfoMessage>
-
-          <Button
-            style={{
-              top: `28.86rem`,
-              left: `0.17rem`,
-              position: `relative`,
-            }}
-          >
-            보내기
-          </Button>
+          <StyledButton>보내기</StyledButton>
         </form>
+        <SuccessMessage>{sMessage}</SuccessMessage>
+        <ErrorMessage>{fMessage}</ErrorMessage>
+        <InfoMessage>{iMessage}</InfoMessage>
       </Description>
     </RightBlock>
   );

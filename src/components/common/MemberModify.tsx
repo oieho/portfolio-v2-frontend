@@ -14,13 +14,13 @@ import MemberModifyPassword from '../../containers/MemberModifyPasswordContainer
 const RightBlock = styled.div`
   background: #f5f5f5;
   width: 16.61rem;
+  border-radius: 1rem;
   height: 10rem;
 `;
 const Description = styled.div`
   position: absolute;
   top: -15.535rem;
   background: #f5f5f5;
-  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
@@ -28,52 +28,84 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 0;
+  }
 `;
 const MemberModifyConfirmPw = styled.div`
   position: absolute;
   text-align: center;
-  top: -15.535rem;
   background: #f5f5f5;
-  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
-  z-index: 2;
+  top: -15.535rem;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 0;
+  }
 `;
 const MemberModifyForm = styled.div`
   position: absolute;
   text-align: center;
-  top: -15.535rem;
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
-  z-index: 3;
+  top: -15.535rem;
+  z-index: 2;
   display: none;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    height: 100%;
+    top: 0;
+  }
 `;
 const DescriptionTop = styled.div`
   position: absolute;
   width: 100%;
   left: 0;
   top: 1.25rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    border-radius: 1rem;
+    width: 100%;
+    left: -5rem;
+    top: -1.4rem;
+    z-index: 3;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const NowLoading = styled.span`
   position: absolute;
   left: 6.65rem;
   top: 7.97rem;
   font-size: 0.85rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 11.26rem;
+    left: 9.91rem;
+  }
+`;
+const Confirmpwtit = styled.img`
+  position: relative;
+  top: 4.8rem;
+  z-index: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 6.6rem;
+  }
 `;
 const PwInput = styled.input`
   position: absolute;
   top: 10.5rem;
   width: 15.5rem;
-  left: 0.57rem;
+  left: 0.55rem;
   line-height: 2rem;
   border: 1px solid #ededed;
   outline: none;
@@ -87,27 +119,49 @@ const PwInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
-`;
-const Confirmpwtit = styled.img`
-  position: relative;
-  top: 4.8rem;
-  z-index: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    left: 4.8rem;
+    top: 14.2rem;
+  }
 `;
 const InputTitles = styled.ul`
-  position: absolute;
+  position: relative;
   text-align: right;
+  top: 10.35rem;
   left: -1.3rem;
-  top: 9.47rem;
   list-style: none;
   font-size: 0.85rem;
   font-weight: 600;
   line-height: 3.306rem;
   z-index: 2;
+  width: 100%;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: 15.3rem;
+    left: 7.07rem;
+    line-height: 3.306rem;
+  }
 `;
 const UserIdTit = styled.li``;
 const UserPwTit = styled.li``;
 const UserEmailTit = styled.li``;
 const UserNameTit = styled.li``;
+const Inputs = styled.ul`
+  position: absolute;
+  list-style: none;
+  padding: 0;
+  top: -0.5rem;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: -8.8rem;
+    top: -2.7rem;
+  }
+`;
 const IdInput = styled.input`
   position: absolute;
   top: 10.5rem;
@@ -124,6 +178,10 @@ const IdInput = styled.input`
 
   &:focus {
     font-weight: bold;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 15.5rem;
+    left: 8.7rem;
   }
 `;
 
@@ -145,6 +203,10 @@ const MpwInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 18.8rem;
+    left: 8.7rem;
+  }
 `;
 
 const EmailInput = styled.input`
@@ -165,6 +227,10 @@ const EmailInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 22.1rem;
+    left: 8.7rem;
+  }
 `;
 const UserNameInput = styled.input`
   position: absolute;
@@ -184,6 +250,10 @@ const UserNameInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 25.35rem;
+    left: 8.7rem;
+  }
 `;
 
 const SuccessMessage = styled.div`
@@ -193,6 +263,12 @@ const SuccessMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    width: 100%;
+    top: -10.77rem;
+    left: 5.13rem;
+  }
 `;
 const CErrorMessage = styled.div`
   width: 266px;
@@ -201,6 +277,11 @@ const CErrorMessage = styled.div`
   color: red;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    top: 4.4rem;
+    left: 4.7rem;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -210,6 +291,12 @@ const ErrorMessage = styled.div`
   color: red;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    width: 100%;
+    top: -10.77rem;
+    left: 5.13rem;
+  }
 `;
 
 const InfoMessage = styled.div`
@@ -220,12 +307,16 @@ const InfoMessage = styled.div`
   text-align: center;
   font-size: 0.855rem;
   transition: all 0.8s ease-out;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 11.27rem;
+  }
 `;
 const MemberModifyPasswordWrapper = styled.span`
   position: relative;
   top: 0rem;
   left: -30.65rem;
   display: none;
+  z-index: 2;
 `;
 
 const BackBtn = styled.img`
@@ -233,9 +324,17 @@ const BackBtn = styled.img`
   position: absolute;
   width: 1.5rem;
   height: 3.6rem;
-  right: -1.53rem;
-  top: 4.497rem;
+  right: -1.54rem;
+  top: 4.495rem;
   z-index: 1;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.43);
+    top: -2.821rem;
+    right: calc(10.1% + 0.15vw);
+    transform: rotate(-90deg);
+    z-index: 3;
+  }
 `;
 
 interface Props {
@@ -301,7 +400,7 @@ const MemberModify = ({
       isOwn = true;
     }
   }
-
+  const miniBtnWrapper = document.getElementById('miniBtnWrapper');
   useEffect(() => {
     if (myInfo) {
       // onModify 메서드 실행 후 myInfo.userId 를 불러올 수 없어 member의 상태를 사용
@@ -329,9 +428,12 @@ const MemberModify = ({
         validatePwChk(myInfo.userId, cpassword).then((response: boolean) => {
           if (response === true) {
             setFMessage('');
-            MemberModuleArray[0].current.style.display = 'none';
-
-            MemberModuleArray[1].current.style.display = 'block';
+            if (MemberModuleArray[0].current) {
+              MemberModuleArray[0].current.style.display = 'none';
+            }
+            if (MemberModuleArray[1].current) {
+              MemberModuleArray[1].current.style.display = 'block';
+            }
           } else {
             cPwInput.current.focus();
             setSMessage('');
@@ -525,7 +627,7 @@ const MemberModify = ({
 
   return (
     <RightBlock>
-      {!myInfo || myInfo?.providerType === 'LOCAL' ? (
+      {myInfo || myInfo?.providerType === 'LOCAL' ? (
         <>
           <MemberModifyConfirmPw ref={MemberModifyConfirmPwRef}>
             <Confirmpwtit
@@ -545,9 +647,7 @@ const MemberModify = ({
                   required
                 />
 
-                <SuccessMessage></SuccessMessage>
                 <CErrorMessage>{fMessage}</CErrorMessage>
-                <InfoMessage>{Info}</InfoMessage>
               </DescriptionTop>
               <Button
                 style={{
@@ -570,55 +670,56 @@ const MemberModify = ({
               <>
                 <form method="post" onSubmit={onSubmit}>
                   <DescriptionTop>
-                    <InputTitles>
-                      <UserIdTit>아이디</UserIdTit>
-                      <UserPwTit>비밀번호</UserPwTit>
-                      <UserEmailTit>이메일</UserEmailTit>
-                      <UserNameTit>이름</UserNameTit>
-                    </InputTitles>
-                    <IdInput
-                      maxLength={10}
-                      name="userId"
-                      value={userId}
-                      disabled
-                    />
-                    <MpwInput
-                      ref={mPwInput}
-                      maxLength={20}
-                      name="password"
-                      type="password"
-                      autoComplete="new-password"
-                      onChange={onChangeUserPassword}
-                      placeholder="비밀번호"
-                      required
-                    />
+                    <Inputs>
+                      <InputTitles>
+                        <UserIdTit>아이디</UserIdTit>
+                        <UserPwTit>비밀번호</UserPwTit>
+                        <UserEmailTit>이메일</UserEmailTit>
+                        <UserNameTit>이름</UserNameTit>
+                      </InputTitles>
+                      <IdInput
+                        maxLength={10}
+                        name="userId"
+                        value={userId}
+                        disabled
+                      />
+                      <MpwInput
+                        ref={mPwInput}
+                        maxLength={20}
+                        name="password"
+                        type="password"
+                        autoComplete="new-password"
+                        onChange={onChangeUserPassword}
+                        placeholder="비밀번호"
+                        required
+                      />
 
-                    <EmailInput
-                      ref={emailInput}
-                      maxLength={30}
-                      name="userEmail"
-                      type="text"
-                      autoComplete="userEmail"
-                      onChange={onChangeUserEmail}
-                      defaultValue={myInfo.userEmail}
-                      spellCheck="false"
-                    />
-                    <UserNameInput
-                      ref={nameInput}
-                      maxLength={30}
-                      name="userName"
-                      type="text"
-                      autoComplete="userName"
-                      onChange={(e: any) => {
-                        onChangeUserName(e);
-                      }}
-                      defaultValue={myInfo.userName}
-                      spellCheck="false"
-                      required
-                    />
+                      <EmailInput
+                        ref={emailInput}
+                        maxLength={30}
+                        name="userEmail"
+                        type="text"
+                        autoComplete="userEmail"
+                        onChange={onChangeUserEmail}
+                        defaultValue={myInfo.userEmail}
+                        spellCheck="false"
+                      />
+                      <UserNameInput
+                        ref={nameInput}
+                        maxLength={30}
+                        name="userName"
+                        type="text"
+                        autoComplete="userName"
+                        onChange={(e: any) => {
+                          onChangeUserName(e);
+                        }}
+                        defaultValue={myInfo.userName}
+                        spellCheck="false"
+                        required
+                      />
+                    </Inputs>
                     <SuccessMessage>{sMessage}</SuccessMessage>
                     <ErrorMessage>{fMessage}</ErrorMessage>
-                    <InfoMessage>{Info}</InfoMessage>
                   </DescriptionTop>
                   {isOwn && (
                     <>
@@ -681,25 +782,37 @@ const MemberModify = ({
           </MemberModifyForm>
         </>
       ) : (
-        <Description>
-          <Confirmpwtit
-            src={process.env.PUBLIC_URL + '/images/modifytit.png'}
-            alt="Member Confirm Password"
-          />
-          <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
-          <Button
-            onClick={deleteMember}
-            style={{
-              width: `4.7rem`,
-              color: `red`,
-              top: `14.3rem`,
-              left: `0.12rem`,
-              position: `relative`,
-            }}
-          >
-            탈퇴
-          </Button>
-        </Description>
+        <>
+          {myInfo ? (
+            <Description>
+              <Confirmpwtit
+                src={process.env.PUBLIC_URL + '/images/modifytit.png'}
+                alt="Member Confirm Password"
+              />
+              <InfoMessage>소셜 회원은 탈퇴만 이용할 수 있습니다.</InfoMessage>
+              <Button
+                onClick={deleteMember}
+                style={{
+                  width: `4.7rem`,
+                  color: `red`,
+                  top: `14.3rem`,
+                  left: `0.12rem`,
+                  position: `relative`,
+                }}
+              >
+                탈퇴
+              </Button>
+            </Description>
+          ) : (
+            <Description>
+              <Confirmpwtit
+                src={process.env.PUBLIC_URL + '/images/modifytit.png'}
+                alt="Member Confirm Password"
+              />
+              <InfoMessage>로그아웃 되었습니다.</InfoMessage>
+            </Description>
+          )}
+        </>
       )}
 
       <MemberModifyPasswordWrapper ref={MemberModifyPasswordRef}>

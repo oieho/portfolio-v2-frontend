@@ -11,22 +11,30 @@ interface Props {
 }
 const MemberLoginContainer = ({ isAuthorized }: Props) => {
   const dispatch = useDispatch();
+  const outerMemberWrapper = document.getElementById(
+    'outerMemberWrapper',
+  ) as HTMLDivElement;
+  const loginWrapper = document.getElementById('memberLogin') as HTMLDivElement;
+  const miniBtnWrapper = document.getElementById(
+    'miniBtnWrapper',
+  ) as HTMLDivElement;
 
-  const { accessToken, tryLoginAuth, toggleLogin, timeToLive } = useSelector(
-    ({ auth }: RootState) => ({
+  const { loginSuccess, accessToken, tryLoginAuth, toggleLogin, timeToLive } =
+    useSelector(({ auth }: RootState) => ({
+      loginSuccess: auth.loginSuccess,
       accessToken: auth.accessToken,
       tryLoginAuth: auth.tryLoginAuth,
       toggleLogin: auth.toggleLogin,
       timeToLive: auth.timeToLive,
-    }),
-  );
+    }));
+
   const onSignIn = async (
     userId: string,
     password: string,
     autoLogin: boolean,
   ) => {
     try {
-      dispatch(login({ userId, password, autoLogin }));
+      await dispatch(login({ userId, password, autoLogin }));
     } catch (e) {
       console.log(e);
     }
@@ -36,7 +44,24 @@ const MemberLoginContainer = ({ isAuthorized }: Props) => {
     if (accessToken) {
       dispatch(checkMyInfo(true));
     }
-  }, [accessToken, dispatch]);
+    if (
+      loginSuccess &&
+      window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
+    ) {
+      if (loginWrapper && outerMemberWrapper) {
+        if (miniBtnWrapper) miniBtnWrapper.style.display = 'none';
+        if (loginWrapper) loginWrapper.style.display = 'none';
+        if (outerMemberWrapper) outerMemberWrapper.style.display = 'none';
+      }
+    }
+  }, [
+    accessToken,
+    dispatch,
+    loginSuccess,
+    loginWrapper,
+    miniBtnWrapper,
+    outerMemberWrapper,
+  ]);
 
   return (
     <MemberLogin

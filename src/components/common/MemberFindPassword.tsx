@@ -11,24 +11,21 @@ import { useNavigate } from 'react-router-dom';
 import CountDownTimer from '../../containers/CountDownTimerContainer';
 import { CircularProgress } from '@mui/material';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
   position: relative;
   background: #f5f5f5;
-  left: 30.63rem;
+  left: 22.33rem;
   width: 16.61rem;
   height: 10rem;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 20rem;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
 `;
 
 const DescriptionTop = styled.div`
@@ -36,16 +33,33 @@ const DescriptionTop = styled.div`
   width: 100%;
   left: 0;
   top: 1.25rem;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    background: #f5f5f5;
+    border-radius: 1rem;
+    width: 100%;
+    left: -5rem;
+    top: -10.4rem;
+    z-index: 3;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const NowLoading = styled.span`
   position: absolute;
-  top: 8.8rem;
+  top: 8.65rem;
   font-size: 0.85rem;
   z-index: 99;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 8.46rem;
+  }
 `;
 
 const Confirmpwtit = styled.img`
-  position: relative;
+  position: absolute;
   top: 4.8rem;
   z-index: 0;
 `;
@@ -67,6 +81,10 @@ const IdInput = styled.input`
   &:focus {
     font-weight: bold;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 21rem;
+    left: 0;
+  }
 `;
 
 const DisplayAndTakeEmailInput = styled.input`
@@ -86,6 +104,10 @@ const DisplayAndTakeEmailInput = styled.input`
   &:focus {
     font-weight: bold;
     border: solid 0.11rem #000000;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 21rem;
+    left: -2.43rem;
   }
 `;
 const Inputs = styled.ul`
@@ -140,6 +162,10 @@ const SuccessMessage = styled.div`
   text-align: center;
   font-size: 0.875rem;
   z-index: 3;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    top: -0.1rem;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -150,6 +176,10 @@ const ErrorMessage = styled.div`
   text-align: center;
   font-size: 0.875rem;
   z-index: 3;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    top: -0.1rem;
+  }
 `;
 
 const InfoMessage = styled.div`
@@ -161,12 +191,15 @@ const InfoMessage = styled.div`
   font-size: 0.855rem;
   transition: all 0.8s ease-out;
   z-index: 3;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    top: -6.8rem;
+  }
 `;
 const FindPasswordFindIdWrapper = styled.span`
   position: absolute;
   top: -15.535rem;
   background: #f5f5f5;
-  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
@@ -174,12 +207,14 @@ const FindPasswordFindIdWrapper = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+  }
 `;
 const FindPasswordChangePwWrapper = styled.span`
   position: absolute;
   top: -15.535rem;
   background: #f5f5f5;
-  box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
@@ -187,6 +222,9 @@ const FindPasswordChangePwWrapper = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+  }
 `;
 const ShowChangePassword = styled.span`
   position: absolute;
@@ -200,6 +238,14 @@ const BackBtn = styled.img`
   height: 3.57rem;
   right: -1.5rem;
   top: 4.5rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.43);
+    top: -7.25rem;
+    left: 53.5vw;
+    transform: rotate(-90deg);
+    z-index: 5;
+  }
 `;
 interface Props {
   readonly validateIdChk: (userId: string) => any;
@@ -216,7 +262,6 @@ const MemberFindPassword = ({
   deleteFindPasswordToken,
   onChangePW,
 }: Props) => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const [, setId] = useState('');
@@ -301,6 +346,7 @@ const MemberFindPassword = ({
 
   const onSubmit = useCallback(
     (e: React.ChangeEvent<HTMLFormElement>) => {
+      console.log(userEmail);
       setIsLoading(true);
       setIMessage('');
       setFMessage('');
@@ -325,10 +371,8 @@ const MemberFindPassword = ({
         if (preventReattempt === true) {
           alert('이미 발송되었습니다. 새로고침 후 재시도 하실 수 있습니다.');
           e.preventDefault();
-          navigate(-1);
           return;
         }
-        setPreventReattempt(true);
         startLoadingInterval();
         if (window.confirm('인증 메일을 발송하시겠습니까?')) {
           validateEmailChk(userId, userEmail)
@@ -344,6 +388,7 @@ const MemberFindPassword = ({
                 setIMessage('');
                 setFMessage('');
                 setShowTimer(true);
+                setPreventReattempt(true);
 
                 const tobeDeletedToken = response.data.token;
                 // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -490,150 +535,147 @@ const MemberFindPassword = ({
     }
   };
   return (
-    <Wrapper>
-      <RightBlock>
-        {!contentToggle ? (
-          <FindPasswordFindIdWrapper>
-            <Confirmpwtit
-              src={process.env.PUBLIC_URL + '/images/confirmidtit.png'}
-              alt="Confirm Identification"
-            />
-            <form method="post" onSubmit={onIdConfirm}>
+    <RightBlock>
+      {!contentToggle ? (
+        <FindPasswordFindIdWrapper>
+          <Confirmpwtit
+            src={process.env.PUBLIC_URL + '/images/confirmidtit.png'}
+            alt="Confirm Identification"
+          />
+          <form method="post" onSubmit={onIdConfirm}>
+            <DescriptionTop>
+              <IdInput
+                ref={cIdInput}
+                maxLength={20}
+                name="userid"
+                type="text"
+                autoComplete="userid"
+                onChange={onConfirmId}
+                placeholder="아이디"
+                required
+              />
+            </DescriptionTop>
+            <Button
+              style={{ top: `16.3rem`, left: `0rem`, position: `relative` }}
+            >
+              확인
+            </Button>
+          </form>
+        </FindPasswordFindIdWrapper>
+      ) : (
+        <FindPasswordChangePwWrapper>
+          {isLoading ? (
+            <NowLoading>
+              <CircularProgress
+                size={30}
+                variant="determinate"
+                value={progress}
+              />
+            </NowLoading>
+          ) : null}
+          <Confirmpwtit
+            src={process.env.PUBLIC_URL + '/images/findpasswordtit.png'}
+            alt="Member Modify"
+          />
+          {takenEmail ? (
+            <form method="post" onSubmit={onSubmit}>
               <DescriptionTop>
-                <IdInput
-                  ref={cIdInput}
+                <DisplayAndTakeEmailInput
                   maxLength={20}
-                  name="userid"
+                  name="useremail"
                   type="text"
-                  autoComplete="userid"
-                  onChange={onConfirmId}
-                  placeholder="아이디"
+                  autoComplete="useremail"
+                  onChange={onChangeEmail}
+                  value={userEmail}
+                  spellCheck="false"
                   required
                 />
               </DescriptionTop>
               <Button
-                style={{ top: `14.6rem`, left: `0rem`, position: `relative` }}
+                style={{
+                  width: `5.973rem`,
+                  top: `16.27rem`,
+                  left: `5.47rem`,
+                  position: `absolute`,
+                }}
               >
-                확인
+                메일로 받기
               </Button>
             </form>
-          </FindPasswordFindIdWrapper>
-        ) : (
-          <FindPasswordChangePwWrapper>
-            {isLoading ? (
-              <NowLoading>
-                <CircularProgress
-                  size={30}
-                  variant="determinate"
-                  value={progress}
-                />
-              </NowLoading>
-            ) : null}
-            <Confirmpwtit
-              src={process.env.PUBLIC_URL + '/images/findpasswordtit.png'}
-              alt="Member Modify"
-            />
-            {takenEmail ? (
-              <form method="post" onSubmit={onSubmit}>
-                <DescriptionTop>
-                  <DisplayAndTakeEmailInput
-                    maxLength={20}
-                    name="useremail"
-                    type="text"
-                    autoComplete="useremail"
-                    onChange={onChangeEmail}
-                    value={userEmail}
-                    spellCheck="false"
-                    required
-                  />
-
-                  <Button
-                    style={{
-                      width: `5.973rem`,
-                      top: `16.27rem`,
-                      left: `5.47rem`,
-                      position: `relative`,
-                    }}
-                  >
-                    메일로 받기
-                  </Button>
-                </DescriptionTop>
+          ) : (
+            <></>
+          )}
+          {showTimer ? (
+            <form method="post" onSubmit={onSubmit}>
+              <DescriptionTop>
+                <CountDownTimer timeToLive={300} />
+              </DescriptionTop>
+            </form>
+          ) : (
+            <></>
+          )}
+          {showChangePassword ? (
+            <ShowChangePassword>
+              <form method="put" onSubmit={onChangePassword}>
+                <Inputs>
+                  <InputLi>
+                    <NewPwInput
+                      maxLength={20}
+                      name="cpassword"
+                      type="password"
+                      autoComplete="cpassword"
+                      onChange={onNewPassword}
+                      placeholder="새 비밀번호"
+                      required
+                    />
+                  </InputLi>
+                  <InputLi>
+                    <NewPwConfirmInput
+                      maxLength={20}
+                      name="cpassword"
+                      type="password"
+                      autoComplete="cpassword"
+                      onChange={onConfirmNewPassword}
+                      placeholder="새 비밀번호 확인"
+                      required
+                    />
+                  </InputLi>
+                </Inputs>
+                <Button
+                  style={{
+                    width: `6.7rem`,
+                    top: `18.272rem`,
+                    left: `5.17rem`,
+                    position: `relative`,
+                  }}
+                >
+                  비밀번호 변경
+                </Button>
               </form>
-            ) : (
-              <></>
-            )}
-            {showTimer ? (
-              <form method="post" onSubmit={onSubmit}>
-                <DescriptionTop>
-                  <CountDownTimer timeToLive={300} />
-                </DescriptionTop>
-              </form>
-            ) : (
-              <></>
-            )}
-            {showChangePassword ? (
-              <ShowChangePassword>
-                <form method="put" onSubmit={onChangePassword}>
-                  <Inputs>
-                    <InputLi>
-                      <NewPwInput
-                        maxLength={20}
-                        name="cpassword"
-                        type="password"
-                        autoComplete="cpassword"
-                        onChange={onNewPassword}
-                        placeholder="새 비밀번호"
-                        required
-                      />
-                    </InputLi>
-                    <InputLi>
-                      <NewPwConfirmInput
-                        maxLength={20}
-                        name="cpassword"
-                        type="password"
-                        autoComplete="cpassword"
-                        onChange={onConfirmNewPassword}
-                        placeholder="새 비밀번호 확인"
-                        required
-                      />
-                    </InputLi>
-                  </Inputs>
-                  <Button
-                    style={{
-                      width: `6.7rem`,
-                      top: `18.272rem`,
-                      left: `5.17rem`,
-                      position: `relative`,
-                    }}
-                  >
-                    비밀번호 변경
-                  </Button>
-                </form>
-              </ShowChangePassword>
-            ) : (
-              <></>
-            )}
-            <BackBtn
-              alt="뒤로가기"
-              title="뒤로가기"
-              onClick={() => goToBackward()}
-              onMouseOver={() => setBackBtnHover(true)}
-              onMouseOut={() => setBackBtnHover(false)}
-              onMouseDown={() => setBackBtnHover(false)}
-              onMouseUp={() => setBackBtnHover(true)}
-              src={
-                backBtnHover
-                  ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-                  : process.env.PUBLIC_URL + '/images/board/back.png'
-              }
-            />
-          </FindPasswordChangePwWrapper>
-        )}
-        <SuccessMessage>{sMessage}</SuccessMessage>
-        <ErrorMessage>{fMessage}</ErrorMessage>
-        <InfoMessage ref={Warning}>{iMessage}</InfoMessage>
-      </RightBlock>
-    </Wrapper>
+            </ShowChangePassword>
+          ) : (
+            <></>
+          )}
+          <BackBtn
+            alt="뒤로가기"
+            title="뒤로가기"
+            onClick={() => goToBackward()}
+            onMouseOver={() => setBackBtnHover(true)}
+            onMouseOut={() => setBackBtnHover(false)}
+            onMouseDown={() => setBackBtnHover(false)}
+            onMouseUp={() => setBackBtnHover(true)}
+            src={
+              backBtnHover
+                ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+                : process.env.PUBLIC_URL + '/images/board/back.png'
+            }
+          />
+        </FindPasswordChangePwWrapper>
+      )}
+      <SuccessMessage>{sMessage}</SuccessMessage>
+      <ErrorMessage>{fMessage}</ErrorMessage>
+      <InfoMessage ref={Warning}>{iMessage}</InfoMessage>
+    </RightBlock>
   );
 };
 

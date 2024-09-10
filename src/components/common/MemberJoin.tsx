@@ -14,7 +14,10 @@ import { MainContext } from '../../pages/Main';
 const RightBlock = styled.div`
   background: #f5f5f5;
   width: 16.61rem;
-  height: 10rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 70%;
+    border-radius: 1rem;
+  }
 `;
 
 const Description = styled.div`
@@ -24,10 +27,17 @@ const Description = styled.div`
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
-  z-index: 3;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    top: 50%;
+    border-radius: 1rem;
+    transform: translateY(-50%);
+    padding-bottom: 40rem;
+  }
 `;
 const DescriptionTop = styled.div`
   position: absolute;
@@ -46,6 +56,13 @@ const Inputs = styled.ul`
   padding: 0;
   top: 9.5rem;
   left: 0.55rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: calc(0% - 19.6rem + 12rem);
+  }
 `;
 const InputLi = styled.li`
   height: 3.33rem;
@@ -82,6 +99,10 @@ const PwInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    right: -50%;
+  }
 `;
 const PwInputConfirm = styled.input`
   position: absolute;
@@ -98,6 +119,9 @@ const PwInputConfirm = styled.input`
   &:focus {
     font-weight: bold;
     border: solid 0.11rem #000000;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
   }
 `;
 const UserEmailInput = styled.input`
@@ -141,31 +165,41 @@ const Agree = styled.div`
     width: 15.5rem;
     left: 0.1rem;
     right: 0.1rem;
-    bottom: 0.17rem;
     font-size: 0.72rem;
     font-weight: bold;
     z-index: 1;
     &:hover {
       cursor: pointer;
     }
+    @media (min-width: 1px) and (max-width: 768px) {
+      top: 0.1rem;
+      left: 0.35rem;
+      bottom: 0;
+    }
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    text-align: right;
+    margin-right: 3.6vw;
   }
 `;
-const Chkbox = styled.input.attrs({
-  type: 'checkbox',
-})`
+const Chkbox = styled.input<{ checked: boolean }>`
   appearance: none;
   position: relative;
   background-image: url('/images/chkbox.png');
+  background-size: 1.125rem 1.125rem;
   width: 1.125rem;
   height: 1.125rem;
-  top: 0.273rem;
+  top: 0.18rem;
   left: 0.06rem;
   border: none;
   z-index: 1;
   cursor: pointer;
-  ${({ value }) => {
-    return value ? `background-image: url('/images/chkboxOv.png')` : null;
-  }}
+
+  ${({ checked }) =>
+    checked
+      ? `background-image: url('/images/chkboxOv.png')`
+      : `background-image: url('/images/chkbox.png')`};
 `;
 const TermsAndConditions = styled.div`
   background-color: #ffffff;
@@ -201,6 +235,13 @@ const TermsAndConditions = styled.div`
   ::-webkit-scrollbar-thumb:active {
     background: #000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    margin: 0 auto;
+    width: 90%;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+  }
 `;
 const ShowAgreement = styled.span`
   position: absolute;
@@ -221,6 +262,11 @@ const ShowAgreement = styled.span`
     color: #000000;
     font-weight: bold;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    text-align: right;
+    margin-right: 2.4vw;
+  }
 `;
 const SuccessMessage = styled.div`
   width: 266px;
@@ -229,6 +275,9 @@ const SuccessMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ErrorMessage = styled.div`
@@ -238,6 +287,9 @@ const ErrorMessage = styled.div`
   color: red;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const InfoMessage = styled.div`
@@ -248,6 +300,9 @@ const InfoMessage = styled.div`
   text-align: center;
   font-size: 0.855rem;
   transition: all 0.8s ease-out;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 interface Props {
@@ -298,9 +353,11 @@ const MemberJoin = ({
   const pwInputConfirm = useRef(null) as any;
   const nameInput = useRef(null) as any;
   const emailInput = useRef(null) as any;
-  useEffect(() => {
-    setAgreeChk(false);
-  }, [setAgreeChk]);
+  const miniBtnWrapper = document.getElementById(
+    'miniBtnWrapper',
+  ) as HTMLSpanElement;
+
+  useEffect(() => {}, [agreeChk]);
   const Warning = useRef(null) as InnerHTML &
     CSSProperties &
     (RefObject<HTMLDivElement> | null | undefined);
@@ -445,8 +502,9 @@ const MemberJoin = ({
 
   const onScrollTandC = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      const { scrollTop, scrollHeight, clientHeight } = tAndc.current;
+      if (!tAndc.current) return; // tAndc.current가 존재하지 않으면 리턴
 
+      const { scrollTop, scrollHeight, clientHeight } = tAndc.current;
       if (scrollHeight - scrollTop - 10 <= clientHeight) {
         setAgreeChk(true);
       }
@@ -548,9 +606,12 @@ const MemberJoin = ({
       state.toggleAddCommentForm,
     ],
   );
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAgreeChk(event.target.checked); // 체크 상태에 따라 상태 업데이트
+  };
 
   return (
-    <RightBlock id="memberJoin">
+    <RightBlock>
       <Description>
         <Jointit
           src={process.env.PUBLIC_URL + '/images/jointit.png'}
@@ -623,7 +684,8 @@ const MemberJoin = ({
             <Agree>
               <Chkbox
                 id="agree"
-                value={agreeChk as string | undefined}
+                checked={agreeChk || false} // checked 속성에 boolean 전달
+                onChange={handleCheckboxChange}
                 onClick={chkTandC}
               />
               <label htmlFor="agree">동의</label>
@@ -631,7 +693,9 @@ const MemberJoin = ({
             {tac && (
               <TermsAndConditions
                 ref={tAndc}
-                onScroll={onScrollTandC}
+                onScroll={(e: any) => {
+                  onScrollTandC(e);
+                }}
                 onMouseOut={() => setTac(false)}
               >
                 1. Lorem ipsum, dolor sit amet consectetur adipisicing elit.

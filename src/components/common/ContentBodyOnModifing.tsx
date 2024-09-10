@@ -54,7 +54,7 @@ const Content = styled.div`
   background-color: #ffffff;
   border: 0.375rem solid #000000;
   z-index: 2;
-  overflow: hidden;
+  overflow-x: hidden;
   box-sizing: border-box;
   @media (min-width: 1025px) and (max-width: 1280px) {
     position: relative;
@@ -71,6 +71,13 @@ const Content = styled.div`
     width: calc(100% - 303.99px - 28.16px);
     margin-left: 1.7rem;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: 1.94rem;
+    left: -2.75rem;
+    width: calc(100% - 80px - 28.16px);
+    margin-left: 1.7rem;
+  }
 `;
 const ToolBar = styled.div`
   top: -5.4rem;
@@ -81,7 +88,7 @@ const MiniBtnWrapper = styled.span`
   position: relative;
   width: 100%;
   height: 100%;
-  @media (min-width: 769px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     left: calc(100% - 836px);
   }
 `;
@@ -91,8 +98,8 @@ const SunEditorWrapper = styled.div`
   top: -0.12rem;
   width: 52.17rem;
   left: -0.05rem;
-  @media (min-width: 769px) and (max-width: 1280px) {
-    width: 100.2%;
+  @media (min-width: 1px) and (max-width: 1280px) {
+    width: 100%;
   }
 `;
 
@@ -123,10 +130,21 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
       const regDateQParam = searchParams.get('regDate');
       const searchTypeQParam = searchParams.get('searchType');
       const keywordQParam = searchParams.get('keyword');
-      contentRef.current.style.display = 'none';
-      const saying = document.getElementById('saying');
-      saying!.style.opacity = '1';
-      saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
+
+      if (contentRef.current) {
+        contentRef!.current.style.display = 'none';
+      }
+
+      if (
+        !window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
+      ) {
+        const saying = document.getElementById('saying');
+        if (saying) {
+          saying.style.opacity = '1';
+          saying.style.transition = 'opacity 0.2s 0.75s ease-out';
+        }
+      }
+
       deliveryImgInfoOnWriting.setImgInfoOnWriting([]); // 배열 초기화 안하면 이전 저장 내역이 존재
 
       navigate(
@@ -243,7 +261,7 @@ const ContentBodyOnModifing: React.FC<Props> = observer(
               style={{
                 backgroundColor: '#ff0b0b',
                 top: '0.4rem',
-                left: '50.6rem',
+                left: '50rem',
                 zIndex: '1',
               }}
               onClick={() => {

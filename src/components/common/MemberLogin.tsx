@@ -25,12 +25,12 @@ const Description = styled.div`
   width: 100%;
   height: 35.67rem;
   top: -15.535rem;
-  z-index: 1;
+  z-index: 3;
   opacity: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     top: 50%;
     transform: translateY(-50%);
     padding-bottom: 40rem;
@@ -62,6 +62,9 @@ const IdInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: -0.03rem;
+  }
 `;
 const IdInputIcon = styled.img`
   position: absolute;
@@ -71,6 +74,9 @@ const IdInputIcon = styled.img`
   left: 1.3rem;
   cursor: default;
   z-index: 2;
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: 0.7rem;
+  }
 `;
 const PwInput = styled.input`
   position: absolute;
@@ -89,6 +95,9 @@ const PwInput = styled.input`
     font-weight: bold;
     border: solid 0.11rem #000000;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: -0.03rem;
+  }
 `;
 const PwInputIcon = styled.img`
   position: absolute;
@@ -99,6 +108,9 @@ const PwInputIcon = styled.img`
 
   cursor: default;
   z-index: 2;
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: 0.7rem;
+  }
 `;
 const AutoLgn = styled.div`
   position: absolute;
@@ -117,6 +129,10 @@ const AutoLgn = styled.div`
       cursor: pointer;
       text-decoration: underline;
     }
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    left: 0rem;
   }
 `;
 const Chkbox = styled.input.attrs({
@@ -156,6 +172,9 @@ const FindID = styled.span`
     cursor: pointer;
     text-decoration: none;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    right: 4.6rem;
+  }
 `;
 const FindIdandPassword = styled.span`
   position: absolute;
@@ -163,6 +182,9 @@ const FindIdandPassword = styled.span`
   top: 19.09rem;
   right: 0.96rem;
   font-size: 0.72rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    right: 0rem;
+  }
 `;
 const FindPassword = styled.span`
   position: absolute;
@@ -181,6 +203,9 @@ const FindPassword = styled.span`
     cursor: pointer;
     text-decoration: none;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    right: 1.4rem;
+  }
 `;
 const SuccessMessage = styled.div`
   width: 242px;
@@ -189,8 +214,9 @@ const SuccessMessage = styled.div`
   position: absolute;
   color: #00b300;
   font-size: 0.875rem;
-  @media (min-width: 481px) and (max-width: 768px) {
-    left: 0.7rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 1rem;
+    left: 0rem;
   }
 `;
 const ErrorMessage = styled.div`
@@ -200,8 +226,9 @@ const ErrorMessage = styled.div`
   position: absolute;
   color: red;
   font-size: 0.875rem;
-  @media (min-width: 481px) and (max-width: 768px) {
-    left: 0.7rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 1rem;
+    left: 0rem;
   }
 `;
 const IdInfoMessage = styled.div`
@@ -213,6 +240,10 @@ const IdInfoMessage = styled.div`
   width: 265px;
   font-size: 0.855rem;
   transition: all 0.8s ease-out;
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: -0.5rem;
+    top: 1.1rem;
+  }
 `;
 
 const AlignBtn = styled.div`
@@ -224,6 +255,10 @@ const AlignBtn = styled.div`
   justify-content: center;
   align-items: center;
   top: 21.2rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: 21.8rem;
+  }
 `;
 
 const KakaoBtnWrap = styled.span`
@@ -311,25 +346,69 @@ const MemberWrapper = styled.div`
   position: relative;
   top: 0rem;
   left: -22.32rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 const MemberFindIdWrapper = styled.span`
   position: absolute;
   display: none;
+  @media (min-width: 1px) and (max-width: 768px) {
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: 20.07rem;
+    margin-top: -0.35rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
 const MemberFindPasswordWrapper = styled.span`
   position: absolute;
   display: none;
   left: 0;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    text-align: center;
+    margin: 0 auto;
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: 20.07rem;
+    margin-top: -0.35rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
 const BackBtn = styled.img`
   display: none;
   position: absolute;
   width: 1.5rem;
   height: 3.6rem;
-  right: -1.5rem;
+  right: -23.83rem;
   top: -11.07rem;
   z-index: 4;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.43);
+    top: -2.821rem;
+    left: calc(10.1% + 106.5vw);
+    transform: rotate(-90deg);
+    z-index: 3;
+  }
 `;
 
 const SetPosCountDownTimer = styled.div`
@@ -340,6 +419,10 @@ const SetPosCountDownTimer = styled.div`
   top: -9rem;
   left: -0.78rem;
   z-index: 9999;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: -20.5rem;
+    left: 2.68rem;
+  }
 `;
 
 interface Props {
@@ -416,6 +499,7 @@ const MemberLogin = ({
     },
     [autoLogin],
   );
+
   const onSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -462,7 +546,7 @@ const MemberLogin = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hideBackBtn]);
   return (
-    <RightBlock id="memberLogin">
+    <RightBlock>
       <Description ref={LoginRef}>
         <Logintit
           src={process.env.PUBLIC_URL + '/images/logintit.png'}
@@ -607,22 +691,22 @@ const MemberLogin = ({
         </AlignBtn>
       </Description>
 
-      <BackBtn
-        alt="뒤로가기"
-        title="뒤로가기"
-        ref={BackBtnRef}
-        onClick={() => goToBackward()}
-        onMouseOver={() => setBackBtnHover(true)}
-        onMouseOut={() => setBackBtnHover(false)}
-        onMouseDown={() => setBackBtnHover(false)}
-        onMouseUp={() => setBackBtnHover(true)}
-        src={
-          backBtnHover
-            ? process.env.PUBLIC_URL + '/images/board/backOv.png'
-            : process.env.PUBLIC_URL + '/images/board/back.png'
-        }
-      />
       <MemberWrapper>
+        <BackBtn
+          alt="뒤로가기"
+          title="뒤로가기"
+          ref={BackBtnRef}
+          onClick={() => goToBackward()}
+          onMouseOver={() => setBackBtnHover(true)}
+          onMouseOut={() => setBackBtnHover(false)}
+          onMouseDown={() => setBackBtnHover(false)}
+          onMouseUp={() => setBackBtnHover(true)}
+          src={
+            backBtnHover
+              ? process.env.PUBLIC_URL + '/images/board/backOv.png'
+              : process.env.PUBLIC_URL + '/images/board/back.png'
+          }
+        />
         <MemberFindIdWrapper ref={MemberFindIdRef}>
           <MemberFindId />
         </MemberFindIdWrapper>

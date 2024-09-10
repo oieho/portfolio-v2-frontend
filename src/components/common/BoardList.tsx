@@ -57,7 +57,7 @@ const BoardListBlock = styled.div`
     width: calc(100% - 318.99px - 28.16px);
     margin-left: 1.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     top: 1.94rem;
     left: -2.75rem;
     width: calc(100% - 80px - 28.16px);
@@ -75,7 +75,7 @@ const BoardTitle = styled.img`
   @media (min-width: 769px) and (max-width: 1024px) {
     left: 1.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     left: 1.2rem;
   }
 `;
@@ -90,8 +90,13 @@ const SearchArea = styled.span`
     position: relative;
     left: 1.2rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 480px) and (max-width: 768px) {
     left: 0.7rem;
+  }
+  @media (min-width: 1px) and (max-width: 479px) {
+    position: absolute;
+    top: 3.35rem;
+    right: -3.17rem;
   }
 `;
 const Sorting = styled.span`
@@ -101,6 +106,9 @@ const Sorting = styled.span`
   font-weight: 400;
   line-tracking: 20%;
   z-index: 3;
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: 0rem;
+  }
 `;
 const SelectSort = styled.select`
   background: none;
@@ -108,6 +116,9 @@ const SelectSort = styled.select`
   font-weight: 600;
   &:focus {
     outline: none;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 5.25rem;
   }
 `;
 const Option = styled.option`
@@ -129,6 +140,9 @@ const SearchLine = styled.div`
     height: 0.153rem;
     background: #000000;
     z-index: 2;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 12rem;
   }
 `;
 const Button = styled.button`
@@ -153,6 +167,16 @@ const Button = styled.button`
   &:active {
     background-image: url('/images/board/enterOv.png');
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    right: 1.94rem;
+  }
+`;
+const ControlBtnWrapper = styled.span`
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: relative;
+    top: -0.55rem;
+    right: 13.94rem;
+  }
 `;
 const SearchInput = styled.input`
   position: absolute;
@@ -170,6 +194,9 @@ const SearchInput = styled.input`
   &:focus {
     font-weight: bold;
   }
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 10rem;
+  }
 `;
 const BoardTableHeader = styled.table`
   position: absolute;
@@ -180,7 +207,7 @@ const BoardTableHeader = styled.table`
     width: calc(93.5%);
     margin-left: 0.3rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     width: calc(93.5%);
     margin-left: 0.3rem;
   }
@@ -250,16 +277,20 @@ const TitleTd = styled.td`
       left: -0.57rem;
       width: calc(22.6%);
     }
-    @media (min-width: 481px) and (max-width: 768px) {
-      left: -0.95rem;
+    @media (min-width: 1px) and (max-width: 768px) {
+      left: -1.1rem;
       width: 21rem;
     }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   &.tHeadTd2 {
     position: relative;
     width: 6.129rem;
     text-align: center;
     left: 0.68rem;
+
     &:hover {
       font-weight: bold;
     }
@@ -274,9 +305,9 @@ const TitleTd = styled.td`
       right: -0.92rem;
       width: calc(5%);
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       position: relative;
-      left: -0.3rem;
+      left: -0.4rem;
       right: calc(0.1% + 1rem);
     }
   }
@@ -293,9 +324,9 @@ const TitleTd = styled.td`
       right: 0.32rem;
       width: calc(5%);
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       position: relative;
-      right: calc(1.1% + 1.075rem);
+      right: calc(1.1% + 1.175rem);
       width: 10%;
     }
   }
@@ -317,11 +348,11 @@ const TitleTd = styled.td`
       left: -0.45rem;
       width: calc(7.95%);
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       display: none;
     }
   }
-  @media (min-width: 481px) and (max-width: 1024px) {
+  @media (min-width: 1px) and (max-width: 1024px) {
     font-size: 0.72rem;
   }
 `;
@@ -361,7 +392,7 @@ const StyledList = styled(List)`
     position: relative;
     left: -0.5rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     left: -0.9rem;
   }
 `;
@@ -534,7 +565,7 @@ const BoardList = ({
         'MobileHAndTabletVRegDateTit',
       ) as HTMLElement | any;
       if (
-        window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+        window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
       ) {
         regDateTit!.style.display = 'inline';
       } else {
@@ -542,6 +573,17 @@ const BoardList = ({
       }
     };
     whenMobileHAndTabletVDisplayRegDateTit();
+
+    const WhenMobileAndTabletVSetCountTitMargin = () => {
+      const countTit = document.getElementById('countTit') as any;
+
+      if (
+        window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
+      ) {
+        if (countTit) countTit.style.marginRight = '20px';
+      }
+    };
+    WhenMobileAndTabletVSetCountTitMargin();
 
     let index = 0;
     const interval = setInterval(() => {
@@ -830,7 +872,7 @@ const BoardList = ({
                 onBlur={() => setLine()}
               />
               {isAuthorized && myInfo?.roleType === 'ADMIN' && (
-                <>
+                <ControlBtnWrapper>
                   <ControlBtn
                     style={{
                       marginBottom: '-1.5em',
@@ -947,7 +989,7 @@ const BoardList = ({
                       )}
                     </span>
                   </ControlBtn>
-                </>
+                </ControlBtnWrapper>
               )}
             </SearchArea>
           </form>
@@ -963,9 +1005,9 @@ const BoardList = ({
                   <span onClick={titleLink}>
                     <TitleTit>
                       {titleQParam === 'desc'
-                        ? titleTit + ' ↓'
+                        ? titleTit + '↓'
                         : titleQParam === 'asc'
-                        ? titleTit + ' ↑'
+                        ? titleTit + '↑'
                         : titleTit}
                     </TitleTit>
                   </span>
@@ -974,18 +1016,22 @@ const BoardList = ({
                     onClick={regDateLink}
                   >
                     {regDateQParam === 'desc'
-                      ? regDateTit + ' ↓'
+                      ? regDateTit + '↓'
                       : regDateQParam === 'asc'
-                      ? regDateTit + ' ↑'
+                      ? regDateTit + '↑'
                       : regDateTit}
                   </MobileHAndTabletVRegDateTit>
                 </TitleTd>
                 <TitleTd className="tHeadTd2">
-                  <span onClick={countLink}>
+                  <span
+                    id="countTit"
+                    onClick={countLink}
+                    style={{ whiteSpace: 'pre' }}
+                  >
                     {countQParam === 'desc'
-                      ? countTit + ' ↓'
+                      ? countTit + '↓'
                       : countQParam === 'asc'
-                      ? countTit + ' ↑'
+                      ? countTit + '↑'
                       : countTit}
                   </span>
                 </TitleTd>

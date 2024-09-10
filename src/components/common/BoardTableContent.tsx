@@ -67,7 +67,7 @@ const TableTr = styled.tr`
   &:hover {
     border: 1px solid #bbbbbb;
   }
-  @media (min-width: 769px) and (max-width: 1023px) {
+  @media (min-width: 769px) and (max-width: 1024px) {
     height: 100%;
   }
 `;
@@ -84,7 +84,7 @@ const TableTd = styled.td`
     @media (min-width: 769px) and (max-width: 1024px) {
       padding-right: 0.8rem;
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       position: absolute;
       left: -0.45rem;
     }
@@ -103,7 +103,7 @@ const TableTd = styled.td`
       left: 3.5rem;
       top: 0.64rem;
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       position: absolute;
       top: 0.42rem;
       width: 100%;
@@ -124,7 +124,7 @@ const TableTd = styled.td`
       right: calc(1% + 0.25rem);
       top: 1.65rem;
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       position: absolute;
       width: 6.129rem;
       top: 1.46rem;
@@ -145,7 +145,7 @@ const TableTd = styled.td`
       top: 0.74rem;
       right: -0.2rem;
     }
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       top: 0.6rem;
       right: calc(-2.5% + 0.5rem);
       width: 8rem;
@@ -157,6 +157,7 @@ const TableTd = styled.td`
   }
 `;
 const More = styled.hr`
+  z-index: -1;
   position: relative;
   margin-top: 0.5rem;
   width: 1.625rem;
@@ -170,7 +171,7 @@ const RegDate = styled.div`
   font-size: 0.81rem;
   right: 0;
   font-weight: 600;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: absolute;
     text-align: left;
     font-size: 0.7rem;
@@ -186,14 +187,14 @@ const Ago = styled.div`
   color: #b2b2b2;
   font-weight: 500;
   font-size: 0.75rem;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: relative;
     text-align: left;
     font-size: 0.7rem;
     font-weight: 400;
     width: 100%;
     top: 1.99rem;
-    left: 11.65rem;
+    left: 8.65rem;
   }
 `;
 
@@ -209,7 +210,7 @@ const BoardBodyThumbnailImg = styled.img`
     position: absolute;
     top: 4%;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: absolute;
     top: 0.2rem;
     left: 0.4rem;
@@ -231,15 +232,20 @@ const BoardTitle = styled.a`
   font-size: 0.85rem;
   font-weight: 700;
   vertical-align: top;
+  pointer-events: auto;
   @media (min-width: 769px) and (max-width: 1024px) {
     position: relative;
     top: 0.5rem;
     left: 3.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     top: 0.7rem;
     left: 5.1rem;
     font-size: 0.81rem;
+    width: 7.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 const BoardComment = styled.span`
@@ -249,7 +255,7 @@ const BoardComment = styled.span`
   left: 0.03rem;
   bottom: 0.07rem;
   font-weight: 500;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.7rem;
   }
 `;
@@ -278,11 +284,11 @@ const ToolsDescendant = styled.span`
     left: 0rem;
     text-align: left !important;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
   }
 `;
 const ToShowMoreTools = styled.span`
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: absolute;
     top: 0.74rem;
     left: 3.65rem;
@@ -352,7 +358,7 @@ const BoardCategory = styled.a`
     top: 0.6rem;
     left: 3.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.77rem;
     top: 0.4rem;
     left: 3.83rem;
@@ -369,7 +375,7 @@ const BoardTags = styled.a`
     top: 0.6rem;
     left: 3.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     width: 100%;
     top: 0.4rem;
     left: 3.7rem;
@@ -381,7 +387,7 @@ const BoardCount = styled.a`
   font-weight: 750;
   letter-spacing: -0.015rem;
   bottom: 0.07rem;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.85rem;
   }
 `;
@@ -394,7 +400,7 @@ const HashTag1 = styled.span`
     font-style: normal;
     font-weight: 300;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.77rem;
   }
 `;
@@ -408,7 +414,7 @@ const HashTag2 = styled.span`
     font-style: normal;
     font-weight: 300;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.77rem;
   }
 `;
@@ -422,7 +428,7 @@ const HashTag3SharpAndComma = styled.span`
     font-style: normal;
     font-weight: 300;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     font-size: 0.77rem;
   }
 `;
@@ -576,6 +582,13 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
         } else if (typeof boards[4] === 'undefined') {
           minutes = '00';
         }
+
+        if (
+          window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
+        ) {
+          return year + '-' + month + '-' + date;
+        }
+
         return (
           year +
           '-' +
@@ -591,6 +604,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
         );
       }
     };
+
     setBoardRegDateDays(convertDateForm(boards.workBoard?.regDate));
 
     const newBoardRegDateDaysAgo = () => {
@@ -818,7 +832,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
 
       const whenMobileHAndTabletV = async () => {
         if (
-          window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+          window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           setShowMoreTools(true);
           setShowDefaultTools(false);
@@ -971,7 +985,7 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
           actions.setSelectedList(newSelectedList);
         }
         const navigateTo = window.matchMedia(
-          '(min-width: 481px) and (max-width: 768px)',
+          '(min-width: 1px) and (max-width: 768px)',
         ).matches
           ? `boards/viewContentBody/${boards.workBoard?.wno}`
           : `boards/view/${boards.workBoard?.wno}`;
@@ -1349,7 +1363,9 @@ const BoardTableContent = ({ index, boards, style, modifiable }: any) => {
             <BoardHeadUL>
               <li>
                 <BoardTitle>
-                  <span className="boardTitle">{boards.workBoard?.title}</span>
+                  <span className="boardTitle" title={boards.workBoard?.title}>
+                    {boards.workBoard?.title}
+                  </span>
                   &nbsp;
                   <BoardComment>[{boards.commentCount}]</BoardComment>
                   <Tools>

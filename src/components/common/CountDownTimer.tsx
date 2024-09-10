@@ -8,6 +8,11 @@ const SuccessMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    top: 11.25rem;
+    left: -3.4rem;
+  }
 `;
 const ErrorMessage = styled.div`
   width: 266px;
@@ -16,6 +21,11 @@ const ErrorMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    position: absolute;
+    top: 11.25rem;
+    left: -3.4rem;
+  }
 `;
 interface Props {
   readonly timeToLive: number;

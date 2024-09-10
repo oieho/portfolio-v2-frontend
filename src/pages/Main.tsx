@@ -5,10 +5,9 @@ import Bracket from '../components/common/Bracket';
 import BoardListContainer from '../containers/BoardListContainer';
 import styled from 'styled-components';
 import { Outlet } from 'react-router-dom';
-import React, { useState, useContext, createContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, createContext } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import RightLessThan481 from '../components/common/mobileHAndTabletVRight';
+import MobileHAndTabletVRightContainer from '../containers/RightMobileHAndTabletVContainer';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -24,6 +23,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 0;
+  overflow-x: hidden;
 
   @media (max-height: 800px) {
     height: 60rem;
@@ -65,6 +65,7 @@ export const MainContext = createContext({
     toggleShowDesc: false,
     toggleShowDescCount: 0,
     afterHideSetContentDesc: false,
+    toggleShowDescType: '',
   },
   actions: {
     setZIdx: (zIdx: number) => ({
@@ -165,12 +166,12 @@ export const MainContext = createContext({
     setAfterHideSetContentDesc: (afterHideSetContentDesc: boolean) => ({
       afterHideSetContentDesc,
     }),
+    setToggleShowDescType: (toggleShowDescType: string) => ({
+      toggleShowDescType,
+    }),
   },
 });
 const Main = () => {
-  const { state, actions } = useContext(MainContext);
-  const navigate = useNavigate();
-
   const [zIdx, setZIdx] = useState(2);
   const [rightBlock, setRightBlock] = useState();
   const [selectedList, setSelectedList] = useState<number[]>([]);
@@ -208,6 +209,7 @@ const Main = () => {
   const [toggleShowDescCount, setToggleShowDescCount] = useState<any>(0);
   const [afterHideSetContentDesc, setAfterHideSetContentDesc] =
     useState<boolean>(false);
+  const [toggleShowDescType, setToggleShowDescType] = useState<string>('');
 
   const value = {
     state: {
@@ -243,6 +245,7 @@ const Main = () => {
       toggleShowDesc,
       toggleShowDescCount,
       afterHideSetContentDesc,
+      toggleShowDescType,
     },
     actions: {
       setZIdx,
@@ -277,6 +280,7 @@ const Main = () => {
       setToggleShowDesc,
       setToggleShowDescCount,
       setAfterHideSetContentDesc,
+      setToggleShowDescType,
     },
   };
 
@@ -321,12 +325,14 @@ const Main = () => {
             <HeaderContainer />
             <BoardListContainer />
             <Outlet />
-            <RightLessThan481 />
+            <MobileHAndTabletVRightContainer />
           </>
         ) : mobileV ? (
           <>
             <HeaderContainer />
             <BoardListContainer />
+            <Outlet />
+            <MobileHAndTabletVRightContainer />
           </>
         ) : (
           // Desktop

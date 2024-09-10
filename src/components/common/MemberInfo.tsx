@@ -4,10 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { MyInfo } from '../../App';
 
 const RightBlock = styled.div`
-  background: #f5f5f5;
   width: 16.61rem;
 `;
-
 const Description = styled.div`
   position: absolute;
   top: -15.535rem;
@@ -19,6 +17,13 @@ const Description = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 100%;
+    top: 50%;
+    border-radius: 1rem;
+    transform: translateY(-50%);
+    padding-bottom: 40rem;
+  }
 `;
 const DescriptionTop = styled.div`
   position: absolute;
@@ -30,8 +35,10 @@ const NowLoading = styled.span`
   position: absolute;
   top: 7.97rem;
   font-size: 0.85rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 10.5rem;
+  }
 `;
-
 const Confirmpwtit = styled.img`
   position: relative;
   top: 4.8rem;
@@ -47,6 +54,14 @@ const InputTitles = styled.ul`
   font-weight: 600;
   line-height: 3.306rem;
   z-index: 2;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    left: -6.7rem;
+    top: 11rem;
+  }
 `;
 const UserIdTit = styled.li``;
 const UserEmailTit = styled.li``;
@@ -58,6 +73,15 @@ const Inputs = styled.ul`
   padding: 0;
   top: 9.5rem;
   left: 0.55rem;
+
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    left: -8rem;
+    top: 11rem;
+  }
 `;
 const InputLi = styled.li`
   height: 3.33rem;
@@ -74,7 +98,6 @@ const IdInput = styled.input`
   border-radius: 1rem;
   z-index: 1;
   font-size: 0.85rem;
-
   &:focus {
     font-weight: bold;
   }
@@ -158,6 +181,7 @@ const MemberInfo = ({ myInfo, isLoading }: Props) => {
       setBoardRegDateDays(convertDateForm(myInfo?.regDate));
     }
   }, [myInfo, myInfo?.regDate]);
+
   return (
     <RightBlock>
       <Description>

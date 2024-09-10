@@ -14,6 +14,7 @@ import {
 } from '../App';
 import Cookies from 'js-cookie';
 
+const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 const SET_ACCESS_TOKEN = 'auth/SET_ACCESS_TOKEN';
 const FAILED_LOGIN_AUTH = 'auth/FAILED_LOGIN_AUTH';
 const LOGIN = 'auth/LOGIN';
@@ -23,6 +24,8 @@ const SET_MY_INFO = 'auth/SET_MY_INFO';
 const CHECK_MY_INFO = 'auth/CHECK_MY_INFO';
 const SET_TIME_TO_LIVE = 'auth/TIME_TO_LIVE';
 const IF_NOT_LOGGED_DISPLAY_BLOCK = 'auth/IF_NOT_LOGGED_DISPLAY_BLOCK';
+
+export const loginSuccess = createAction<boolean>(LOGIN_SUCCESS);
 
 export const setAccessToken = createAction(
   SET_ACCESS_TOKEN,
@@ -87,6 +90,7 @@ function* loginSaga(action: ReturnType<typeof login>) {
     }
 
     if (response && response.status === 200) {
+      yield put(loginSuccess(true));
       yield put(setTryLoginAuth(false as any));
       yield put(ifNotLoggedDisplayBlock({ ifNotLoggedDisplayBlock: false }));
       return response;
@@ -109,6 +113,12 @@ function* loginSaga(action: ReturnType<typeof login>) {
       yield put(setTryLoginAuth(true as any));
     } else if (e.message.includes('2회 시도까지 로그인창 block')) {
       yield put(ifNotLoggedDisplayBlock({ ifNotLoggedDisplayBlock: true }));
+    }
+  } finally {
+    const memberLogin = document.getElementById('memberLogin');
+    const memberJoin = document.getElementById('memberJoin');
+    if (memberLogin && memberJoin) {
+      memberJoin.style.display = 'none';
     }
   }
 }
@@ -141,6 +151,7 @@ export function* authSaga() {
 
 // 상태 인터페이스 정의
 export interface AuthState {
+  loginSuccess: boolean;
   accessToken: string;
   myInfo: MyInfo | null;
   modifyInfo: ModifyInfo | null;
@@ -153,6 +164,8 @@ export interface AuthState {
 }
 // 초기 상태
 const initialState: AuthState = {
+  loginSuccess: false,
+  error: null,
   accessToken: '',
   myInfo: null,
   modifyInfo: null,
@@ -161,10 +174,13 @@ const initialState: AuthState = {
   ifNotLoggedDisplayBlock: true,
   timeToLive: 0,
   token: '',
-  error: null,
 };
 // 리듀서 함수 정의
 const auth = createReducer(initialState, {
+  [LOGIN_SUCCESS]: (state, action) => ({
+    ...state,
+    loginSuccess: action.payload,
+  }),
   [SET_ACCESS_TOKEN]: (state, action) => ({
     ...state,
     accessToken: action.payload,

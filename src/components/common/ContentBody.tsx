@@ -34,7 +34,7 @@ const OuterWrapper = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   cursor: pointer;
 `;
 const ContentWrapper = styled.div`
@@ -64,7 +64,7 @@ const ContentWrapper = styled.div`
     width: calc(100% - 303.99px - 28.16px);
     margin-left: 1.7rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: relative;
     top: 1.94rem;
     left: -2.75rem;
@@ -76,7 +76,7 @@ const MiniBtnWrapper = styled.span`
   position: relative;
   width: 100%;
   height: 100%;
-  @media (min-width: 481px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     left: calc(100% - 836px);
   }
 `;
@@ -111,7 +111,7 @@ const Content = styled.div`
   ::-webkit-scrollbar-thumb:active {
     background: #000;
   }
-  @media (min-width: 481px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     width: 100%;
   }
 `;
@@ -315,7 +315,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
           actions.setViewSelectedIndex(prevWno);
           navigate(
             `/boards/${
-              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+              window.matchMedia('(min-width: 1px) and (max-width: 768px)')
                 .matches
                 ? 'viewContentBody'
                 : 'view'
@@ -347,7 +347,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
           actions.setViewSelectedIndex(prevWno);
           navigate(
             `/boards/${
-              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+              window.matchMedia('(min-width: 1px) and (max-width: 768px)')
                 .matches
                 ? 'viewContentBody'
                 : 'view'
@@ -405,7 +405,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
           actions.setViewSelectedIndex(nextWno);
           navigate(
             `/boards/${
-              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+              window.matchMedia('(min-width: 1px) and (max-width: 768px)')
                 .matches
                 ? 'viewContentBody'
                 : 'view'
@@ -436,7 +436,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
           actions.setViewSelectedIndex(nextWno);
           navigate(
             `/boards/${
-              window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+              window.matchMedia('(min-width: 1px) and (max-width: 768px)')
                 .matches
                 ? 'viewContentBody'
                 : 'view'
@@ -468,6 +468,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
     setTimeout(() => {
       actions.setToggleBackBtn(false);
     }, 700);
+    actions.setAfterHideSetContentDesc(true);
 
     const titleQParam = searchParams.get('title');
     const countQParam = searchParams.get('count');
@@ -479,9 +480,7 @@ const ContentBody: React.FC<Props> = observer(({ board }) => {
       contentRef!.current.style.display = 'none';
     }
 
-    if (
-      !window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
-    ) {
+    if (!window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches) {
       const saying = document.getElementById('saying');
       if (saying) {
         saying.style.opacity = '1';

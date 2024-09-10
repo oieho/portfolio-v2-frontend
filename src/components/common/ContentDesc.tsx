@@ -8,7 +8,6 @@ import {
   useCallback,
 } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSearchParams, useNavigate } from 'react-router-dom';
 import { MyInfo, IfNotLoggedDisplayBlock, Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
@@ -44,7 +43,7 @@ const Wrapper = styled.div`
     left: -1.4rem;
     width: 100%;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: absolute;
   }
 `;
@@ -68,7 +67,7 @@ const DescriptionAndComment = styled.div`
     top: -20.51rem;
     left: calc(100% - (315.99px - 38.5px));
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,7 +85,7 @@ const DescriptionAndComment = styled.div`
 const MiniBtnWrapper = styled.span`
   display: none;
 
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: block;
     position: absolute;
     right: 2.48rem;
@@ -1051,7 +1050,7 @@ const CoverBackBtn = styled.span`
   @media (min-width: 769px) and (max-width: 1024px) {
     right: -2.1rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: none;
   }
 `;
@@ -1284,7 +1283,6 @@ const ContentDesc = ({
 }: Props) => {
   const { state, actions } = useContext(MainContext);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [boardRegDateDays, setBoardRegDateDays] = useState() as any;
   const [star, setStar] = useState<number>(-3);
@@ -1485,13 +1483,12 @@ const ContentDesc = ({
         }
         if (
           contentDesc &&
-          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-            .matches
+          !window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '39.36rem';
         } else if (
           contentDesc &&
-          window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+          window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '44.92rem';
         }
@@ -1508,13 +1505,12 @@ const ContentDesc = ({
       } else {
         setToggleAddCommentForm(true);
         actions.setToggleAddCommentForm(true);
-        if (window.matchMedia('(min-width: 481px)').matches) {
+        if (window.matchMedia('(min-width: 1px)').matches) {
           addCommentForm!.style.opacity = '0';
           addCommentForm!.style.transition = 'opacity 0.2s';
         }
         if (
-          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-            .matches
+          !window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '35.66rem';
         } else {
@@ -2021,44 +2017,28 @@ const ContentDesc = ({
     });
   };
 
-  const [searchParams] = useSearchParams();
-  const titleQParam = searchParams.get('title');
-  const countQParam = searchParams.get('count');
-  const regDateQParam = searchParams.get('regDate');
-  const searchTypeQParam = searchParams.get('searchType');
-  const keywordQParam = searchParams.get('keyword');
-  const toolOrHashTagQParam = searchParams.get('toolOrHashTag');
-
   const hideContent = () => {
-    const contentDesc = document.getElementById('contentDesc');
-    const outerDescWrapper = document.getElementById('outerDescWrapper');
-    if (contentDesc && outerDescWrapper) {
-      contentDesc!.style.display = 'none';
-      outerDescWrapper.style.display = 'none';
-      actions.setToggleShowDesc(true);
-      actions.setAfterHideSetContentDesc(true);
-    }
-    // const navigateTo = window.matchMedia(
-    //   '(min-width: 481px) and (max-width: 768px)',
-    // ).matches
-    //   ? `boards/viewContentBody/${board.workBoard?.wno}`
-    //   : `/boards?`;
-    // setTimeout(() => {
-    //   navigate(
-    //     `${navigateTo}?${
-    //       state.selectedView === true ? `selected=${state.selectedList}&` : ''
-    //     }title=${titleQParam}&count=${countQParam}&regDate=${regDateQParam}&searchType=${searchTypeQParam}&keyword=${keywordQParam}&toolOrHashTag=${toolOrHashTagQParam}&isModified=false`,
-    //     {
-    //       state: { searchType: null, keyword: null },
-    //     },
-    //   );
-    // }, 560);
+    const miniBtnWrapper = document.getElementById(
+      'miniBtnWrapper',
+    ) as HTMLDivElement;
+    const outerDescWrapper = document.getElementById(
+      'outerDescWrapper',
+    ) as HTMLDivElement;
+    const contentDesc = document.getElementById(
+      'contentDesc',
+    ) as HTMLDivElement;
+
+    if (miniBtnWrapper) miniBtnWrapper.style.display = 'none';
+    if (outerDescWrapper) outerDescWrapper.style.display = 'none';
+    if (contentDesc) contentDesc!.style.display = 'none';
+
+    actions.setToggleShowDesc(true);
+    actions.setAfterHideSetContentDesc(true);
   };
 
   return (
     <>
-      {window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-        .matches ? (
+      {window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches ? (
         <OuterWrapper
           id="outerDescWrapper"
           onClick={() => hideContent()}

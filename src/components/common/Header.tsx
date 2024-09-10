@@ -21,7 +21,9 @@ import { MainContext } from '../../pages/Main';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
 import MiniBtn from './button/AddButton';
-const OuterWrapper = styled.div`
+
+const OuterMemberWrapper = styled.div`
+  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -40,7 +42,7 @@ const Wrapper = styled.div`
   top: 0;
   bottom: 0;
   right: 0;
-  @media (min-width: 481px) {
+  @media (min-width: 1px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -54,7 +56,7 @@ const Gnb = styled.span`
   width: 1.9rem;
   height: 1.9rem;
 
-  @media (min-width: 481px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     display: none;
     position: absolute;
     width: 9rem;
@@ -71,7 +73,7 @@ const Gnb = styled.span`
       width: 144px;
       height: 120.49px;
       visibility: visible;
-      z-index: 3;
+      z-index: 99999;
     }
 
     ul {
@@ -105,7 +107,7 @@ const HeaderBlock = styled.div`
   background: #f5f5f5;
   box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.03);
   border-radius: 1rem;
-  z-index: 2;
+  z-index: 3;
   .hamburgerBtn {
     left: 0.1rem;
     top: 0.05rem;
@@ -118,7 +120,7 @@ const HeaderBlock = styled.div`
     top: 0.23rem;
     right: 0.53rem;
     height: 100%;
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       top: -0.853rem;
     }
   }
@@ -126,7 +128,7 @@ const HeaderBlock = styled.div`
     position: relative;
     display: inline-block;
     width: 11.2rem;
-    bottom: 0.05rem;
+    bottom: 0.01rem;
     right: 0.5rem;
     text-align: right;
     cursor: default;
@@ -141,19 +143,25 @@ const HeaderBlock = styled.div`
       line-height: 122%;
       li {
         width: 4rem;
+        margin-top: 0.1rem;
         display: inline-block;
         &:nth-child(1) {
           width: 2.7rem;
           position: relative;
           font-weight: 600;
-          @media (min-width: 481px) and (max-width: 768px) {
+          @media (min-width: 1px) and (max-width: 768px) {
             left: 2.6rem;
           }
         }
+        &:nth-child(n + 1) {
+          @media (min-width: 1px) and (max-width: 768px) {
+            display: none;
+          }
+        }
       }
-      @media (min-width: 481px) and (max-width: 768px) {
+      @media (min-width: 1px) and (max-width: 768px) {
         top: 47.38rem;
-        left: 16.65rem;
+        left: 16.3rem;
         line-height: 168.1%;
         font-size: 0.54rem;
       }
@@ -166,11 +174,12 @@ const HeaderBlock = styled.div`
     padding: 0.5rem 0.5rem 0.5rem 0.46rem;
     width: 19.6rem;
     height: 100%;
-    @media (min-width: 481px) and (max-width: 768px) {
+    @media (min-width: 1px) and (max-width: 768px) {
       width: 71.2%;
+      top: 0.63rem;
     }
   }
-  @media (min-width: 1024px) and (max-width: 1280px) {
+  @media (min-width: 1px) and (max-width: 1280px) {
     position: relative;
     top: -22.9rem;
     left: 0rem;
@@ -186,7 +195,6 @@ const HeaderBlock = styled.div`
       position: absolute;
       margin: 1rem;
       transition: transform 0.3s ease, background-color 0.3s ease;
-      z-index: 3;
       &:hover,
       &.expanded {
         transform: scale(1.7);
@@ -194,6 +202,8 @@ const HeaderBlock = styled.div`
         background-color: #e5e5e5;
         color: black;
         text-decoration: underline;
+        z-index: 999999;
+        cursor: pointer;
       }
       &:active {
         transform: scale(1.92);
@@ -232,7 +242,7 @@ const HeaderBlock = styled.div`
       }
     }
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: relative;
     top: -22.9rem;
     left: 0.1rem;
@@ -266,7 +276,7 @@ const HeaderBlock = styled.div`
 `;
 
 const DisplayNoneOnMobileHAndTabletV = styled.span`
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: none;
   }
 `;
@@ -277,8 +287,11 @@ const User = styled.span`
   position: relative;
   margin-left: 1.06rem;
   top: 0.15rem;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     left: 10.175rem;
+  }
+  @media (min-width: 1px) and (max-width: 479px) {
+    left: 59%;
   }
 `;
 
@@ -287,6 +300,27 @@ const MailTo = styled.img`
   bottom: 0.15rem;
   margin-left: 1.325rem;
   cursor: pointer;
+  @media (min-width: 480px) and (max-width: 768px) {
+    top: 0.47rem;
+  }
+  @media (min-width: 1px) and (max-width: 479px) {
+    display: none;
+  }
+`;
+const Github = styled.img`
+  position: relative;
+  width: 1.5rem;
+  bottom: 0.15rem;
+  margin-left: 0.84rem;
+  cursor: pointer;
+  z-index: 9;
+  @media (min-width: 480px) and (max-width: 768px) {
+    top: 0.47rem;
+  }
+  @media (min-width: 1px) and (max-width: 479px) {
+    top: 0.47rem;
+    left: 3.2rem;
+  }
 `;
 const Admin = styled.img`
   position: relative;
@@ -306,14 +340,12 @@ const Admin = styled.img`
     animation: rotate_image 1.9s linear infinite;
     transform-origin: 50% 50%;
   }
-`;
-const Github = styled.img`
-  position: relative;
-  width: 1.5rem;
-  bottom: 0.15rem;
-  margin-left: 0.84rem;
-  cursor: pointer;
-  z-index: 9;
+  @media (min-width: 480px) and (max-width: 768px) {
+    top: 0.47rem;
+  }
+  @media (min-width: 1px) and (max-width: 479px) {
+    display: none;
+  }
 `;
 
 const Name = styled.div`
@@ -369,22 +401,21 @@ const LogAreaBtn = styled.img`
 const MemberWrapper = styled.div`
   position: relative;
   left: 53.5rem;
-  width: 16.61rem;
-  bottom: -16.5rem;
+  bottom: -16.49rem;
   @media (min-width: 769px) and (max-width: 1280px) {
     top: calc(692% - 3.938rem);
     left: calc(100% - (305.99px - 39px));
   }
-  @media (min-width: 481px) and (max-width: 768px) {
-    left: 0rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    left: -0.2rem;
   }
 `;
-const MemberLoginWrapper = styled.span`
+const MemberLoginWrapper = styled.div`
   display: block;
   position: absolute;
   left: 0;
   top: 0;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: none;
     z-index: 3;
     height: 44.91rem;
@@ -392,35 +423,88 @@ const MemberLoginWrapper = styled.span`
     border-radius: 1rem;
     background: #f5f5f5;
     box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
-    left: -2.1rem;
+    left: -1.91rem;
     top: -14.52rem;
-    width: calc(100vw - 77px - 28.16px);
+    width: calc(100vw - 76px - 28.16px);
     margin-left: 1.9rem;
   }
 `;
-const MemberJoinWrapper = styled.span`
+const MemberJoinWrapper = styled.div`
+  display: block;
   position: absolute;
-  display: none;
   left: 0;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -1.91rem;
+    top: -14.52rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
-const MemberModifyWrapper = styled.span`
+
+const MemberModifyWrapper = styled.div`
   position: absolute;
   display: none;
   left: 0;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -1.91rem;
+    top: -14.52rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
-const MemberInfoWrapper = styled.span`
+const MemberInfoWrapper = styled.div`
   position: absolute;
   display: none;
   left: 0;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -1.91rem;
+    top: -14.52rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
-const MailSenderWrapper = styled.span`
+const MailSenderWrapper = styled.div`
   position: absolute;
   display: none;
   left: 0;
   top: 0;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: none;
+    z-index: 3;
+    height: 44.91rem;
+    border: 0.375rem solid #000000;
+    border-radius: 1rem;
+    background: #f5f5f5;
+    box-shadow: 0px 15px 25px -6px rgba(0, 0, 0, 0.23);
+    left: -1.91rem;
+    top: -14.52rem;
+    width: calc(100vw - 76px - 28.16px);
+    margin-left: 1.9rem;
+  }
 `;
 const BackBtn = styled.img`
   display: none;
@@ -433,7 +517,7 @@ const BackBtn = styled.img`
   @media (min-width: 1025px) and (max-width: 1280px) {
     right: -1.545rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: none;
     right: 0rem;
   }
@@ -448,25 +532,33 @@ const CoverBackBtn = styled.span`
   right: -1.51rem;
   top: 8.175rem;
   z-index: 3;
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 769px) and (max-width: 1024px) {
+    top: 8.36rem;
+    right: -1.47rem;
+  }
+  @media (min-width: 1px) and (max-width: 768px) {
     right: 0rem;
   }
 `;
 const MiniBtnWrapper = styled.span`
   display: none;
 
-  @media (min-width: 481px) and (max-width: 768px) {
-    display: block;
+  @media (min-width: 1px) and (max-width: 768px) {
+    display: none;
     position: absolute;
-    right: 2.48rem;
-    top: 0rem;
+    right: 6.62rem;
+    top: -14.17rem;
+    z-index: 4;
+  }
+  @media (min-width: 769px) and (max-width: 2000px) {
+    display: none !important;
   }
 `;
 type Props = {
   readonly myInfo: MyInfo | null;
   readonly isAuthorized: boolean;
-  readonly onLogout: () => void;
   readonly countInfos: CountInfo[];
+  readonly onLogout: () => void;
 };
 const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
   const { state, actions } = useContext(MainContext);
@@ -521,7 +613,7 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
       setTimeout(() => {
         if (BackBtnRef?.current) {
           if (
-            !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
+            !window.matchMedia('(min-width: 1px) and (max-width: 768px)')
               .matches
           ) {
             BackBtnRef.current.style.display = 'block';
@@ -570,25 +662,22 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
               .replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
           );
 
-          // 목표수치에 도달하면 정지
           if (now < 1 && now2 < 1) {
             clearInterval(handle);
           }
 
-          // 증가되는 값이 계속하여 작아짐
           const step = now / 3;
           const step2 = now2 / 3;
 
-          // 값을 적용시키면서 다음 차례에 영향을 끼침
           now -= step;
           now2 -= step2;
         }, 40);
       }
     }, 1500);
 
-    // 브라우저가 481~768 해상도일 때 검색창 텍스트 변경
+    // 브라우저가 1~768 해상도일 때 검색창 텍스트 변경
     const mediaQuery = window.matchMedia(
-      '(min-width: 481px) and (max-width: 768px)',
+      '(min-width: 1px) and (max-width: 768px)',
     );
     const handleMediaQueryChange = (e: any) => {
       const inputElement = document.getElementById(
@@ -616,6 +705,9 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     MemberInfoRef,
     MailSenderRef,
   ];
+  const miniBtnWrapper = document.getElementById(
+    'miniBtnWrapper',
+  ) as HTMLDivElement;
   const onDisplayMember = useCallback(
     (
       e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -623,15 +715,56 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     ) => {
       MemberLoginRef.current.style.opacity = 1;
       MemberModuleArray[selectItem].current.style.display = 'block';
-      MemberModuleArray[selectItem].current.style.zIndex = state.zIdx++;
-      headerBlockRef.current.style.zIndex = state.zIdx++;
+      MemberModuleArray[selectItem].current.style.zIndex = state.zIdx += 2;
+      headerBlockRef.current.style.zIndex = state.zIdx += 2;
 
       const hideAddComment = document.getElementById('addComment');
+      const saying = document.getElementById('saying');
+
+      if (
+        window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
+      ) {
+        const contentBodyOuterWrapper = document.getElementById(
+          'contentBodyOuterWrapper',
+        ) as HTMLDivElement;
+        const outerDescWrapper = document.getElementById(
+          'outerDescWrapper',
+        ) as HTMLDivElement;
+        const outerMemberWrapper = document.getElementById(
+          'outerMemberWrapper',
+        ) as HTMLDivElement;
+        const memberModify = document.getElementById(
+          'memberModify',
+        ) as HTMLDivElement;
+
+        const controlzIdx = () => {
+          if (outerDescWrapper) {
+            outerDescWrapper.style.zIndex = (
+              parseInt(outerDescWrapper.style.zIndex) - 1
+            ).toString();
+          }
+
+          if (outerMemberWrapper) {
+            outerMemberWrapper.style.display = 'block';
+            outerMemberWrapper.style.zIndex = (3).toString();
+          }
+          if (contentBodyOuterWrapper) {
+            contentBodyOuterWrapper.style.zIndex = (2).toString();
+          }
+
+          if (memberModify) {
+            memberModify.style.display = 'none';
+          }
+        };
+        controlzIdx();
+      }
+
       if (hideAddComment) {
-        const saying = document.getElementById('saying');
         hideAddComment!.style.display = 'none';
-        saying!.style.opacity = '1';
-        saying!.style.transition = 'opacity 0.2s 0.75s ease-out';
+        if (saying) {
+          saying.style.opacity = '1';
+          saying.style.transition = 'opacity 0.2s 0.75s ease-out';
+        }
       }
     },
     [MemberModuleArray, state.zIdx],
@@ -701,24 +834,56 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
     }
   };
   const hideContent = () => {
-    const outerWrapper = document.getElementById('outerWrapper') as any;
-    const outerLoginWrapper = document.getElementById(
-      'outerLoginWrapper',
-    ) as any;
-    const contentDesc = document.getElementById('contentDesc');
-    const memberLogin = document.getElementById('memberLogin') as any;
-    const memberJoin = document.getElementById('memberJoin');
-    if (memberLogin && outerWrapper) {
-      memberLogin!.style.display = 'none';
-      outerWrapper.style.zIndex--;
-      outerWrapper.style.display = 'none';
+    const outerMemberWrapper = document.getElementById(
+      'outerMemberWrapper',
+    ) as HTMLDivElement | null;
+    const outerDescWrapper = document.getElementById(
+      'outerDescWrapper',
+    ) as HTMLDivElement | null;
+    const miniBtnWrapper = document.getElementById(
+      'miniBtnWrapper',
+    ) as HTMLDivElement | null;
+    const memberLogin = document.getElementById(
+      'memberLogin',
+    ) as HTMLDivElement;
+    const memberJoin = document.getElementById(
+      'memberJoin',
+    ) as HTMLDivElement | null;
+    const memberModify = document.getElementById(
+      'memberModify',
+    ) as HTMLDivElement | null;
+    const memberInfo = document.getElementById(
+      'memberInfo',
+    ) as HTMLDivElement | null;
+    const mailSender = document.getElementById(
+      'mailSender',
+    ) as HTMLDivElement | null;
+
+    if (memberLogin) {
+      if (outerMemberWrapper) outerMemberWrapper.style.display = 'none';
+      if (outerDescWrapper) outerDescWrapper.style.display = 'none';
+      if (miniBtnWrapper) miniBtnWrapper.style.display = 'none';
+      if (memberLogin) memberLogin.style.display = 'none';
+      if (memberJoin) memberJoin.style.display = 'none';
+      if (memberModify) memberModify.style.display = 'none';
+      if (memberInfo) memberInfo.style.display = 'none';
+      if (mailSender) mailSender.style.display = 'none';
     }
   };
   return (
     <>
+      {window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches ? (
+        <OuterMemberWrapper
+          id="outerMemberWrapper"
+          onClick={() => hideContent()}
+          title="폼 닫기"
+        />
+      ) : (
+        <></>
+      )}
       <Wrapper>
         <HeaderBlock ref={headerBlockRef}>
-          <Gnb className={gnbExpanded ? 'expanded' : ''}>
+          <Gnb id="gnb" className={gnbExpanded ? 'expanded' : ''}>
             <ul>
               <li
                 onClick={(e: any) => {
@@ -731,7 +896,7 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
               <li
                 onClick={() => {
                   toggleGNB();
-                  alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+                  alert('작업 예정 ');
                 }}
               >
                 이력서
@@ -739,7 +904,7 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
               <li
                 onClick={() => {
                   toggleGNB();
-                  alert('작업 예정인 Portfolio Version3에 구현됩니다. ');
+                  alert('작업 예정 ');
                 }}
               >
                 IT 블로그
@@ -799,6 +964,15 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
                   <Name
                     onClick={(e: any) => {
                       onDisplayMember(e, 4);
+
+                      if (
+                        window.matchMedia(
+                          '(min-width: 1px) and (max-width: 768px)',
+                        ).matches
+                      ) {
+                        miniBtnWrapper.style.display = 'block';
+                        miniBtnWrapper.style.zIndex += 9;
+                      }
                     }}
                   >
                     {userName}
@@ -847,6 +1021,14 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
             <MailTo
               onClick={(e: any) => {
                 onDisplayMember(e, 5);
+
+                if (
+                  window.matchMedia('(min-width: 1px) and (max-width: 768px)')
+                    .matches
+                ) {
+                  miniBtnWrapper.style.display = 'block';
+                  miniBtnWrapper.style.zIndex += 9;
+                }
               }}
               src={
                 mailToHover
@@ -891,53 +1073,53 @@ const Header = ({ myInfo, isAuthorized, countInfos, onLogout }: Props) => {
           />
           <CoverBackBtn ref={CoverBackBtnRef} />
 
-          <MemberWrapper ref={MemberWrapperRef}>
-            <MemberLoginWrapper id="memberLogin" ref={MemberLoginRef}>
-              <MemberLogin />
-              <MiniBtnWrapper>
-                <MiniBtn
-                  style={{
-                    backgroundColor: '#ff0b0b',
-                    top: '0.4rem',
-                    zIndex: '3',
+          <MemberWrapper id="memberWrapper" ref={MemberWrapperRef}>
+            <MiniBtnWrapper id="miniBtnWrapper">
+              <MiniBtn
+                style={{
+                  backgroundColor: '#ff0b0b',
+                  top: '0.4rem',
+                  zIndex: '3',
+                }}
+                onClick={() => {
+                  hideContent();
+                }}
+              >
+                <span
+                  title="닫기"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#ffffff';
+                    e.currentTarget.style.fontWeight = '600';
                   }}
-                  onClick={() => {
-                    hideContent();
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.fontWeight = '400';
+                  }}
+                  style={{
+                    fontSize: '1.2rem',
+                    fontWeight: '400',
+                    color: '#ffffff',
+                    left: '0.27rem',
+                    top: '-0.252rem',
+                    transform: 'rotate(45deg)',
                   }}
                 >
-                  <span
-                    title="닫기"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.color = '#ffffff';
-                      e.currentTarget.style.fontWeight = '600';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.fontWeight = '400';
-                    }}
-                    style={{
-                      fontSize: '1.2rem',
-                      fontWeight: '400',
-                      color: '#ffffff',
-                      left: '0.27rem',
-                      top: '-0.252rem',
-                      transform: 'rotate(45deg)',
-                    }}
-                  >
-                    +
-                  </span>
-                </MiniBtn>
-              </MiniBtnWrapper>
+                  +
+                </span>
+              </MiniBtn>
+            </MiniBtnWrapper>
+            <MemberLoginWrapper id="memberLogin" ref={MemberLoginRef}>
+              <MemberLogin />
             </MemberLoginWrapper>
-            <MemberJoinWrapper ref={MemberJoinRef}>
+            <MemberJoinWrapper id="memberJoin" ref={MemberJoinRef}>
               <MemberJoin />
             </MemberJoinWrapper>
-            <MemberModifyWrapper ref={MemberModifyRef}>
+            <MemberModifyWrapper id="memberModify" ref={MemberModifyRef}>
               <MemberModify />
             </MemberModifyWrapper>
-            <MemberInfoWrapper ref={MemberInfoRef}>
+            <MemberInfoWrapper id="memberInfo" ref={MemberInfoRef}>
               <MemberInfo />
             </MemberInfoWrapper>
-            <MailSenderWrapper ref={MailSenderRef}>
+            <MailSenderWrapper id="mailSender" ref={MailSenderRef}>
               <MailSender />
             </MailSenderWrapper>
           </MemberWrapper>

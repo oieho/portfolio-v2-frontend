@@ -3,37 +3,33 @@ import React, { useState, useCallback, useRef } from 'react';
 import Button from './button/Button';
 import { CircularProgress } from '@mui/material';
 
-const Wrapper = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
 const RightBlock = styled.div`
-  position: relative;
   background: #f5f5f5;
-  left: 30.63rem;
   width: 16.61rem;
-  height: 10rem;
   top: 0;
 `;
 
 const Description = styled.div`
   position: absolute;
-  top: -15.535rem;
   background: #f5f5f5;
   border-radius: 1rem;
   width: 100%;
   height: 35.67rem;
-  z-index: 1;
+  left: 22.32rem;
+  top: -15.535rem;
+  z-index: 3;
+  opacity: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    form {
+      position: relative;
+    }
+  }
 `;
 const NowLoading = styled.span`
   position: absolute;
@@ -60,6 +56,10 @@ const Inputs = styled.ul`
   padding: 0;
   top: 9.5rem;
   left: 0.56rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    top: 6.5rem;
+    left: -5.18rem;
+  }
 `;
 const InputLi = styled.li`
   height: 3.33rem;
@@ -108,6 +108,11 @@ const SuccessMessage = styled.div`
   color: #00b300;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 15rem;
+    top: -3rem;
+    left: -5rem;
+  }
 `;
 const ErrorMessage = styled.div`
   width: 266px;
@@ -117,6 +122,11 @@ const ErrorMessage = styled.div`
   color: red;
   text-align: center;
   font-size: 0.875rem;
+  @media (min-width: 1px) and (max-width: 768px) {
+    width: 15rem;
+    top: -3rem;
+    left: -5rem;
+  }
 `;
 
 interface Props {
@@ -320,67 +330,65 @@ const MemberFindId = ({
   );
 
   return (
-    <Wrapper>
-      <RightBlock>
-        <Description>
-          {isLoading ? (
-            <NowLoading>
-              <CircularProgress
-                size={30}
-                variant="determinate"
-                value={progress}
-              />
-            </NowLoading>
-          ) : null}
-          <Confirmidtit
-            src={process.env.PUBLIC_URL + '/images/findidtit.png'}
-            alt="Member Confirm Idenification"
-          />
-          <form method="post" onSubmit={onSendIdByEmail}>
-            <DescriptionTop>
-              <Inputs>
-                <InputLi>
-                  <UserNameInput
-                    ref={nameInput}
-                    maxLength={30}
-                    name="userName"
-                    type="text"
-                    autoComplete="userName"
-                    onChange={onChangeUserName}
-                    onBlur={onConfirmUserName}
-                    placeholder="회원이름"
-                    spellCheck="false"
-                    required
-                  />
-                </InputLi>
-                <InputLi>
-                  <EmailInput
-                    ref={emailInput}
-                    maxLength={20}
-                    name="usereEmail"
-                    type="text"
-                    autoComplete="userEmail"
-                    onChange={onValidateUserEmail}
-                    onBlur={onConfirmUserEmail}
-                    placeholder="이메일"
-                    spellCheck="false"
-                    required
-                  />
-                </InputLi>
-              </Inputs>
+    <RightBlock>
+      <Description>
+        {isLoading ? (
+          <NowLoading>
+            <CircularProgress
+              size={30}
+              variant="determinate"
+              value={progress}
+            />
+          </NowLoading>
+        ) : null}
+        <Confirmidtit
+          src={process.env.PUBLIC_URL + '/images/findidtit.png'}
+          alt="Member Confirm Idenification"
+        />
+        <form method="post" onSubmit={onSendIdByEmail}>
+          <DescriptionTop>
+            <Inputs>
+              <InputLi>
+                <UserNameInput
+                  ref={nameInput}
+                  maxLength={30}
+                  name="userName"
+                  type="text"
+                  autoComplete="userName"
+                  onChange={onChangeUserName}
+                  onBlur={onConfirmUserName}
+                  placeholder="회원이름"
+                  spellCheck="false"
+                  required
+                />
+              </InputLi>
+              <InputLi>
+                <EmailInput
+                  ref={emailInput}
+                  maxLength={20}
+                  name="usereEmail"
+                  type="text"
+                  autoComplete="userEmail"
+                  onChange={onValidateUserEmail}
+                  onBlur={onConfirmUserEmail}
+                  placeholder="이메일"
+                  spellCheck="false"
+                  required
+                />
+              </InputLi>
+            </Inputs>
 
-              <SuccessMessage>{sMessage}</SuccessMessage>
-              <ErrorMessage>{fMessage}</ErrorMessage>
-            </DescriptionTop>
-            <Button
-              style={{ top: `16.56rem`, left: `0rem`, position: `relative` }}
-            >
-              확인
-            </Button>
-          </form>
-        </Description>
-      </RightBlock>
-    </Wrapper>
+            <SuccessMessage>{sMessage}</SuccessMessage>
+            <ErrorMessage>{fMessage}</ErrorMessage>
+          </DescriptionTop>
+          <Button
+            style={{ top: `16.56rem`, left: `0rem`, position: `relative` }}
+          >
+            확인
+          </Button>
+        </form>
+      </Description>
+    </RightBlock>
   );
 };
 

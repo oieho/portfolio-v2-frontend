@@ -13,7 +13,6 @@ import { MyInfo, IfNotLoggedDisplayBlock, Board, Comment } from '../../App';
 import { MainContext } from '../../pages/Main';
 import Button from './button/Button';
 import AddCommentBtn from './button/AddButton';
-import MiniBtn from './button/AddButton';
 import Cookies from 'js-cookie';
 
 const OuterWrapper = styled.div`
@@ -46,7 +45,7 @@ const Wrapper = styled.div`
     left: -1.4rem;
     width: 100%;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     position: absolute;
   }
 `;
@@ -70,7 +69,7 @@ const DescriptionAndComment = styled.div`
     top: -20.51rem;
     left: calc(100% - (315.99px - 38.5px));
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,16 +82,6 @@ const DescriptionAndComment = styled.div`
     width: calc(100vw - 80px - 28.16px);
     margin-left: 1.7rem;
     padding: 1.75rem 0.8rem 0 0;
-  }
-`;
-const MiniBtnWrapper = styled.span`
-  display: none;
-
-  @media (min-width: 481px) and (max-width: 768px) {
-    display: block;
-    position: absolute;
-    right: 2.48rem;
-    top: 0rem;
   }
 `;
 const Inputs = styled.ul`
@@ -1053,7 +1042,7 @@ const CoverBackBtn = styled.span`
   @media (min-width: 769px) and (max-width: 1024px) {
     right: -2.1rem;
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     display: none;
   }
 `;
@@ -1486,13 +1475,12 @@ const ContentDescLessThan769 = ({
         }
         if (
           contentDesc &&
-          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-            .matches
+          !window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '39.36rem';
         } else if (
           contentDesc &&
-          window.matchMedia('(min-width: 481px) and (max-width: 768px)').matches
+          window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '44.92rem';
         }
@@ -1509,13 +1497,12 @@ const ContentDescLessThan769 = ({
       } else {
         setToggleAddCommentForm(true);
         actions.setToggleAddCommentForm(true);
-        if (window.matchMedia('(min-width: 481px)').matches) {
+        if (window.matchMedia('(min-width: 1px)').matches) {
           addCommentForm!.style.opacity = '0';
           addCommentForm!.style.transition = 'opacity 0.2s';
         }
         if (
-          !window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-            .matches
+          !window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches
         ) {
           wrapperresizingA.current.style.height = '35.66rem';
         } else {
@@ -2046,8 +2033,7 @@ const ContentDescLessThan769 = ({
 
   return (
     <>
-      {window.matchMedia('(min-width: 481px) and (max-width: 768px)')
-        .matches ? (
+      {window.matchMedia('(min-width: 1px) and (max-width: 768px)').matches ? (
         <OuterWrapper
           id="outerDescWrapper"
           onClick={() => hideContent()}
@@ -4182,39 +4168,6 @@ const ContentDescLessThan769 = ({
             </InputLi>
           </Inputs>
           <CoverBackBtn />
-          <MiniBtnWrapper>
-            <MiniBtn
-              style={{
-                backgroundColor: '#ff0b0b',
-                top: '0.4rem',
-                zIndex: '3',
-              }}
-              onClick={() => {
-                hideContent();
-              }}
-            >
-              <span
-                title="닫기"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#ffffff';
-                  e.currentTarget.style.fontWeight = '600';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.fontWeight = '400';
-                }}
-                style={{
-                  fontSize: '1.2rem',
-                  fontWeight: '400',
-                  color: '#ffffff',
-                  left: '0.27rem',
-                  top: '-0.252rem',
-                  transform: 'rotate(45deg)',
-                }}
-              >
-                +
-              </span>
-            </MiniBtn>
-          </MiniBtnWrapper>
         </DescriptionAndComment>
       </Wrapper>
     </>

@@ -9,7 +9,7 @@ const Line = styled.div`
     left: 3rem;
     width: 38%;
   }
-  @media (min-width: 481px) and (max-width: 1024px) {
+  @media (min-width: 1px) and (max-width: 1024px) {
     left: 3rem;
     width: 34%;
   }
@@ -77,7 +77,7 @@ const Button = styled.button`
       transition: 0.1s 0.65s ease-out;
     }
   }
-  @media (min-width: 481px) and (max-width: 768px) {
+  @media (min-width: 1px) and (max-width: 768px) {
     &.magnifierhover {
       left: 3.8%;
       transition: 0.1s ease-in;
@@ -95,7 +95,7 @@ const SearchInput = styled.input`
     left: 3rem;
     width: 38%;
   }
-  @media (min-width: 481px) and (max-width: 1024px) {
+  @media (min-width: 1px) and (max-width: 1024px) {
     position: absolute;
     left: 3rem;
     width: 34%;
@@ -182,8 +182,43 @@ const Search = () => {
     (e: React.FormEvent<HTMLFormElement>) => {
       searchInput!.value = '';
 
+      const outerMemberWrapper = document.getElementById(
+        'outerMemberWrapper',
+      ) as HTMLDivElement | null;
+      const outerDescWrapper = document.getElementById(
+        'outerDescWrapper',
+      ) as HTMLDivElement | null;
+      const miniBtnWrapper = document.getElementById(
+        'miniBtnWrapper',
+      ) as HTMLDivElement | null;
+      const memberLogin = document.getElementById(
+        'memberLogin',
+      ) as HTMLDivElement;
+      const memberJoin = document.getElementById(
+        'memberJoin',
+      ) as HTMLDivElement | null;
+      const memberModify = document.getElementById(
+        'memberModify',
+      ) as HTMLDivElement | null;
+      const memberInfo = document.getElementById(
+        'memberInfo',
+      ) as HTMLDivElement | null;
+      const mailSender = document.getElementById(
+        'mailSender',
+      ) as HTMLDivElement | null;
+
       try {
         e.preventDefault();
+
+        if (outerMemberWrapper) outerMemberWrapper.style.display = 'none';
+        if (outerDescWrapper) outerDescWrapper.style.display = 'none';
+        if (miniBtnWrapper) miniBtnWrapper.style.display = 'none';
+        if (memberLogin) memberLogin.style.display = 'none';
+        if (memberJoin) memberJoin.style.display = 'none';
+        if (memberModify) memberModify.style.display = 'none';
+        if (memberInfo) memberInfo.style.display = 'none';
+        if (mailSender) mailSender.style.display = 'none';
+
         actions.setOnGlobalSearch(true);
         actions.setHashSelected(false);
         actions.setToolsSelected(false);
